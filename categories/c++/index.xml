@@ -2,13 +2,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>c&#43;&#43; on JackyLove的小窝</title>
-    <link>https://www.jackylove.me/tags/c&#43;&#43;/</link>
+    <link>https://www.jackylove.me/categories/c&#43;&#43;/</link>
     <description>Recent content in c&#43;&#43; on JackyLove的小窝</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Tue, 26 Mar 2019 16:26:58 +0800</lastBuildDate>
     
-	<atom:link href="https://www.jackylove.me/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.jackylove.me/categories/c++/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>

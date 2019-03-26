@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>C&#43;&#43;primer学习笔记-变量 - JackyLove的小窝</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="JackyLove" /><meta name="description" content="C&#43;&#43;笔记&amp;ndash;变量 变量声明和定义，变量和对象很类似，只不过变量时C&#43;&#43;内置对象的说法，而对象是用户自定义的类的实例的说法。 初始化 首" /><meta name="keywords" content="Hugo, code, linux, c&#43;&#43;, python, go, javascript" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.54.0 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://www.jackylove.me/post/c&#43;&#43;%E7%AC%94%E8%AE%B0-%E5%8F%98%E9%87%8F/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="C&#43;&#43;primer学习笔记-变量" />
+<meta property="og:description" content="C&#43;&#43;笔记&ndash;变量 变量声明和定义，变量和对象很类似，只不过变量时C&#43;&#43;内置对象的说法，而对象是用户自定义的类的实例的说法。 初始化 首" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.jackylove.me/post/c&#43;&#43;%E7%AC%94%E8%AE%B0-%E5%8F%98%E9%87%8F/" />
+<meta property="article:published_time" content="2019-03-26T16:26:58&#43;08:00"/>
+<meta property="article:modified_time" content="2019-03-26T16:26:58&#43;08:00"/>
+
+<meta itemprop="name" content="C&#43;&#43;primer学习笔记-变量">
+<meta itemprop="description" content="C&#43;&#43;笔记&ndash;变量 变量声明和定义，变量和对象很类似，只不过变量时C&#43;&#43;内置对象的说法，而对象是用户自定义的类的实例的说法。 初始化 首">
+
+
+<meta itemprop="datePublished" content="2019-03-26T16:26:58&#43;08:00" />
+<meta itemprop="dateModified" content="2019-03-26T16:26:58&#43;08:00" />
+<meta itemprop="wordCount" content="1477">
+
+
+
+<meta itemprop="keywords" content="c&#43;&#43;," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="C&#43;&#43;primer学习笔记-变量"/>
+<meta name="twitter:description" content="C&#43;&#43;笔记&ndash;变量 变量声明和定义，变量和对象很类似，只不过变量时C&#43;&#43;内置对象的说法，而对象是用户自定义的类的实例的说法。 初始化 首"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">人生若只如初见</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">人生若只如初见</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">C&#43;&#43;primer学习笔记-变量</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-03-26 </span>
+        <div class="post-category">
+            <a href="/categories/c&#43;&#43;/"> c&#43;&#43; </a>
+            </div>
+          <span class="more-meta"> 1477 words </span>
+          <span class="more-meta"> 3 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#c-笔记-变量">C++笔记&ndash;变量</a>
+<ul>
+<li><a href="#初始化">初始化</a></li>
+<li><a href="#默认初始化">默认初始化</a></li>
+<li><a href="#变量声明和定义">变量声明和定义</a></li>
+<li><a href="#变量作用域">变量作用域</a></li>
+<li><a href="#左值和右值">左值和右值</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="c-笔记-变量">C++笔记&ndash;变量</h1>
+
+<p>变量声明和定义，变量和对象很类似，只不过变量时C++内置对象的说法，而对象是用户自定义的类的实例的说法。</p>
+
+<h2 id="初始化">初始化</h2>
+
+<p>首先初始化和赋值是不同的操作。初始化是指对象调用构造函数初始化对象的值，而赋值是指把对象的当前值擦除，而以一个新值来替代。</p>
+
+<p>至于初始化的形式有几种：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="c1">//这种初始化形式看起来与赋值一样，实则是操作符重载，在对应的类中定义了相应的=号操作，可能调用了对应类型的构造函数
+</span><span class="c1"></span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+<span class="kt">int</span> <span class="nf">i</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="c1">//看起来就是调用构造函数创建一个对象
+</span><span class="c1"></span><span class="kt">int</span> <span class="n">i</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span><span class="c1">//列表初始化(C++11标准)
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="默认初始化">默认初始化</h2>
+
+<p>内置类型的变量如果定义在所有块之外(即全局变量),则被初始化为0，否则如果是块内的内置类型则不被初始化，此时的值是未定义的，使用未定义值的变量可能引发程序错误。</p>
+
+<ul>
+<li>每个类各自决定其初始化对象的方式，例如string类规定如果没有指定初值则生成一个空串。</li>
+</ul>
+
+<h2 id="变量声明和定义">变量声明和定义</h2>
+
+<p>C++ 支持分离式编译，允许将程序分割成若干个文件，每个文件可被独立编译。为支持独立编译，C++语言将声明和定义分开来。<strong>声明</strong>使得对象为程序所知，一个文件如果想使用别处定义的名字则必须包含对那个名字的声明。而<strong>定义</strong>则负责创建与名字关联的实体。</p>
+
+<p>如果想声明一个变量而非定义它，则在变量前加extern，而且不要显式地初始化变量。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">extern</span> <span class="kt">int</span> <span class="n">i</span><span class="p">;</span><span class="c1">//声明i而非定义i
+</span><span class="c1"></span><span class="kt">int</span> <span class="n">j</span><span class="p">;</span><span class="c1">//声明并定义j
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>变量能且只能被定义一次，但是可以被多次声明。</p>
+
+<p>如果要在多个文件中使用同一个变量，就必须将声明和定义分离。此时，变量的定义必须出现在且只能出现在一个文件中，而其他用到该变量的文件必须对其进行声明，却绝对不能重复定义。</p>
+
+<p>具体使用场景例如：包含在头文件<c.h>中声明一个变量</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">extern</span> <span class="kt">int</span> <span class="n">h</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>在<c.pp>中定义了该变量</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">int</span> <span class="n">h</span><span class="o">-</span><span class="mi">3</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>则在其他.cpp文件中include这个<c.h>文件就可以直接使用h=3的变量了。</p>
+
+<p>include相当于在源文件中加入该段代码。</p>
+
+<h2 id="变量作用域">变量作用域</h2>
+
+<p>名字main和其他定义在函数体外的名字一样有全局作用域。作用域能彼此包含，内层作用域可以访问外层作用域中的变量，就像在main函数中可以访问全局变量一样。内层作用域的作用范围就式块作用范围。如函数内，或者for循环内。内层作用域中的变量允许和外层作用域一样，但是在块内优先访问局部变量，要访问外层相同名字的变量则要使用作用域::</p>
+
+<h2 id="左值和右值">左值和右值</h2>
+
+<p>对左值和右值的一个最常见的误解是：等号左边的就是左值，等号右边的就是右值。左值和右值都是针对表达式而言的，左值是指表达式结束后依然存在的持久对象，右值是指表达式结束时就不再存在的临时对象。一个区分左值与右值的便捷方法是：看能不能对表达式取地址，如果能，则为左值，否则为右值。</p>
+
+<p>​    区分清楚了左值与右值，我们再来看看左值引用。左值引用根据其修饰符的不同，可以分为非常量左值引用和常量左值引用。非常量左值引用只能绑定到非常量左值，不能绑定到常量左值、非常量右值和常量右值。如果允许绑定到常量左值和常量右值，则非常量左值引用可以用于修改常量左值和常量右值，这明显违反了其常量的含义。如果允许绑定到非常量右值，则会导致非常危险的情况出现，因为非常量右值是一个临时对象，非常量左值引用可能会使用一个已经被销毁了的临时对象。</p>
+
+<p>常量左值引用可以绑定到所有类型的值，包括非常量左值、常量左值、非常量右值和常量右值。</p>
+
+<ul>
+<li>非const左值引用只能绑定到非const左值；</li>
+<li>const左值引用可绑定到const左值、非const左值、const右值、非const右值；</li>
+<li>非const右值引用只能绑定到非const右值；</li>
+<li>const右值引用可绑定到const右值和非const右值。</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">JackyLove</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2019-03-26
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/c&#43;&#43;/">c&#43;&#43;</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/second/">
+            <span class="next-text nav-default">Second</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  <span id="/post/c&#43;&#43;%E7%AC%94%E8%AE%B0-%E5%8F%98%E9%87%8F/" class="leancloud_visitors" data-flag-title="C&#43;&#43;primer学习笔记-变量">
+    <span class="post-meta-item-text">文章阅读量 </span>
+    <span class="leancloud-visitors-count">1000000</span>
+    <p></p>
+  </span>
+  <div id="vcomments"></div>
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+  <script type="text/javascript">
+    new Valine({
+        el: '#vcomments' ,
+        appId: 'xPwmFUoHVqraVIVlAt2Xch9M-gzGzoHsz',
+        appKey: 'VP1APko2CdGfydmf7xOplDur',
+        notify:  false , 
+        verify:  false , 
+        avatar:'', 
+        placeholder: '请说点什么吧...',
+        visitor:  true 
+    });
+  </script>
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="http://localhost:1313" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="http://localhost:1313" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://github.com/jacklov3" class="iconfont icon-github" title="github"></a>
+  <a href="https://www.jackylove.me/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">JackyLove</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
