@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-03-27T13:25:39&#43;08:00" />
 <meta itemprop="dateModified" content="2019-03-27T13:25:39&#43;08:00" />
-<meta itemprop="wordCount" content="2760">
+<meta itemprop="wordCount" content="2757">
 
 
 
@@ -132,7 +132,7 @@
         <div class="post-category">
             <a href="/categories/%E5%8D%9A%E5%AE%A2%E7%9B%B8%E5%85%B3/"> 博客相关 </a>
             </div>
-          <span class="more-meta"> 2760 words </span>
+          <span class="more-meta"> 2757 words </span>
           <span class="more-meta"> 6 mins read </span>
         
       </div>
@@ -148,7 +148,7 @@
 <li><a href="#原因">原因：</a>
 <ul>
 <li><a href="#一-准备工作">一、准备工作</a></li>
-<li><a href="#二-开始准备一个博客的主题">二、开始准备一个博客的主题</a>
+<li><a href="#二-选择一个博客主题">二、选择一个博客主题</a>
 <ul>
 <li><a href="#第一篇博客">第一篇博客</a></li>
 </ul></li>
@@ -156,8 +156,8 @@
 <ul>
 <li><a href="#建立远程库">建立远程库</a></li>
 <li><a href="#添加子模块">添加子模块</a></li>
-</ul></li>
 <li><a href="#自动化部署脚本">自动化部署脚本</a></li>
+</ul></li>
 <li><a href="#四-添加域名">四、添加域名</a></li>
 </ul></li>
 </ul></li>
@@ -216,7 +216,7 @@
 <pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">$git</span> init</code></pre></td></tr></table>
 </div>
 </div>
-<h3 id="二-开始准备一个博客的主题">二、开始准备一个博客的主题</h3>
+<h3 id="二-选择一个博客主题">二、选择一个博客主题</h3>
 
 <p>可以到hugo官网的博客站点<a href="https://themes.gohugo.io">themes.gohugo.io</a>选择一个你喜欢的主题，我选择的主题是<a href="https://github.com/olOwOlo/hugo-theme-even">even</a>,之后便可以按照该主题的README来写了到你的本地博客站点目录下运行一下命令把该主题克隆下来：</p>
 <div class="highlight"><div class="chroma">
@@ -315,7 +315,7 @@
 <p>上面的username换成你自己的github名字。
 这样我们就把该public与&lt;username&gt;.github.io远程库建立了联系。这样推送的时候我们就可以分别把整个站点源文件推送到blog(刚才建立的远程库)和public网站静态文件夹推送到&lt;username&gt;.github.io远程库中。</p>
 
-<h3 id="自动化部署脚本">自动化部署脚本</h3>
+<h4 id="自动化部署脚本">自动化部署脚本</h4>
 
 <p>之前，我试过使用travis ci来自动化部署的，但是有个很重要的原因让我放弃使用：</p>
 
