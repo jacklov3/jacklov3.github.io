@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>hugo on JackyLove的小窝</title>
-    <link>https://www.jackylove.me/tags/hugo/</link>
-    <description>Recent content in hugo on JackyLove的小窝</description>
+    <title>博客相关 on JackyLove的小窝</title>
+    <link>https://www.jackylove.me/categories/%E5%8D%9A%E5%AE%A2%E7%9B%B8%E5%85%B3/</link>
+    <description>Recent content in 博客相关 on JackyLove的小窝</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Wed, 27 Mar 2019 13:25:39 +0800</lastBuildDate>
     
-	<atom:link href="https://www.jackylove.me/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.jackylove.me/categories/%E5%8D%9A%E5%AE%A2%E7%9B%B8%E5%85%B3/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -18,15 +18,6 @@
       
       <guid>https://www.jackylove.me/post/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8hugo%E5%92%8Cgithub%E6%9D%A5%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E8%BF%87%E7%A8%8B/</guid>
       <description>记录一次博客的搭建过程 原因： 和大多数人的原因一样，对于博客这种轻量级的系统，我是懒的自己去搞服务器做动态的系统了。刚好GitHub pages</description>
-    </item>
-    
-    <item>
-      <title>My First</title>
-      <link>https://www.jackylove.me/post/my-first/</link>
-      <pubDate>Tue, 26 Mar 2019 11:15:53 +0800</pubDate>
-      
-      <guid>https://www.jackylove.me/post/my-first/</guid>
-      <description>测试一下子模块和主项目 看看能否成功 hello world!</description>
     </item>
     
   </channel>
