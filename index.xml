@@ -30,12 +30,12 @@
     </item>
     
     <item>
-      <title>C&#43;&#43;primer学习笔记-变量</title>
+      <title>C&#43;&#43;primer学习笔记(1)</title>
       <link>https://www.jackylove.me/post/c&#43;&#43;%E7%AC%94%E8%AE%B0-%E5%8F%98%E9%87%8F/</link>
       <pubDate>Tue, 26 Mar 2019 16:26:58 +0800</pubDate>
       
       <guid>https://www.jackylove.me/post/c&#43;&#43;%E7%AC%94%E8%AE%B0-%E5%8F%98%E9%87%8F/</guid>
-      <description>C++笔记&amp;ndash;变量 变量声明和定义，变量和对象很类似，只不过变量时C++内置对象的说法，而对象是用户自定义的类的实例的说法。 初始化 首</description>
+      <description>C++笔记&amp;ndash;变量与基本数据类型 基本类型 算术类型：整型（整型数、字符、布尔类型）、浮点型 空类型(void) 除去布尔型和扩展的字符型</description>
     </item>
     
     <item>
