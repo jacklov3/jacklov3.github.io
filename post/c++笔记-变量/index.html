@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-03-26T16:26:58&#43;08:00" />
 <meta itemprop="dateModified" content="2019-03-26T16:26:58&#43;08:00" />
-<meta itemprop="wordCount" content="2011">
+<meta itemprop="wordCount" content="7217">
 
 
 
@@ -132,8 +132,8 @@
         <div class="post-category">
             <a href="/categories/c&#43;&#43;/"> c&#43;&#43; </a>
             </div>
-          <span class="more-meta"> 2011 words </span>
-          <span class="more-meta"> 5 mins read </span>
+          <span class="more-meta"> 7217 words </span>
+          <span class="more-meta"> 15 mins read </span>
         
       </div>
     </header>
@@ -154,6 +154,28 @@
 <li><a href="#默认初始化">默认初始化</a></li>
 <li><a href="#变量声明和定义">变量声明和定义</a></li>
 <li><a href="#变量作用域">变量作用域</a></li>
+<li><a href="#复合类型">复合类型</a>
+<ul>
+<li><a href="#引用">引用</a></li>
+<li><a href="#指针">指针</a></li>
+<li><a href="#指向指针的指针">指向指针的指针</a></li>
+<li><a href="#指向指针的引用">指向指针的引用</a></li>
+<li><a href="#const限定符">const限定符</a></li>
+<li><a href="#初始化和对const的引用">初始化和对const的引用</a></li>
+<li><a href="#指针与const">指针与const</a></li>
+<li><a href="#顶层const和底层const">顶层const和底层const</a></li>
+<li><a href="#constexpr和常量表达式">constexpr和常量表达式</a>
+<ul>
+<li><a href="#指针和constexpr">指针和constexpr</a></li>
+</ul></li>
+<li><a href="#类型别名">类型别名</a></li>
+<li><a href="#auto">auto</a></li>
+<li><a href="#decltype">decltype</a></li>
+<li><a href="#迭代器">迭代器</a>
+<ul>
+<li><a href="#小结">小结</a></li>
+</ul></li>
+</ul></li>
 <li><a href="#左值和右值">左值和右值</a></li>
 </ul></li>
 </ul>
@@ -173,24 +195,28 @@
 <li>空类型(void)</li>
 </ul>
 
-<p>除去布尔型和扩展的字符型外，其它整型可以划分为带符号的（signed)和无符号的（unsigned)两种。与其它整型不同的是，字符型被分为了三种：char、signed char和unsigned char。
-<img src="https://ws1.sinaimg.cn/large/005Sd4WIly1g1ipa4lspvj310u0nc7wh.jpg" alt="" /></p>
+<p>除去布尔型和扩展的字符型外，其它整型可以划分为带符号的（signed)和无符号的（unsigned)两种。与其它整型不同的是，字符型被分为了三种：char、signed char和unsigned char。</p>
+
+<p><img src="https://ws1.sinaimg.cn/large/005Sd4WIly1g1ipa4lspvj310u0nc7wh.jpg" alt="" /></p>
 
 <h3 id="类型转换">类型转换</h3>
 
-<p>c++中的内置类型一般都能进行自动类型转换，但是要注意几点：
-- 非布尔类型的值赋值给布尔型时，初始为0时结果为false，否则结果为true。
-- 把布尔赋值给非布尔时，初始值为false则结果为0，初始值为true则结果为1。
-- 把浮点数赋予给整型时，结果只保留浮点数中小数点之前的部分，即丢失精度。
-- 整数赋给浮点类型时，小数部分记为0。若该整数超过了浮点类型的容量，可能丢失精度。
-- 当赋给无符号类型一个超出它表示范围的值时，结果是初始值对无符号类型表示数值总数取模后的余数。（如8比特的unsigned char表示0-255的值，即对256取模），把-1赋给它则结果就是255。
-- 赋值给带符号类型一个可能超过表示范围的值时，结果是未定义的。</p>
+<p>c++中的内置类型一般都能进行自动类型转换，但是要注意几点：</p>
+
+<ul>
+<li>非布尔类型的值赋值给布尔型时，初始为0时结果为false，否则结果为true。</li>
+<li>把布尔赋值给非布尔时，初始值为false则结果为0，初始值为true则结果为1。</li>
+<li>把浮点数赋予给整型时，结果只保留浮点数中小数点之前的部分，即丢失精度。</li>
+<li>整数赋给浮点类型时，小数部分记为0。若该整数超过了浮点类型的容量，可能丢失精度。</li>
+<li>当赋给无符号类型一个超出它表示范围的值时，结果是初始值对无符号类型表示数值总数取模后的余数。（如8比特的unsigned char表示0-255的值，即对256取模），把-1赋给它则结果就是255。</li>
+<li>赋值给带符号类型一个可能超过表示范围的值时，结果是未定义的。</li>
+</ul>
 
 <p><img src="https://ws1.sinaimg.cn/large/005Sd4WIly1g1iprmm0gpj310y098gyh.jpg" alt="" /></p>
 
 <h2 id="变量">变量</h2>
 
-<p>变量声明和定义，变量和对象很类似，只不过变量时C++内置对象的说法，而对象是用户自定义的类的实例的说法。</p>
+<p>变量声明和定义，变量和对象很类似，只不过变量时c++内置对象的说法，而对象是用户自定义的类的实例的说法。</p>
 
 <h2 id="初始化">初始化</h2>
 
@@ -199,16 +225,16 @@
 <p>至于初始化的形式有几种：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="c1">//这种初始化形式看起来与赋值一样，实则是操作符重载，在对应的类中定义了相应的=号操作，可能调用了对应类型的构造函数
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="c1">//这种初始化形式看起来与赋值一样，实则是操作符重载，在对应的类中定义了相应的=号操作，可能调用了对应类型的构造函数
 </span><span class="c1"></span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
 <span class="kt">int</span> <span class="nf">i</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="c1">//看起来就是调用构造函数创建一个对象
-</span><span class="c1"></span><span class="kt">int</span> <span class="n">i</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span><span class="c1">//列表初始化(C++11标准)
+</span><span class="c1"></span><span class="kt">int</span> <span class="n">i</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span><span class="c1">//列表初始化(c++11标准)
 </span></code></pre></td></tr></table>
 </div>
 </div>
@@ -262,13 +288,478 @@
 </code></pre></td></tr></table>
 </div>
 </div>
-<p>则在其他.cpp文件中include这个&lt;c.h&gt;文件就可以直接使用h=3的变量了。</p>
+<p>则在其他.c++文件中include这个&lt;c.h&gt;文件就可以直接使用h=3的变量了。</p>
 
 <p>include相当于在源文件中加入该段代码。</p>
 
 <h2 id="变量作用域">变量作用域</h2>
 
 <p>名字main和其他定义在函数体外的名字一样有全局作用域。作用域能彼此包含，内层作用域可以访问外层作用域中的变量，就像在main函数中可以访问全局变量一样。内层作用域的作用范围就式块作用范围。如函数内，或者for循环内。内层作用域中的变量允许和外层作用域一样，但是在块内优先访问局部变量，要访问外层相同名字的变量则要使用作用域::</p>
+
+<h2 id="复合类型">复合类型</h2>
+
+<p>符合类型是基于其它类型定义的类型，如引用、指针等。</p>
+
+<h3 id="引用">引用</h3>
+
+<p>引用即为对象起的一个别名，使用&amp;符号来定义引用类型。
+引用把自己和引用的对象绑定在一起，而且必须初始化，一旦初始化完成，引用将和它的初始对象一直绑定在一起。因为无法令引用重新绑定到另外一个对象，因为引用必须初始化。</p>
+
+<p>引用分左值引用，右值引用（c++11新增），一般我们讲的是左值引用。
+引用就是对象的别名，就像给一个箱子贴上另一标签，所以对引用的操作都会作用到原对象上。<strong>引用不是对象</strong>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="kt">int</span> <span class="o">&amp;</span><span class="n">a</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span><span class="c1">//引用必须初始化，即确立绑定关系，之后无法解除
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="指针">指针</h3>
+
+<p>指针是一复合类型，与引用类似,指针也实现了对其他对象的间接访问。然而指针与引用相比有不同点：</p>
+
+<ul>
+<li>指针本身是一个对象，允许对指针赋值和拷贝，而且在指针的生命周期内它可以先后指向几个不同的对象。</li>
+<li>指针无须在定义时赋初值。和其他内置类型一样，在块作用域内定义的指针如果没有被初始化，也将拥有一个不确定的值。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span><span class="mi">2</span><span class="p">;</span>
+<span class="kt">int</span> <span class="o">*</span><span class="n">p</span><span class="o">=&amp;</span><span class="n">i</span><span class="p">;</span><span class="c1">//定义了一个指针变量p指向整型i对象，&amp;用于获取变量的地址。
+</span><span class="c1"></span><span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span><span class="c1">//相当于i=3，通过指针间接改变指向的对象的值。*指解引用操作。
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>int型，double型等什么指针指的是该指针变量指向的对象的类型，而非指针变量本身的类型，指针变量存储的是地址(一个16进制的值)。</p>
+
+<p><strong>空指针</strong>不指向任何对象，在试图使用一个指针之前代码可以先检查它是否为空</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="c1">//空指针
+</span><span class="c1"></span><span class="kt">int</span> <span class="o">*</span><span class="n">p1</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span><span class="c1">//等价于int *p1=0;c++11标准
+</span><span class="c1"></span><span class="kt">int</span> <span class="o">*</span><span class="n">p2</span> <span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="c1">//直接将p2初始化为字面常量0
+</span><span class="c1"></span><span class="kt">int</span> <span class="o">*</span><span class="n">p3</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span><span class="c1">//等价于 int *p3 = 0;
+</span><span class="c1"></span>
+<span class="c1">//判断指针是否为空，只需将指针变量用于if判断语句中
+</span><span class="c1"></span><span class="k">if</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>void</strong> * 指针是一种特殊的指针类型，可用于存放任意对象的地址。一个void*指针存放着一个地址。不能直接操作void* 指针所指的对象，因为我们并不知道这个对象到底是什么类型，也就无法确定能在该对象上做哪些操作。</p>
+
+<h3 id="指向指针的指针">指向指针的指针</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1024</span><span class="p">;</span>
+<span class="kt">int</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">i</span><span class="p">;</span><span class="c1">//p指向一个int型的数
+</span><span class="c1"></span><span class="kt">int</span> <span class="o">**</span><span class="n">pp</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">p</span><span class="p">;</span><span class="c1">//pp指向一个int型的指针
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="指向指针的引用">指向指针的引用</h3>
+
+<p>引用本身不是一个对象，因此不能定义指向引用的指针。但指针是对象，所以存在指针的引用:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="kt">int</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span><span class="c1">//p是一个int型指针
+</span><span class="c1"></span><span class="kt">int</span> <span class="o">*&amp;</span><span class="n">r</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span><span class="c1">//r是一个对指针p的引用，也就是指针变量p的别名
+</span><span class="c1"></span><span class="n">r</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">i</span><span class="p">;</span><span class="c1">//r引用了一个指针，因此给r赋值&amp;i就是令p指向i
+</span><span class="c1"></span><span class="o">*</span><span class="n">r</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="c1">//解引用r得到i，也就是p指向的对象，将i的值改为0
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>对一条比较复杂的指针或引用的声明语句，从右向左阅读比较好。</p>
+
+<h3 id="const限定符">const限定符</h3>
+
+<p>const限定一个变量为常量，则此变量的值不能被改变</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">const</span> <span class="kt">int</span> <span class="n">bufsize</span> <span class="o">=</span><span class="mi">512</span><span class="p">;</span>
+<span class="n">bufsize</span><span class="o">=</span><span class="mi">1024</span><span class="c1">//❌，不能改变const对象的值。
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>注意</strong>：在不改变const对象下，用一个对象去初始化另一个const对象。则它们是不是const都无关紧要</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">int i = 42;
+const int ci = i;//正确，i的值被拷贝给整型常量ci，即使i是非常量
+int j =ci;//即使ci是常量，但是该赋值只是拷贝ci的值给j，之后j的值怎么操作与ci无关，j的值可以改变。</pre></td></tr></table>
+</div>
+</div>
+<p>默认情况下，const对象被设定为仅在文件内有效。当多个文件中出现了同名的const变量时，其实等同于在不同文件中分别定义了独立的变量。</p>
+
+<p>如果要在文件间共享const变量，则应该在const变量不管时声明还是定义都添加extern关键字，这样只需定义一次就行了：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="c1">//file_1.cc定义并初始化了一个常量，该常量能被其他文件访问
+</span><span class="c1"></span><span class="k">extern</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">bufsize</span> <span class="o">=</span> <span class="n">fcn</span><span class="p">();</span>
+<span class="c1">//file_1.h头文件
+</span><span class="c1"></span><span class="k">extern</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">bufsize</span><span class="p">;</span><span class="c1">//与file_1.cc中定义的bufsize是同一个。
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>const的引用</strong>可以把引用绑定到const对象上，就像绑定到其他对象一样，我们称之为对常量的引用。与普通引用不同的是，对常量的引用不能被用作修改它所绑定的对象：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">const</span> <span class="kt">int</span> <span class="n">ci</span> <span class="o">=</span> <span class="mi">1024</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">r1</span><span class="o">=</span><span class="n">ci</span><span class="p">;</span><span class="c1">//正确：引用及其对应的对象都是常量
+</span><span class="c1"></span><span class="n">r1</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span><span class="c1">//错误：r1是对常量的引用
+</span><span class="c1"></span><span class="kt">int</span> <span class="o">&amp;</span><span class="n">r2</span> <span class="o">=</span> <span class="n">ci</span><span class="p">;</span><span class="c1">//错误，试图让一个非常量引用指向一个常量对象
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="初始化和对const的引用">初始化和对const的引用</h3>
+
+<p>引用的类型必须与其所引用对象的类型一致，但是有两个例外：</p>
+
+<ul>
+<li>在初始化常量引用时允许用任意表达式作为初始值，只要该表达式能转换成引用的类型即可。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span><span class="mi">42</span><span class="p">;</span>
+  <span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">r1</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span><span class="c1">//允许将const int&amp;绑定到一个普通int对象上
+</span><span class="c1"></span>  <span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">r2</span><span class="o">=</span> <span class="mi">42</span><span class="p">;</span><span class="c1">//正确：r2是一个常量引用
+</span><span class="c1"></span>  <span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">r3</span><span class="o">=</span> <span class="n">r1</span><span class="o">*</span><span class="mi">2</span><span class="p">;</span><span class="c1">//正确：r3时一个常量引用
+</span><span class="c1"></span>  <span class="kt">int</span> <span class="o">&amp;</span><span class="n">r4</span> <span class="o">=</span> <span class="n">r1</span> <span class="o">*</span><span class="mi">2</span><span class="p">;</span><span class="c1">//错误:r4是一个普通的非常量引用
+</span><span class="c1"></span>  <span class="kt">double</span> <span class="n">d</span> <span class="o">=</span> <span class="mf">3.14</span><span class="p">;</span>
+  <span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">ri</span> <span class="o">=</span> <span class="n">d</span><span class="p">;</span><span class="c1">//ri是一个整型的引用，我们把一个浮点型赋予它，则会创建一个临时的整型变量（临时量），所以我们的ri实际绑定的是这个临时量。
+</span><span class="c1"></span>  <span class="kt">int</span> <span class="o">&amp;</span><span class="n">ri</span> <span class="o">=</span> <span class="n">d</span><span class="p">;</span><span class="c1">//若ri是指向非常量的引用，把浮点数赋值给它则是非法的。
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>对const的引用可能引用一个并非const的对象</strong></p>
+
+<p>常量引用仅对引用可参与的操作作出了限定，对于引用的对象本身是不是一个常量未作限定。因为对象也可能是个非常量，所以允许通过其他途径改变它的值：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span><span class="mi">42</span><span class="p">;</span>
+<span class="kt">int</span> <span class="o">&amp;</span><span class="n">r1</span><span class="o">=</span><span class="n">i</span><span class="p">;</span><span class="c1">//引用r1绑定对象i
+</span><span class="c1"></span><span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">r2</span> <span class="o">=</span><span class="n">i</span><span class="p">;</span><span class="c1">//r2也绑定对象i,但是不允许通过r2修改i的值
+</span><span class="c1"></span><span class="n">r1</span> <span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="c1">//r1并非常量，i的值修改为0
+</span><span class="c1"></span><span class="n">r2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="c1">//错误：r2是一个常量引用
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="指针与const">指针与const</h3>
+
+<p>与引用一样，也可以令指针指向常量或非常量。类似于常量引用，指向常量的指针不能用于改变其所指对象的值。要想存放常量对象的地址，只能使用指向常量的指针：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">const</span> <span class="kt">double</span> <span class="n">pi</span> <span class="o">=</span> <span class="mf">3.14</span><span class="p">;</span><span class="c1">//pi是一个常量，它的值不能改变
+</span><span class="c1"></span><span class="kt">double</span> <span class="o">*</span><span class="n">ptr</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">pi</span><span class="p">;</span><span class="c1">//错误：ptr是一个普通指针
+</span><span class="c1"></span><span class="k">const</span> <span class="kt">double</span> <span class="o">*</span><span class="n">cptr</span> <span class="o">=&amp;</span><span class="n">pi</span><span class="p">;</span><span class="c1">//正确，cptr可以指向一个双精度常量
+</span><span class="c1"></span><span class="o">*</span><span class="n">cptr</span> <span class="o">=</span> <span class="mi">42</span><span class="err">；</span><span class="c1">//错误：不能给*cptr赋值
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>指针的类型必须与其所指对象的类型一致，但是有两个例外</strong>：</p>
+
+<ul>
+<li>允许令一个指向常量的指针指向一个非常量对象：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="kt">double</span> <span class="n">v</span> <span class="o">=</span> <span class="mf">3.14</span><span class="c1">//v是一个双精度浮点数，它的值可以改变
+</span><span class="c1"></span>  <span class="n">cptr</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">v</span><span class="err">；</span><span class="c1">//正确：但是不能通过cptr改变v的值
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>和常量引用一样，指向常量的指针也没有规定其所指的对象必须是一个常量。所谓指向常量的指针仅仅要求不能通过该指针改变对象的值，而没有规定那个对象的值不能通过其他途径改变。</p>
+
+<p><strong>const指针</strong></p>
+
+<p>指针是对象而引用不是，因此就像其他对象类型一样，允许把指针本身定为常量。常量指针必须初始化，而且一旦初始化完成，则它的值（也就是存放在指针中的那个地址）就不能改变了。把* 放在const关键字前用以说明指针是一个常量。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">3</span><span class="p">;</span>
+<span class="kt">int</span> <span class="o">*</span><span class="k">const</span> <span class="n">p</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">i</span><span class="p">;</span><span class="c1">//p将一直指向i
+</span><span class="c1"></span><span class="o">*</span><span class="n">p</span><span class="o">=</span><span class="mi">34</span><span class="p">;</span><span class="c1">//可以通过常量指针p改变i的值，因为指针是常量，但是所指向的对象是非常量（可以改变的）
+</span><span class="c1"></span><span class="k">const</span> <span class="kt">double</span> <span class="n">pi</span> <span class="o">=</span> <span class="mf">3.14159</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">double</span> <span class="o">*</span><span class="k">const</span> <span class="n">pip</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">pi</span><span class="p">;</span><span class="c1">//pip是一个指向常量对象的常量指针
+</span><span class="c1"></span><span class="o">*</span><span class="n">pip</span><span class="o">=</span><span class="mf">2.3</span><span class="err">；</span><span class="c1">//错误。pip是一个常量指针，它指向的对象也是一个常量不能被改变
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="顶层const和底层const">顶层const和底层const</h3>
+
+<p>指针本身是一个对象，它又可以指向另外一个对象。因此，指针本身是不是常量以及指针所指的是不是一个常量就是两个相互独立的问题。用名词顶层const(top-level const)表示指针本身是个常量，而用名词底层const(low-level const)表示指针所指的对象是一个常量。</p>
+
+<p>更一般的,顶层const可以表示任意的对象是常量，这一点对任何数据类型都适用。底层const则与指针和引用等复合类型相关（指指向的对象是常量）。<strong>特殊</strong>的是指针类型即可以是顶层const也可以是底层const</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">int</span> <span class="o">*</span><span class="k">const</span> <span class="n">p1</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">i</span><span class="p">;</span><span class="c1">//顶层const，不能改变p1本身的值
+</span><span class="c1"></span><span class="k">const</span> <span class="kt">int</span> <span class="n">ci</span> <span class="o">=</span><span class="mi">42</span><span class="p">;</span><span class="c1">//不能改变ci的值，是一个顶层const
+</span><span class="c1"></span><span class="k">const</span> <span class="kt">int</span> <span class="o">*</span><span class="n">p2</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ci</span><span class="p">;</span><span class="c1">//允许修改p2的值但指向的是常量，底层const
+</span><span class="c1"></span><span class="k">const</span> <span class="kt">int</span> <span class="o">*</span><span class="k">const</span> <span class="n">p3</span> <span class="o">=</span> <span class="n">p2</span><span class="p">;</span><span class="c1">//靠右的const是顶层constant，靠左的是底层const表示p3是一个常量指针，该指针指向的对象又是个常量，p2是个指向常量的指针，存储了该常量的地址，把p2赋给p3，指两个指针指向相同的常量对象的地址
+</span><span class="c1"></span><span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">r</span><span class="o">=</span><span class="n">ci</span><span class="p">;</span><span class="c1">//用于引用的const都是底层const（指引用的对象是常量），不存在引用是常量的，因为引用本身不是一个对象
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="constexpr和常量表达式">constexpr和常量表达式</h3>
+
+<p>常量表达式是指值不会改变并且在编译过程就能得到计算结果的表达式。
+c++11新增加了constexpr类型来让编译器来验证变量的值是否是一个常量表达式。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">constexpr</span> <span class="kt">int</span> <span class="n">mf</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span> <span class="c1">//20是常量表达式
+</span><span class="c1"></span><span class="k">constexpr</span> <span class="kt">int</span> <span class="n">limit</span> <span class="o">=</span> <span class="n">mf</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span><span class="c1">//mf+1是常量表达式
+</span><span class="c1"></span><span class="k">constexpr</span> <span class="kt">int</span> <span class="n">sz</span> <span class="o">=</span> <span class="n">size</span><span class="p">()</span><span class="c1">//只有size是一个constexpr函数时才是一条正确的声明语句
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<h4 id="指针和constexpr">指针和constexpr</h4>
+
+<p>在constexpr声明中如果定义了一个指针，限定符constexpr仅对指针有效，与指针所指的对象无关：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">const</span> <span class="kt">int</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span><span class="c1">//p是一个指向整型常量的指针
+</span><span class="c1"></span><span class="k">constexpr</span> <span class="kt">int</span> <span class="o">*</span><span class="n">q</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span><span class="c1">//q是一个指向整数的常量指针，constexpr定义为顶层const
+</span><span class="c1"></span><span class="k">constexpr</span> <span class="kt">int</span> <span class="o">*</span><span class="n">p1</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">j</span><span class="p">;</span><span class="c1">//p1是常量指针，指向整数j
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="类型别名">类型别名</h3>
+
+<p>类型别名</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">typedef</span> <span class="kt">int</span> <span class="n">wages</span><span class="p">;</span><span class="c1">//旧式
+</span><span class="c1"></span><span class="k">using</span> <span class="n">wages</span><span class="o">=</span><span class="kt">int</span><span class="p">;</span><span class="c1">//c++11新标准
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>类型别名对于符合类型或常量的说，</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">typedef</span> <span class="kt">char</span> <span class="o">*</span><span class="n">pstring</span><span class="p">;</span>
+<span class="k">const</span> <span class="n">pstring</span> <span class="n">cstr</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="c1">//cstr是指向char的常量指针
+</span><span class="c1"></span><span class="k">const</span> <span class="n">pstring</span> <span class="o">*</span><span class="n">ps</span><span class="p">;</span><span class="c1">//ps是一个指针，它的对象是指向char 的常量指针
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>我们可以看到const是对给定类型的修饰。</p>
+
+<h3 id="auto">auto</h3>
+
+<p>auto是c++11引入的一种自动推导类型关键字，auto一般会忽略顶层const，而保留底层const</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span><span class="o">&amp;</span><span class="n">r</span> <span class="o">=</span><span class="n">i</span><span class="p">;</span>
+<span class="k">auto</span> <span class="n">a</span><span class="o">=</span><span class="n">r</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">ci</span> <span class="o">=</span> <span class="n">i</span><span class="p">,</span><span class="o">&amp;</span><span class="n">cr</span><span class="o">=</span><span class="n">ci</span><span class="p">;</span><span class="c1">//ci是一个整型常量，cr是ci的一个引用
+</span><span class="c1"></span><span class="k">auto</span> <span class="n">b</span> <span class="o">=</span> <span class="n">ci</span><span class="p">;</span><span class="c1">//b是int型，顶层const被忽略了
+</span><span class="c1"></span><span class="k">auto</span> <span class="n">c</span> <span class="o">=</span> <span class="n">cr</span><span class="p">;</span><span class="c1">//c是int型，cr是ci的别名
+</span><span class="c1"></span><span class="k">auto</span> <span class="n">d</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">i</span><span class="p">;</span><span class="c1">//d是一个整型指针
+</span><span class="c1"></span><span class="k">auto</span> <span class="n">e</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ci</span><span class="p">;</span><span class="c1">//e是一个指向int型常量的指针（对常量对象取地址是一种底层const）
+</span><span class="c1"></span><span class="k">const</span> <span class="k">auto</span> <span class="n">f</span> <span class="o">=</span> <span class="n">ci</span><span class="p">;</span><span class="c1">//f是const int
+</span><span class="c1"></span><span class="k">auto</span> <span class="o">&amp;</span><span class="n">g</span> <span class="o">=</span> <span class="n">ci</span><span class="p">;</span><span class="c1">//g是一个整型常量引用（因为引用是一种底层const，所以被保留了下来）
+</span><span class="c1"></span><span class="k">auto</span> <span class="o">&amp;</span><span class="n">h</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span><span class="c1">//错误，不能为非常量引用绑定字面值
+</span><span class="c1"></span><span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span><span class="n">j</span><span class="o">=</span><span class="mi">42</span><span class="p">;</span><span class="c1">//可以为常量引用绑定字面值，因为字面值是不可改变的量
+</span><span class="c1"></span><span class="k">auto</span> <span class="n">k</span> <span class="o">=</span> <span class="n">ci</span><span class="p">,</span><span class="o">&amp;</span><span class="n">l</span><span class="o">=</span><span class="n">i</span><span class="p">;</span><span class="c1">//k是整数，l是整型引用
+</span><span class="c1"></span><span class="k">auto</span> <span class="o">&amp;</span><span class="n">m</span> <span class="o">=</span> <span class="n">ci</span><span class="err">，</span><span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ci</span><span class="p">;</span><span class="c1">//m是对整型常量的引用，p是指向整型常量的指针
+</span><span class="c1"></span><span class="k">auto</span> <span class="o">&amp;</span><span class="n">n</span> <span class="o">=</span> <span class="n">i</span><span class="p">,</span><span class="o">*</span><span class="n">p2</span><span class="o">=&amp;</span><span class="n">ci</span><span class="p">;</span><span class="c1">//错误,i是int型而&amp;ci是const int型
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="decltype">decltype</h3>
+
+<p>它的作用是选择并返回操作数的数据类型，</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">const</span> <span class="kt">int</span> <span class="n">ci</span><span class="o">=</span> <span class="mi">0</span><span class="p">,</span><span class="o">&amp;</span><span class="n">cj</span><span class="o">=</span><span class="n">ci</span><span class="p">;</span>
+<span class="k">decltype</span><span class="p">(</span><span class="n">ci</span><span class="p">)</span> <span class="n">x</span> <span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="c1">//x的类型是const int 
+</span><span class="c1"></span><span class="k">decltype</span><span class="p">(</span><span class="n">cj</span><span class="p">)</span> <span class="n">y</span> <span class="o">=</span><span class="n">x</span><span class="p">;</span><span class="c1">//y的类型是const int&amp;,y绑定到变量x
+</span><span class="c1"></span><span class="k">decltype</span><span class="p">(</span><span class="n">cj</span><span class="p">)</span> <span class="n">z</span><span class="p">;</span><span class="c1">//错误，z是一个引用，必须初始化
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>需要指出的是，引用从来都作为其所指对象的同义词出现，只有用在decltype处是一个例外。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">3</span><span class="p">;</span><span class="o">*</span><span class="n">p</span><span class="o">=&amp;</span><span class="n">i</span><span class="p">,</span><span class="o">&amp;</span><span class="n">r</span><span class="o">=</span><span class="n">i</span><span class="p">;</span>
+<span class="k">decltype</span><span class="p">(</span><span class="n">r</span><span class="o">+</span><span class="mi">0</span><span class="p">)</span> <span class="n">b</span><span class="p">;</span><span class="c1">//正确，加法的结果是int，因此b是一个（未被初始化的int
+</span><span class="c1"></span><span class="k">decltype</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">)</span> <span class="n">c</span><span class="p">;</span><span class="err">错误，</span><span class="n">c是int</span> <span class="o">&amp;</span><span class="p">,</span><span class="err">必须初始化</span>
+<span class="err">如果表达式的内容是解引用操作，则</span><span class="n">decltype将得到引用类型</span><span class="err">。</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>切记</strong>：decltype((variable))(注意是双层括号)的结果永远是引用，而decltype(variable)结果只有当variable本身就是一个引用时才是引用。</p>
+
+<h3 id="迭代器">迭代器</h3>
+
+<p>首先，迭代器不是指针，它只是类似指针的操作，是一个模版类，重载了指针的操作，它用于访问容器内的元素，返回的是指向元素的迭代器，需要解引用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="o">*</span><span class="n">iter</span> <span class="c1">//返回迭代器iter所指元素的引用
+</span><span class="c1"></span><span class="n">iter</span><span class="o">-&gt;</span><span class="n">mem</span><span class="c1">//解引用iter并获取该元素的名为mem的成员，等价于(*iter).mem，是它的简写
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>限制：不能在范围for循环中向vector对象添加元素，另一个限制是任何一种可能改变vector对象容量的操作，比如push_back，都会使该vector对象的迭代器失效。谨记，但凡是使用了迭代器的循环体，都不要向迭代器所属的容器添加元素。迭代器之间没有加法，只有减法</p>
+
+<h4 id="小结">小结</h4>
+
+<p>引用不是对象，若用const修饰引用，则表示该不能用该引用改变引用的对象。</p>
+
+<p>常量指针和指针常量：</p>
+
+<p>常量指针指的是指针是常量，其对应的地址值不能改变，永远指向一个对象，必须初始化，但是所指向的对象是常量还是非常量与指针无关，可以通过该指针改变所指对象的值。</p>
+
+<p>指针常量（指向常量的指针），指指针所指向的对象是个常量不能改变。</p>
+
+<p>本身是<strong>常量</strong>的必须初始化。</p>
+
+<p><strong>重要</strong>:无论是指针还是迭代器，如果所指对象是const，则必须声明指针或者迭代器为const类型，但是如果所指对象为为非const，则指针和迭代器可以为非const，也可以为const，具体情况具体分析。</p>
 
 <h2 id="左值和右值">左值和右值</h2>
 
