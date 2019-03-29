@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-03-29T11:56:35&#43;08:00" />
 <meta itemprop="dateModified" content="2019-03-29T11:56:35&#43;08:00" />
-<meta itemprop="wordCount" content="2354">
+<meta itemprop="wordCount" content="2680">
 
 
 
@@ -132,8 +132,8 @@
         <div class="post-category">
             <a href="/categories/c&#43;&#43;/"> c&#43;&#43; </a>
             </div>
-          <span class="more-meta"> 2354 words </span>
-          <span class="more-meta"> 5 mins read </span>
+          <span class="more-meta"> 2680 words </span>
+          <span class="more-meta"> 6 mins read </span>
         
       </div>
     </header>
@@ -169,7 +169,9 @@
 <li><a href="#迭代器">迭代器</a>
 <ul>
 <li><a href="#迭代器类型">迭代器类型</a></li>
+<li><a href="#迭代器运算">迭代器运算</a></li>
 </ul></li>
+<li><a href="#数组">数组</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -224,10 +226,10 @@
 我们可以使用auto或者decltype来推断变量的类型：如</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++">    <span class="k">auto</span> <span class="n">len</span>  <span class="o">=</span> <span class="n">line</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="c1">//len的类型为string::size_type
+<pre class="chroma"><code class="language-cpp" data-lang="cpp">    <span class="k">auto</span> <span class="n">len</span>  <span class="o">=</span> <span class="n">line</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="c1">//len的类型为string::size_type
 </span></code></pre></td></tr></table>
 </div>
 </div>
@@ -393,6 +395,32 @@
 </span></code></pre></td></tr></table>
 </div>
 </div>
+<p>一般来说，我们的迭代器的类型可以由auto自动推断得到，如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v</span><span class="p">;</span>
+<span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">cv</span><span class="p">;</span>
+<span class="k">auto</span> <span class="n">it1</span> <span class="o">=</span> <span class="n">v</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span><span class="c1">//it1的类型是vector&lt;int&gt;::iterator
+</span><span class="c1"></span><span class="k">auto</span> <span class="n">it2</span> <span class="o">=</span> <span class="n">cv</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span><span class="c1">//it2的类型是vector&lt;int&gt;::const_iterator
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>c++11新增加了两个函数分别是cbegin和cend,这可以返回const_iterator，无论原对象本身是否是常量。</p>
+
+<p>某些对vector对象的操作可能使得迭代器失效。我们知道前面说过不要在for循环中向vector对象添加元素，另外一个限制是任何一种可能改变vector对象容器的操作，如push_back，都会使该vector对象的迭代器失效。</p>
+
+<h3 id="迭代器运算">迭代器运算</h3>
+
+<p><img src="https://ws1.sinaimg.cn/large/005Sd4WIgy1g1jzrz9cyqj310o0kqwvf.jpg" alt="" /></p>
+
+<h2 id="数组">数组</h2>
+
     </div>
 
     <div class="post-copyright">
