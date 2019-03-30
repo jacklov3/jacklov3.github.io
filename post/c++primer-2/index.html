@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-03-29T11:56:35&#43;08:00" />
 <meta itemprop="dateModified" content="2019-03-29T11:56:35&#43;08:00" />
-<meta itemprop="wordCount" content="2680">
+<meta itemprop="wordCount" content="4071">
 
 
 
@@ -73,7 +73,7 @@
 <body>
   <div id="mobile-navbar" class="mobile-navbar">
   <div class="mobile-header-logo">
-    <a href="/" class="logo">人生若只如初见</a>
+    <a href="/" class="logo">聚散流沙</a>
   </div>
   <div class="mobile-navbar-icon">
     <span></span>
@@ -99,7 +99,7 @@
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
-  <a href="/" class="logo">人生若只如初见</a>
+  <a href="/" class="logo">聚散流沙</a>
 </div>
 
 <nav class="site-navbar">
@@ -132,8 +132,8 @@
         <div class="post-category">
             <a href="/categories/c&#43;&#43;/"> c&#43;&#43; </a>
             </div>
-          <span class="more-meta"> 2680 words </span>
-          <span class="more-meta"> 6 mins read </span>
+          <span class="more-meta"> 4071 words </span>
+          <span class="more-meta"> 9 mins read </span>
         
       </div>
     </header>
@@ -171,7 +171,19 @@
 <li><a href="#迭代器类型">迭代器类型</a></li>
 <li><a href="#迭代器运算">迭代器运算</a></li>
 </ul></li>
-<li><a href="#数组">数组</a></li>
+<li><a href="#数组">数组</a>
+<ul>
+<li><a href="#复杂的数组声明">复杂的数组声明</a></li>
+<li><a href="#指针与数组的关系">指针与数组的关系</a></li>
+<li><a href="#标准库函数begin和end">标准库函数begin和end</a></li>
+<li><a href="#下标和指针">下标和指针</a></li>
+<li><a href="#c风格字符串">C风格字符串</a></li>
+<li><a href="#使用数组初始化vector对象">使用数组初始化vector对象</a></li>
+<li><a href="#多维数组">多维数组</a>
+<ul>
+<li><a href="#使用指针来遍历多维数组">使用指针来遍历多维数组</a></li>
+</ul></li>
+</ul></li>
 </ul></li>
 </ul>
 </nav>
@@ -421,6 +433,199 @@
 
 <h2 id="数组">数组</h2>
 
+<p>数组初始化需要确定数组的大小</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">int</span> <span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">};</span>
+<span class="kt">int</span> <span class="n">b</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">};</span><span class="c1">//剩下的元素将会被默认初始化，至于初始化的值是什么由该数组定义的位置有关
+</span><span class="c1"></span><span class="kt">int</span> <span class="n">c</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">};</span><span class="c1">//也可以不制定大小，则此时数组的大小由给定的元素多少决定
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>不能将数组的内容拷贝给其他数组作为其初始值，也不能用数组为其他数组赋值。</p>
+
+<h3 id="复杂的数组声明">复杂的数组声明</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">int</span> <span class="o">*</span><span class="n">ptr</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span> <span class="c1">//ptrs是含有10个整型指针的数组
+</span><span class="c1"></span><span class="kt">int</span> <span class="o">&amp;</span><span class="n">ref</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span><span class="o">=</span><span class="cm">/*?*/</span><span class="p">;</span><span class="c1">//错误，不存在引用的数组
+</span><span class="c1"></span><span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">Par</span><span class="p">)[</span><span class="mi">10</span><span class="p">]</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">arr</span><span class="p">;</span><span class="c1">//par指向一个含有10个整数的数组
+</span><span class="c1"></span><span class="kt">int</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">arrR</span><span class="p">)[</span><span class="mi">10</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr</span><span class="p">;</span><span class="c1">//arrR引用一个含有10个整数的数组
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>内置数组的下标类型被定义为size_t类型，被定义在cstddef头文件中。</p>
+
+<h3 id="指针与数组的关系">指针与数组的关系</h3>
+
+<p>在使用数组的时候编译器一般会把它转换成指针，数组名就是常量指针，它的值不变指向的是数组中第一个元素的位置。
+当auto作用于数组名时，得到的是一个指针</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">int</span> <span class="n">a</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">};</span>
+<span class="k">auto</span> <span class="nf">b</span><span class="p">(</span><span class="n">a</span><span class="p">);</span><span class="c1">//ia2是一个整型指针，指向ia的第一个元素 
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>当decltype作用于数组名时，得到的类型是一个数组。</p>
+
+<h3 id="标准库函数begin和end">标准库函数begin和end</h3>
+
+<p>尽管我们能得到尾后指针，但是此用法容易出错。为了让指针的使用更简单、更安全，C++11新标准引入了两个名为begin和end的函数。这两个函数不是成员函数，因为数组不是类类型。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">int</span> <span class="n">ia</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">};</span>
+<span class="kt">int</span> <span class="o">*</span><span class="n">beg</span> <span class="o">=</span> <span class="n">begin</span><span class="p">(</span><span class="n">ia</span><span class="p">);</span><span class="c1">//指向ia首元素的指针
+</span><span class="c1"></span><span class="kt">int</span> <span class="o">*</span><span class="n">last</span> <span class="o">=</span> <span class="n">end</span><span class="p">(</span><span class="n">ia</span><span class="p">)</span><span class="err">；</span><span class="c1">//指向arr尾元素的下一位置的指针
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="https://ws1.sinaimg.cn/large/005Sd4WIgy1g1l32n0td4j310q04ktes.jpg" alt="" /></p>
+
+<h3 id="下标和指针">下标和指针</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">int</span> <span class="n">ia</span> <span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">};</span>
+<span class="kt">int</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ia</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span><span class="c1">//p指向索引为2的元素
+</span><span class="c1"></span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span><span class="c1">//p[1]等价于 *(p+1),就是ia[3]表示的那个元素
+</span><span class="c1"></span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">];</span><span class="c1">//p[-2]是ia[0]表示的那个元素
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>内置的下标运算符所用的索引值不是无符号类型，这一点与vector和string不一样。</p>
+
+<h3 id="c风格字符串">C风格字符串</h3>
+
+<p>c风格字符串是存放在字符数组中并以&rsquo;\0&rsquo;结尾，一般利用指针来操作这些字符串。
+<img src="https://ws1.sinaimg.cn/large/005Sd4WIgy1g1l3jdpt0qj310q092455.jpg" alt="" />
+尽量使用string标准库，c风格字符串若操作不当，容易引发安全漏洞。
+但是某个时刻我们需要必须需要使用c风格的字符串时，string专门提供了一个名为c_str的成员函数。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">str</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">c_str</span><span class="p">();</span><span class="cm">/*此处无法保证c_str函数返回的数组一直有效，后面若s的值被改变可能使该数组失去效果，所以，如果执行完c_str()函数后程序想一直都能使用其返回的数组，最好将该数组重新拷贝一份。
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="使用数组初始化vector对象">使用数组初始化vector对象</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">int</span> <span class="n">int_arr</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">};</span>
+<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ivec</span><span class="p">(</span><span class="n">begin</span><span class="p">(</span><span class="n">int_arr</span><span class="p">),</span><span class="n">end</span><span class="p">(</span><span class="n">int_arr</span><span class="p">));</span><span class="c1">//指明一个范围，其中end返回的是指向尾元素的下一位置。
+</span><span class="c1"></span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">subVec</span><span class="p">(</span><span class="n">int_arr</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">int_arr</span><span class="o">+</span><span class="mi">4</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="多维数组">多维数组</h3>
+
+<p>c++中所谓的多维数组其实指的是数组的数组。
+使用范围for语句处理多维数组时除了最内层的循环外，其他所有循环的控制变量都应该是引用类型。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">int</span> <span class="n">ia</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">4</span><span class="p">];</span><span class="c1">//假设已经赋值
+</span><span class="c1"></span>
+<span class="cm">/*此处的row必须是引用类型，如果不加引用，则编译器会把row初始化为int*的类型，则内层循环试图变量一个int*，肯定是不合法的*/</span>
+<span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="n">row</span> <span class="o">=</span> <span class="n">ia</span><span class="p">)</span>
+    <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="nl">col</span><span class="p">:</span><span class="n">row</span><span class="p">){</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">col</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<h4 id="使用指针来遍历多维数组">使用指针来遍历多维数组</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="n">p</span><span class="o">=</span><span class="n">ia</span><span class="p">;</span><span class="n">p</span><span class="o">!=</span><span class="n">ia</span><span class="o">+</span><span class="mi">3</span><span class="p">;</span><span class="o">++</span><span class="n">p</span><span class="p">){</span>
+    <span class="c1">//q指向4个整数数组的首元素，
+</span><span class="c1"></span>    <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="n">q</span> <span class="o">=</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span><span class="n">q</span> <span class="o">!=</span> <span class="o">*</span><span class="n">p</span><span class="o">+</span><span class="mi">4</span><span class="p">;</span><span class="o">++</span><span class="n">q</span><span class="p">)</span>
+        <span class="n">cout</span><span class="o">&lt;&lt;*</span><span class="n">q</span><span class="o">&lt;&lt;</span><span class="sc">&#39; &#39;</span><span class="p">;</span>
+    <span class="n">cont</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="c1">//类型别名简化多维数组的指针
+</span><span class="c1"></span><span class="k">using</span> <span class="n">int_array</span> <span class="o">=</span> <span class="kt">int</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+<span class="k">for</span><span class="p">(</span><span class="n">int_array</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span><span class="n">ia</span><span class="p">;</span><span class="n">p</span><span class="o">!=</span><span class="n">ia</span><span class="o">+</span><span class="mi">3</span><span class="p">;</span><span class="o">++</span><span class="n">p</span><span class="p">){</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">q</span><span class="o">=*</span><span class="n">p</span><span class="p">;</span><span class="n">q</span><span class="o">!=*</span><span class="n">p</span><span class="o">+</span><span class="mi">4</span><span class="p">;</span><span class="o">++</span><span class="n">q</span><span class="p">)</span>
+        <span class="n">cout</span><span class="o">&lt;&lt;*</span><span class="n">q</span><span class="o">&lt;&lt;</span><span class="sc">&#39; &#39;</span><span class="p">;</span>
+    <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">//begin,end版
+</span><span class="c1"></span><span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="n">p</span> <span class="o">=</span> <span class="n">begin</span><span class="p">(</span><span class="n">ia</span><span class="p">);</span><span class="n">p</span><span class="o">!=</span><span class="n">end</span><span class="p">(</span><span class="n">ia</span><span class="p">);</span><span class="o">++</span><span class="n">p</span><span class="p">){</span>
+    <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="n">q</span> <span class="o">=</span> <span class="n">begin</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">);</span><span class="n">q</span><span class="o">!=</span><span class="n">end</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">);</span><span class="o">++</span><span class="n">q</span><span class="p">)</span>
+        <span class="n">cout</span><span class="o">&lt;&lt;*</span><span class="n">q</span><span class="o">&lt;&lt;</span><span class="sc">&#39; &#39;</span><span class="p">;</span>
+    <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
     </div>
 
     <div class="post-copyright">
