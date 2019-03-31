@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-03-31T13:32:24&#43;08:00" />
 <meta itemprop="dateModified" content="2019-03-31T13:32:24&#43;08:00" />
-<meta itemprop="wordCount" content="3049">
+<meta itemprop="wordCount" content="3042">
 
 
 
@@ -132,7 +132,7 @@
         <div class="post-category">
             <a href="/categories/c&#43;&#43;/"> c&#43;&#43; </a>
             </div>
-          <span class="more-meta"> 3049 words </span>
+          <span class="more-meta"> 3042 words </span>
           <span class="more-meta"> 7 mins read </span>
         
       </div>
@@ -185,19 +185,30 @@
 <h3 id="逻辑和关系运算符">逻辑和关系运算符</h3>
 
 <p><img src="https://ws1.sinaimg.cn/large/005Sd4WIgy1g1lxmgegcgj310e0gcjzj.jpg" alt="" />
-其中逻辑与运算符(&amp;&amp;)和逻辑或(||）运算符是短路求值运算符：
-- 对于逻辑与运算符来说，当且仅当左侧运算对象为真时才对右侧运算对象求值。
-- 对于逻辑或运算符来说，当且仅当左侧运算对象为假时才对右侧运算对象求值。</p>
+其中逻辑与运算符(&amp;&amp;)和逻辑或(||）运算符是短路求值运算符：</p>
+
+<ul>
+<li>对于逻辑与运算符来说，当且仅当左侧运算对象为真时才对右侧运算对象求值。</li>
+<li>对于逻辑或运算符来说，当且仅当左侧运算对象为假时才对右侧运算对象求值。</li>
+</ul>
 
 <h2 id="赋值运算符">赋值运算符</h2>
 
 <ul>
-<li>赋值运算符满足右结合律，即
-<code>cpp
-int a,b,c;
-a = b = c =3;//可以连续赋值
-</code></li>
-
+<li>赋值运算符满足右结合律，即</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">int</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">;</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">=</span> <span class="n">c</span> <span class="o">=</span><span class="mi">3</span><span class="p">;</span><span class="c1">//可以连续赋值
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
 <li><p>赋值运算优先级较低，所以在条件语句中，赋值部分通常加上括号，如：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -280,13 +291,16 @@ grade&lt;60为真则取fail，为假则取pass。条件运算符的优先级太�
 sizeof (type)<br />
 sizeof expr
 第二种形式中，sizeof返回的是表达式结果类型的大小，并不实际计算其运算对象的值。
-sizeof运算符的结果部分地依赖于其作用的类型：
-- 对char或者类型为char的表达式执行sizeof运算，结果得1
-- 对引用类型执行sizeof运算得到被引用对象所占空间的大小。
-- 对指针执行sizeof运算得到指针本身所占空间的大小
-- 对解引用指针执行sizeof运算得到指针指向的对象所占空间的大小，指针不需有效。
-- 对数组执行sizeof运算得到整个数组所占空间的大小，等价于对数组中所有元素各执行一次sizeof运算并将所得结果求和。注意，sizeof运算不会把数组转换成指针来处理。
-- 对string和vector对象执行sizeof运算只返回该类型固定部分的大小，不会计算对象中的元素占用了多少空间。</p>
+sizeof运算符的结果部分地依赖于其作用的类型：</p>
+
+<ul>
+<li>对char或者类型为char的表达式执行sizeof运算，结果得1</li>
+<li>对引用类型执行sizeof运算得到被引用对象所占空间的大小。</li>
+<li>对指针执行sizeof运算得到指针本身所占空间的大小</li>
+<li>对解引用指针执行sizeof运算得到指针指向的对象所占空间的大小，指针不需有效。</li>
+<li>对数组执行sizeof运算得到整个数组所占空间的大小，等价于对数组中所有元素各执行一次sizeof运算并将所得结果求和。注意，sizeof运算不会把数组转换成指针来处理。</li>
+<li>对string和vector对象执行sizeof运算只返回该类型固定部分的大小，不会计算对象中的元素占用了多少空间。</li>
+</ul>
 
 <h2 id="逗号运算符">逗号运算符</h2>
 
