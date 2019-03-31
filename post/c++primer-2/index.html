@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-03-29T11:56:35&#43;08:00" />
 <meta itemprop="dateModified" content="2019-03-29T11:56:35&#43;08:00" />
-<meta itemprop="wordCount" content="4071">
+<meta itemprop="wordCount" content="4416">
 
 
 
@@ -132,7 +132,7 @@
         <div class="post-category">
             <a href="/categories/c&#43;&#43;/"> c&#43;&#43; </a>
             </div>
-          <span class="more-meta"> 4071 words </span>
+          <span class="more-meta"> 4416 words </span>
           <span class="more-meta"> 9 mins read </span>
         
       </div>
@@ -469,20 +469,35 @@
 
 <h3 id="指针与数组的关系">指针与数组的关系</h3>
 
-<p>在使用数组的时候编译器一般会把它转换成指针，数组名就是常量指针，它的值不变指向的是数组中第一个元素的位置。
+<p>在使用数组的时候编译器一般会把它转换成指针，数组名就是指针常量，它的值不变指向的是数组中第一个元素的位置。
 当auto作用于数组名时，得到的是一个指针</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
 </span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">int</span> <span class="n">a</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">};</span>
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">int</span> <span class="n">a</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">};</span>
 <span class="k">auto</span> <span class="nf">b</span><span class="p">(</span><span class="n">a</span><span class="p">);</span><span class="c1">//ia2是一个整型指针，指向ia的第一个元素 
+</span><span class="c1"></span><span class="kt">int</span> <span class="o">*</span><span class="n">p</span> <span class="o">=&amp;</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">p</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span><span class="c1">//地址0x7ffee580fb20
+</span><span class="c1"></span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">a</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span><span class="c1">//地址0x7ffee580fb20
+</span><span class="c1"></span><span class="n">cout</span><span class="o">&lt;&lt;&amp;</span><span class="n">a</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span><span class="c1">//地址0x7ffee580fb20
+</span><span class="c1"></span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">p</span><span class="o">+</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span><span class="c1">//地址0x7ffee580fb24
+</span><span class="c1"></span><span class="n">cout</span><span class="o">&lt;&lt;&amp;</span><span class="n">a</span><span class="o">+</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span><span class="c1">//地址0x7ffee580fb3c
 </span></code></pre></td></tr></table>
 </div>
 </div>
-<p>当decltype作用于数组名时，得到的类型是一个数组。</p>
+<p>从中我们可以知道，对于数组名有三种特殊情况：
+- sizeof(a)，得到的是大小是整个数组的大小
+- &amp;a,对数组名取地址，得到的是指向整个数组的指针，此时&amp;a+1，则加上了整个数组大小的字节
+- 当decltype作用于数组名时，得到的类型是一个数组。</p>
 
 <h3 id="标准库函数begin和end">标准库函数begin和end</h3>
 
@@ -648,7 +663,11 @@
           <a href="/tags/c&#43;&#43;/">c&#43;&#43;</a>
           </div>
       <nav class="post-nav">
-        
+        <a class="prev" href="/post/c&#43;&#43;primer-3/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">C&#43;&#43;primer学习笔记(三)</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
         <a class="next" href="/post/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8hugo%E5%92%8Cgithub%E6%9D%A5%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E8%BF%87%E7%A8%8B/">
             <span class="next-text nav-default">记一次使用Hugo和Github来搭建个人博客过程</span>
             <span class="next-text nav-mobile">Next</span>

@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>C&#43;&#43;primer学习笔记(三) - JackyLove的小窝</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="JackyLove" /><meta name="description" content="运算符 1 2 3 if(i&amp;lt;j&amp;lt;k);//此语句首先会将i和j做比较，其返回的布尔值再作为第二个&amp;lt;运算符的左侧运算对象。 所以要实" /><meta name="keywords" content="Hugo, code, linux, c&#43;&#43;, python, go, javascript" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.54.0 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://www.jackylove.me/post/c&#43;&#43;primer-3/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="C&#43;&#43;primer学习笔记(三)" />
+<meta property="og:description" content="运算符 1 2 3 if(i&lt;j&lt;k);//此语句首先会将i和j做比较，其返回的布尔值再作为第二个&lt;运算符的左侧运算对象。 所以要实" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.jackylove.me/post/c&#43;&#43;primer-3/" />
+<meta property="article:published_time" content="2019-03-31T13:32:24&#43;08:00"/>
+<meta property="article:modified_time" content="2019-03-31T13:32:24&#43;08:00"/>
+
+<meta itemprop="name" content="C&#43;&#43;primer学习笔记(三)">
+<meta itemprop="description" content="运算符 1 2 3 if(i&lt;j&lt;k);//此语句首先会将i和j做比较，其返回的布尔值再作为第二个&lt;运算符的左侧运算对象。 所以要实">
+
+
+<meta itemprop="datePublished" content="2019-03-31T13:32:24&#43;08:00" />
+<meta itemprop="dateModified" content="2019-03-31T13:32:24&#43;08:00" />
+<meta itemprop="wordCount" content="1976">
+
+
+
+<meta itemprop="keywords" content="c&#43;&#43;," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="C&#43;&#43;primer学习笔记(三)"/>
+<meta name="twitter:description" content="运算符 1 2 3 if(i&lt;j&lt;k);//此语句首先会将i和j做比较，其返回的布尔值再作为第二个&lt;运算符的左侧运算对象。 所以要实"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">聚散流沙</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">聚散流沙</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">C&#43;&#43;primer学习笔记(三)</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-03-31 </span>
+        <div class="post-category">
+            <a href="/categories/c&#43;&#43;/"> c&#43;&#43; </a>
+            </div>
+          <span class="more-meta"> 1976 words </span>
+          <span class="more-meta"> 4 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#运算符">运算符</a>
+<ul>
+<li>
+<ul>
+<li><a href="#成员访问运算符">成员访问运算符</a></li>
+<li><a href="#隐式类型转换">隐式类型转换</a></li>
+<li><a href="#显示转换">显示转换</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="运算符">运算符</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="o">&lt;</span><span class="n">j</span><span class="o">&lt;</span><span class="n">k</span><span class="p">);</span><span class="c1">//此语句首先会将i和j做比较，其返回的布尔值再作为第二个&lt;运算符的左侧运算对象。
+</span><span class="c1"></span><span class="err">所以要实现我们的目的应该使用</span>
+<span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="o">&lt;</span><span class="n">j</span><span class="o">&amp;&amp;</span><span class="n">j</span><span class="o">&lt;</span><span class="n">k</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>如果想测试一个算术对象或者指针对象的真值,最直接的方法就是将其作为if条件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">if</span><span class="p">(</span><span class="n">val</span><span class="p">);</span><span class="c1">//如果val是任意的非0值，条件为真
+</span><span class="c1"></span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">val</span><span class="p">);</span><span class="c1">//如果val是0，条件为真
+</span><span class="c1"></span><span class="err">有时我们试图将上面的真值测试写成如下形式：</span>
+<span class="k">if</span><span class="err">（</span><span class="n">val</span><span class="o">==</span><span class="nb">true</span><span class="err">）</span><span class="c1">//只有当val等于1时条件才为真，这是因为，在进行比较之前会首先把true转换成val的类型，即ture换成1，false换成0
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>进行比较运算时除非比较的对象是布尔类型,否则不要使用布尔字面值true和false作为运算对象。</p>
+
+<p>建议：除非必须，否则不用递增递减运算符的后置版本</p>
+
+<h3 id="成员访问运算符">成员访问运算符</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">ptr</span><span class="o">-&gt;</span><span class="n">mem等价于</span><span class="p">(</span><span class="o">*</span><span class="n">ptr</span><span class="p">).</span><span class="n">mem</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="隐式类型转换">隐式类型转换</h3>
+
+<p>数组转换成指针：在大多数用到数组的表达式中,数组自动转换成指向数组首元素的指针。当数组被用作decltype关键字的参数，或者作为取地址符（&amp;）、sizeof及typeid等运算符的运算对象时，上述转换不会发生。用一个引用来初始化数组时，上述转换也不会发生。</p>
+
+<p>指针的转换：C++还规定了几种其它的指针转换方式，包括常量整数值0或者字面值nullptr能转换成任意指针类型；指向任意非常量的指针能转换成void*；指向任意对象的指针能转换成const void*。</p>
+
+<h3 id="显示转换">显示转换</h3>
+
+<p>强制类型转换：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">slope</span> <span class="o">=</span> <span class="n">i</span><span class="o">/</span><span class="n">j</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>注意</strong>:虽然有时不得不使用强制类型转换，但这种方法本质上是非常危险的。</p>
+
+<p>命名的强制类型转换：cast-name&lt;type&gt;(expression);</p>
+
+<p>其中，type是转换的目标类型而expression是要转换的值。如果type是引用类型，则结果是左值。cast-name是static_cast、dynamic_cast 、const_cast和reinterpret_cast中的一种。</p>
+
+<p><strong>static_cast：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">任何具有明确定义的类型转换,只要不包含底层const,都可以使用static_cast。</pre></td></tr></table>
+</div>
+</div>
+<p>例如，通过将一个运算对象强制转换成double类型就能使表达式执行浮点数除法；</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">double</span> <span class="n">slope</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">/</span><span class="n">i</span><span class="p">;</span>
+<span class="kt">void</span> <span class="o">*</span><span class="n">P</span><span class="o">=&amp;</span><span class="n">d</span><span class="p">;</span><span class="c1">//正确，任何非常量对象的地址都能存入void*
+</span><span class="c1"></span><span class="kt">double</span> <span class="o">*</span><span class="n">dp</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">p</span><span class="p">);</span><span class="c1">//正确，将void*转换回初始的指针类型，转换应确保转换后所得的类型就是指针所指的类型。否则将产生未定义的后果。
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>const_cast:</strong></p>
+
+<p>const_cast只能改变运算对象的底层const</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">pc</span><span class="p">;</span>
+<span class="kt">char</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="k">const_cast</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">pc</span><span class="p">);</span><span class="c1">//正确,但是通过p写值是未定义的行为
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>注：对于将常量对象转换成非常量对象的行为，我们一本称为“去掉const性质&rdquo;。一旦我们去掉了某个对象的const性质，编译器就不再阻止我们对该对象进行写操作了。如果对象本身不是一个常量，使用强制类型转换获得写权限是合法的行为。然而如果对象是一个常量，再使用const_cast执行写操作就会产生未定义的后果。只有const_cast能改变表达式的常量属性，使用其他形式的命名强制类型转换改变表达式的常量属性都将引发编译器错误。同样的，也不能用const_cast改变表达式的类型：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">string</span> <span class="n">s</span><span class="o">=</span><span class="s">&#34;hello&#34;</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">cp</span><span class="o">=&amp;</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="kt">char</span> <span class="o">*</span><span class="n">q</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">cp</span><span class="p">);</span>
+<span class="k">static_cast</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="n">cp</span><span class="p">);</span><span class="c1">//正确：字符串字面值转换成string类型
+</span><span class="c1"></span><span class="k">const_cast</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="n">cp</span><span class="p">);</span><span class="c1">//错误:const_cast只改变常量属性
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>const_cast常常用于有函数重载的上下文中。</p>
+
+<p><strong>reinterpret_cast:</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">reinterpret_cast通常为运算对象的位模式提供较低层次上的重新解释。举个例子，假设有如下的转换</pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">int</span> <span class="o">*</span><span class="n">ip</span><span class="p">;</span>
+<span class="kt">char</span> <span class="o">*</span><span class="n">pc</span> <span class="o">=</span> <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">ip</span><span class="p">);</span><span class="c1">//我们必须牢记pc所指的真实对象是以恶搞int而非字符，如果把pc当成普通的字符指针使用就可能在运行时发生错误。例如:
+</span><span class="c1"></span><span class="n">string</span> <span class="nf">str</span><span class="p">(</span><span class="n">pc</span><span class="p">);</span><span class="c1">//将会导致异常的运行时行为。使用reinterpret——cast是非常危险的。用pc初始化str的例子很好地证明了这一点。编译器无法知道pc实际指向的是int的指针。
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>旧式的强制类型转换</p>
+
+<p>在早期版本的c++语言中，显式地进行强制类型转换包含两种形式：</p>
+
+<p>type(expr);//函数形式的强制类型转换</p>
+
+<p>(type) expr;//c语言风格的强制类型转换</p>
+
+<p>根据所涉及的类型不同，旧式的强制类型转换分别具有与const_cast、static_cast或reinterpret_cast相似的功能。如果替换不合法，则旧式强制类型转换执行与reinterpret_cast类似的功能：</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">JackyLove</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2019-03-31
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/c&#43;&#43;/">c&#43;&#43;</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/c&#43;&#43;primer-2/">
+            <span class="next-text nav-default">C&#43;&#43;primer学习笔记(二)</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  <span id="/post/c&#43;&#43;primer-3/" class="leancloud_visitors" data-flag-title="C&#43;&#43;primer学习笔记(三)">
+    <span class="post-meta-item-text">文章阅读量 </span>
+    <span class="leancloud-visitors-count">1000000</span>
+    <p></p>
+  </span>
+  <div id="vcomments"></div>
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+  <script type="text/javascript">
+    new Valine({
+        el: '#vcomments' ,
+        appId: 'xPwmFUoHVqraVIVlAt2Xch9M-gzGzoHsz',
+        appKey: 'VP1APko2CdGfydmf7xOplDur',
+        notify:  false , 
+        verify:  false , 
+        avatar:'', 
+        placeholder: '请说点什么吧...',
+        visitor:  true 
+    });
+  </script>
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://stackoverflow.com/users/8640064/jackylove" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/jacklov3" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.instagram.com/jacky1ove/" class="iconfont icon-instagram" title="instagram"></a>
+  <a href="https://www.jackylove.me/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">JackyLove</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
