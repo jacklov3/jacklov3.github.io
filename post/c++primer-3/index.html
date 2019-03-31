@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="JackyLove" /><meta name="description" content="运算符 1 2 3 if(i&amp;lt;j&amp;lt;k);//此语句首先会将i和j做比较，其返回的布尔值再作为第二个&amp;lt;运算符的左侧运算对象。 所以要实" /><meta name="keywords" content="Hugo, code, linux, c&#43;&#43;, python, go, javascript" />
+<meta name="author" content="JackyLove" /><meta name="description" content="运算符 没啥好说的，就是&#43;-/&amp;amp;=、==等。 左值和右值 简单归纳：当一个对象被用作右值的时候，用的是对象的值（内存）；当对象被用作左值的" /><meta name="keywords" content="Hugo, code, linux, c&#43;&#43;, python, go, javascript" />
 
 
 
@@ -39,26 +39,26 @@
 
 
 <meta property="og:title" content="C&#43;&#43;primer学习笔记(三)" />
-<meta property="og:description" content="运算符 1 2 3 if(i&lt;j&lt;k);//此语句首先会将i和j做比较，其返回的布尔值再作为第二个&lt;运算符的左侧运算对象。 所以要实" />
+<meta property="og:description" content="运算符 没啥好说的，就是&#43;-/&amp;=、==等。 左值和右值 简单归纳：当一个对象被用作右值的时候，用的是对象的值（内存）；当对象被用作左值的" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://www.jackylove.me/post/c&#43;&#43;primer-3/" />
 <meta property="article:published_time" content="2019-03-31T13:32:24&#43;08:00"/>
 <meta property="article:modified_time" content="2019-03-31T13:32:24&#43;08:00"/>
 
 <meta itemprop="name" content="C&#43;&#43;primer学习笔记(三)">
-<meta itemprop="description" content="运算符 1 2 3 if(i&lt;j&lt;k);//此语句首先会将i和j做比较，其返回的布尔值再作为第二个&lt;运算符的左侧运算对象。 所以要实">
+<meta itemprop="description" content="运算符 没啥好说的，就是&#43;-/&amp;=、==等。 左值和右值 简单归纳：当一个对象被用作右值的时候，用的是对象的值（内存）；当对象被用作左值的">
 
 
 <meta itemprop="datePublished" content="2019-03-31T13:32:24&#43;08:00" />
 <meta itemprop="dateModified" content="2019-03-31T13:32:24&#43;08:00" />
-<meta itemprop="wordCount" content="1976">
+<meta itemprop="wordCount" content="2746">
 
 
 
 <meta itemprop="keywords" content="c&#43;&#43;," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="C&#43;&#43;primer学习笔记(三)"/>
-<meta name="twitter:description" content="运算符 1 2 3 if(i&lt;j&lt;k);//此语句首先会将i和j做比较，其返回的布尔值再作为第二个&lt;运算符的左侧运算对象。 所以要实"/>
+<meta name="twitter:description" content="运算符 没啥好说的，就是&#43;-/&amp;=、==等。 左值和右值 简单归纳：当一个对象被用作右值的时候，用的是对象的值（内存）；当对象被用作左值的"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -132,8 +132,8 @@
         <div class="post-category">
             <a href="/categories/c&#43;&#43;/"> c&#43;&#43; </a>
             </div>
-          <span class="more-meta"> 1976 words </span>
-          <span class="more-meta"> 4 mins read </span>
+          <span class="more-meta"> 2746 words </span>
+          <span class="more-meta"> 6 mins read </span>
         
       </div>
     </header>
@@ -145,9 +145,20 @@
 <ul>
 <li><a href="#运算符">运算符</a>
 <ul>
-<li>
+<li><a href="#左值和右值">左值和右值</a></li>
+<li><a href="#运算符优先级">运算符优先级</a>
 <ul>
+<li><a href="#逻辑和关系运算符">逻辑和关系运算符</a></li>
+</ul></li>
+<li><a href="#赋值运算符">赋值运算符</a></li>
+<li><a href="#递增递减运算符">递增递减运算符</a></li>
 <li><a href="#成员访问运算符">成员访问运算符</a></li>
+<li><a href="#条件运算符">条件运算符</a></li>
+<li><a href="#位运算符">位运算符</a></li>
+<li><a href="#sizeof运算符">sizeof运算符</a></li>
+<li><a href="#逗号运算符">逗号运算符</a></li>
+<li><a href="#类型转换">类型转换</a>
+<ul>
 <li><a href="#隐式类型转换">隐式类型转换</a></li>
 <li><a href="#显示转换">显示转换</a></li>
 </ul></li>
@@ -160,29 +171,67 @@
       
 
 <h1 id="运算符">运算符</h1>
+
+<p>没啥好说的，就是+-<em>/&amp;</em>=、==等。</p>
+
+<h2 id="左值和右值">左值和右值</h2>
+
+<p>简单归纳：当一个对象被用作右值的时候，用的是对象的值（内存）；当对象被用作左值的时候，用的是对象的身份（在内存中的位置）。假设p的类型是一个int*，则decltype如果作用于一个表达式时如decltype(*p)得到的是一个引用类型，而decltype(&amp;p)的结果是一个int **</p>
+
+<h2 id="运算符优先级">运算符优先级</h2>
+
+<p><img src="https://ws1.sinaimg.cn/large/005Sd4WIgy1g1lxl64xszj310q0as4ej.jpg" alt="" /></p>
+
+<h3 id="逻辑和关系运算符">逻辑和关系运算符</h3>
+
+<p><img src="https://ws1.sinaimg.cn/large/005Sd4WIgy1g1lxmgegcgj310e0gcjzj.jpg" alt="" />
+其中逻辑与运算符(&amp;&amp;)和逻辑或(||）运算符是短路求值运算符：
+- 对于逻辑与运算符来说，当且仅当左侧运算对象为真时才对右侧运算对象求值。
+- 对于逻辑或运算符来说，当且仅当左侧运算对象为假时才对右侧运算对象求值。</p>
+
+<h2 id="赋值运算符">赋值运算符</h2>
+
+<ul>
+<li>赋值运算符满足右结合律，即
+<code>cpp
+int a,b,c;
+a = b = c =3;//可以连续赋值
+</code></li>
+
+<li><p>赋值运算优先级较低，所以在条件语句中，赋值部分通常加上括号，如：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="o">&lt;</span><span class="n">j</span><span class="o">&lt;</span><span class="n">k</span><span class="p">);</span><span class="c1">//此语句首先会将i和j做比较，其返回的布尔值再作为第二个&lt;运算符的左侧运算对象。
-</span><span class="c1"></span><span class="err">所以要实现我们的目的应该使用</span>
-<span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="o">&lt;</span><span class="n">j</span><span class="o">&amp;&amp;</span><span class="n">j</span><span class="o">&lt;</span><span class="n">k</span><span class="p">)</span>
-</code></pre></td></tr></table>
-</div>
-</div>
-<p>如果想测试一个算术对象或者指针对象的真值,最直接的方法就是将其作为if条件</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">if</span><span class="p">(</span><span class="n">val</span><span class="p">);</span><span class="c1">//如果val是任意的非0值，条件为真
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+<span class="k">while</span><span class="p">((</span><span class="n">i</span><span class="o">=</span><span class="n">get_value</span><span class="p">())</span><span class="o">!=</span><span class="mi">42</span><span class="p">){</span>
+<span class="c1">//anything
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="递增递减运算符">递增递减运算符</h2>
+
+<p>分前置版本和后置版本。前置版本先加1，然后将改变后的对象作为求值结果，后置版本也会将运算对象加1，但是求值结果是运算对象改变之前那个值的副本。</p></li>
+</ul>
+
+<p><img src="https://ws1.sinaimg.cn/large/005Sd4WIly1g1ly0wv1zrj310o0c8k9p.jpg" alt="" />
+<img src="https://ws1.sinaimg.cn/large/005Sd4WIgy1g1ly4nq3bwj310o0fme1k.jpg" alt="" /></p>
+
+<p>如果想测试一个算术对象或者指针对象的真值,最直接的方法就是将其作为if条件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">if</span><span class="p">(</span><span class="n">val</span><span class="p">);</span><span class="c1">//如果val是任意的非0值，条件为真
 </span><span class="c1"></span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">val</span><span class="p">);</span><span class="c1">//如果val是0，条件为真
 </span><span class="c1"></span><span class="err">有时我们试图将上面的真值测试写成如下形式：</span>
 <span class="k">if</span><span class="err">（</span><span class="n">val</span><span class="o">==</span><span class="nb">true</span><span class="err">）</span><span class="c1">//只有当val等于1时条件才为真，这是因为，在进行比较之前会首先把true转换成val的类型，即ture换成1，false换成0
@@ -191,18 +240,54 @@
 </div>
 <p>进行比较运算时除非比较的对象是布尔类型,否则不要使用布尔字面值true和false作为运算对象。</p>
 
-<p>建议：除非必须，否则不用递增递减运算符的后置版本</p>
-
-<h3 id="成员访问运算符">成员访问运算符</h3>
+<h2 id="成员访问运算符">成员访问运算符</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">ptr</span><span class="o">-&gt;</span><span class="n">mem等价于</span><span class="p">(</span><span class="o">*</span><span class="n">ptr</span><span class="p">).</span><span class="n">mem</span><span class="p">;</span>
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">ptr</span><span class="o">-&gt;</span><span class="n">mem等价于</span><span class="p">(</span><span class="o">*</span><span class="n">ptr</span><span class="p">).</span><span class="n">mem</span><span class="p">;</span>
 </code></pre></td></tr></table>
 </div>
 </div>
+<h2 id="条件运算符">条件运算符</h2>
+
+<p>cond ? expr1 : expr2<br />
+例如：
+string finalgrade = (grade&lt;60)?&ldquo;fail&rdquo;:&ldquo;pass&rdquo;;<br />
+grade&lt;60为真则取fail，为假则取pass。条件运算符的优先级太低，可能导致如下几种情况</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="p">((</span><span class="n">grade</span><span class="o">&lt;</span><span class="mi">60</span><span class="p">)</span><span class="o">?</span> <span class="s">&#34;fail : &#34;</span><span class="n">pass</span><span class="s">&#34;);//输出pass或者fail</span><span class="err">
+</span><span class="err"></span><span class="s">cout &lt;&lt; (grade&lt;60)? &#34;</span><span class="nl">fail</span> <span class="p">:</span> <span class="s">&#34;pass&#34;</span><span class="p">;</span><span class="c1">//输出1或者0！
+</span><span class="c1"></span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="p">((</span><span class="n">grade</span><span class="o">&lt;</span><span class="mi">60</span><span class="p">)</span><span class="o">?</span> <span class="s">&#34;fail : &#34;</span><span class="n">pass</span><span class="s">&#34;);//错误：试图比较cout和60</span><span class="err">
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="位运算符">位运算符</h2>
+
+<p><img src="https://ws1.sinaimg.cn/large/005Sd4WIgy1g1lyohlsi8j31040ceahh.jpg" alt="" />
+异或相异为1相同为0</p>
+
+<h2 id="sizeof运算符">sizeof运算符</h2>
+
+<p>sizeof运算符返回一条表达式或一个类型名字所占的字节数，返回的是值是一个size_t类型。运算符的运算对象有两种形式：<br />
+sizeof (type)<br />
+sizeof expr
+第二种形式中，sizeof返回的是表达式结果类型的大小，并不实际计算其运算对象的值。</p>
+
+<h2 id="逗号运算符">逗号运算符</h2>
+
+<p>逗号运算符含有两个运算对象，按照从左到右的顺序依次求值。<br />
+对于逗号运算符，首先对左侧的表达式求值，然后将求值结果丢弃掉，逗号运算符真正的结果是右侧表达式的值。如果右侧运算对象是左值，那么最终的求值结果也是左值。</p>
+
+<h2 id="类型转换">类型转换</h2>
+
 <h3 id="隐式类型转换">隐式类型转换</h3>
 
 <p>数组转换成指针：在大多数用到数组的表达式中,数组自动转换成指向数组首元素的指针。当数组被用作decltype关键字的参数，或者作为取地址符（&amp;）、sizeof及typeid等运算符的运算对象时，上述转换不会发生。用一个引用来初始化数组时，上述转换也不会发生。</p>
@@ -214,11 +299,11 @@
 <p>强制类型转换：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">;</span>
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">;</span>
 <span class="kt">double</span> <span class="n">slope</span> <span class="o">=</span> <span class="n">i</span><span class="o">/</span><span class="n">j</span><span class="p">;</span>
 </code></pre></td></tr></table>
 </div>
@@ -230,23 +315,17 @@
 <p>其中，type是转换的目标类型而expression是要转换的值。如果type是引用类型，则结果是左值。cast-name是static_cast、dynamic_cast 、const_cast和reinterpret_cast中的一种。</p>
 
 <p><strong>static_cast：</strong></p>
+
+<p>任何具有明确定义的类型转换,只要不包含底层const,都可以使用static_cast。
+例如，通过将一个运算对象强制转换成double类型就能使表达式执行浮点数除法；</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">任何具有明确定义的类型转换,只要不包含底层const,都可以使用static_cast。</pre></td></tr></table>
-</div>
-</div>
-<p>例如，通过将一个运算对象强制转换成double类型就能使表达式执行浮点数除法；</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">double</span> <span class="n">slope</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">/</span><span class="n">i</span><span class="p">;</span>
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">double</span> <span class="n">slope</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">/</span><span class="n">i</span><span class="p">;</span>
 <span class="kt">void</span> <span class="o">*</span><span class="n">P</span><span class="o">=&amp;</span><span class="n">d</span><span class="p">;</span><span class="c1">//正确，任何非常量对象的地址都能存入void*
 </span><span class="c1"></span><span class="kt">double</span> <span class="o">*</span><span class="n">dp</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">p</span><span class="p">);</span><span class="c1">//正确，将void*转换回初始的指针类型，转换应确保转换后所得的类型就是指针所指的类型。否则将产生未定义的后果。
 </span></code></pre></td></tr></table>
@@ -257,11 +336,11 @@
 <p>const_cast只能改变运算对象的底层const</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">pc</span><span class="p">;</span>
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">pc</span><span class="p">;</span>
 <span class="kt">char</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="k">const_cast</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">pc</span><span class="p">);</span><span class="c1">//正确,但是通过p写值是未定义的行为
 </span></code></pre></td></tr></table>
 </div>
@@ -269,14 +348,14 @@
 <p>注：对于将常量对象转换成非常量对象的行为，我们一本称为“去掉const性质&rdquo;。一旦我们去掉了某个对象的const性质，编译器就不再阻止我们对该对象进行写操作了。如果对象本身不是一个常量，使用强制类型转换获得写权限是合法的行为。然而如果对象是一个常量，再使用const_cast执行写操作就会产生未定义的后果。只有const_cast能改变表达式的常量属性，使用其他形式的命名强制类型转换改变表达式的常量属性都将引发编译器错误。同样的，也不能用const_cast改变表达式的类型：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">string</span> <span class="n">s</span><span class="o">=</span><span class="s">&#34;hello&#34;</span><span class="p">;</span>
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">string</span> <span class="n">s</span><span class="o">=</span><span class="s">&#34;hello&#34;</span><span class="p">;</span>
 <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">cp</span><span class="o">=&amp;</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
 <span class="kt">char</span> <span class="o">*</span><span class="n">q</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">cp</span><span class="p">);</span>
 <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="n">cp</span><span class="p">);</span><span class="c1">//正确：字符串字面值转换成string类型
@@ -287,27 +366,23 @@
 <p>const_cast常常用于有函数重载的上下文中。</p>
 
 <p><strong>reinterpret_cast:</strong></p>
+
+<p>reinterpret_cast通常为运算对象的位模式提供较低层次上的重新解释。举个例子，假设有如下的转换</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">reinterpret_cast通常为运算对象的位模式提供较低层次上的重新解释。举个例子，假设有如下的转换</pre></td></tr></table>
-</div>
-</div><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">int</span> <span class="o">*</span><span class="n">ip</span><span class="p">;</span>
-<span class="kt">char</span> <span class="o">*</span><span class="n">pc</span> <span class="o">=</span> <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">ip</span><span class="p">);</span><span class="c1">//我们必须牢记pc所指的真实对象是以恶搞int而非字符，如果把pc当成普通的字符指针使用就可能在运行时发生错误。例如:
-</span><span class="c1"></span><span class="n">string</span> <span class="nf">str</span><span class="p">(</span><span class="n">pc</span><span class="p">);</span><span class="c1">//将会导致异常的运行时行为。使用reinterpret——cast是非常危险的。用pc初始化str的例子很好地证明了这一点。编译器无法知道pc实际指向的是int的指针。
-</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">int</span> <span class="o">*</span><span class="n">ip</span><span class="p">;</span>
+<span class="kt">char</span> <span class="o">*</span><span class="n">pc</span> <span class="o">=</span> <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">ip</span><span class="p">);</span><span class="cm">/*我们必须牢记pc所指的真实对象是int而非字符，如果把pc当成普通的字符指针使用就可能在运行时发生错误。例如:*/</span>
+<span class="n">string</span> <span class="nf">str</span><span class="p">(</span><span class="n">pc</span><span class="p">);</span><span class="cm">/*将会导致异常的运行时行为。使用reinterpret——cast是非常危险的。用pc初始化str的例子很好地证明了这一点。编译器无法知道pc实际指向的是int的指针。*/</span>
+</code></pre></td></tr></table>
 </div>
 </div>
-<p>旧式的强制类型转换</p>
+<p><img src="https://ws1.sinaimg.cn/large/005Sd4WIly1g1lzei4dfkj310m0d6qlr.jpg" alt="" />
+旧式的强制类型转换</p>
 
 <p>在早期版本的c++语言中，显式地进行强制类型转换包含两种形式：</p>
 
@@ -315,7 +390,7 @@
 
 <p>(type) expr;//c语言风格的强制类型转换</p>
 
-<p>根据所涉及的类型不同，旧式的强制类型转换分别具有与const_cast、static_cast或reinterpret_cast相似的功能。如果替换不合法，则旧式强制类型转换执行与reinterpret_cast类似的功能：</p>
+<p>根据所涉及的类型不同，旧式的强制类型转换分别具有与const_cast、static_cast或reinterpret_cast相似的功能。如果替换不合法，则旧式强制类型转换执行与reinterpret_cast类似的功能。</p>
 
     </div>
 

@@ -17,7 +17,7 @@
       <pubDate>Sun, 31 Mar 2019 13:32:24 +0800</pubDate>
       
       <guid>https://www.jackylove.me/post/c&#43;&#43;primer-3/</guid>
-      <description>运算符 1 2 3 if(i&amp;lt;j&amp;lt;k);//此语句首先会将i和j做比较，其返回的布尔值再作为第二个&amp;lt;运算符的左侧运算对象。 所以要实</description>
+      <description>运算符 没啥好说的，就是+-/&amp;amp;=、==等。 左值和右值 简单归纳：当一个对象被用作右值的时候，用的是对象的值（内存）；当对象被用作左值的</description>
     </item>
     
     <item>
