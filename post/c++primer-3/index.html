@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-03-31T13:32:24&#43;08:00" />
 <meta itemprop="dateModified" content="2019-03-31T13:32:24&#43;08:00" />
-<meta itemprop="wordCount" content="2746">
+<meta itemprop="wordCount" content="3049">
 
 
 
@@ -132,8 +132,8 @@
         <div class="post-category">
             <a href="/categories/c&#43;&#43;/"> c&#43;&#43; </a>
             </div>
-          <span class="more-meta"> 2746 words </span>
-          <span class="more-meta"> 6 mins read </span>
+          <span class="more-meta"> 3049 words </span>
+          <span class="more-meta"> 7 mins read </span>
         
       </div>
     </header>
@@ -279,7 +279,14 @@ grade&lt;60为真则取fail，为假则取pass。条件运算符的优先级太�
 <p>sizeof运算符返回一条表达式或一个类型名字所占的字节数，返回的是值是一个size_t类型。运算符的运算对象有两种形式：<br />
 sizeof (type)<br />
 sizeof expr
-第二种形式中，sizeof返回的是表达式结果类型的大小，并不实际计算其运算对象的值。</p>
+第二种形式中，sizeof返回的是表达式结果类型的大小，并不实际计算其运算对象的值。
+sizeof运算符的结果部分地依赖于其作用的类型：
+- 对char或者类型为char的表达式执行sizeof运算，结果得1
+- 对引用类型执行sizeof运算得到被引用对象所占空间的大小。
+- 对指针执行sizeof运算得到指针本身所占空间的大小
+- 对解引用指针执行sizeof运算得到指针指向的对象所占空间的大小，指针不需有效。
+- 对数组执行sizeof运算得到整个数组所占空间的大小，等价于对数组中所有元素各执行一次sizeof运算并将所得结果求和。注意，sizeof运算不会把数组转换成指针来处理。
+- 对string和vector对象执行sizeof运算只返回该类型固定部分的大小，不会计算对象中的元素占用了多少空间。</p>
 
 <h2 id="逗号运算符">逗号运算符</h2>
 
