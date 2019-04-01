@@ -6,10 +6,19 @@
     <description>Recent content in c&#43;&#43; on JackyLove的小窝</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 31 Mar 2019 13:32:24 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 31 Mar 2019 17:33:53 +0800</lastBuildDate>
     
 	<atom:link href="https://www.jackylove.me/categories/c++/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>C&#43;&#43;primer学习笔记(三)</title>
+      <link>https://www.jackylove.me/post/c&#43;&#43;primer-4/</link>
+      <pubDate>Sun, 31 Mar 2019 17:33:53 +0800</pubDate>
+      
+      <guid>https://www.jackylove.me/post/c&#43;&#43;primer-4/</guid>
+      <description>语句 条件语句 if语句 1 2 3 4 5 6 7 8 9 10 11 12 13 if(condition) statement //if else if(condition) statement else statement2 //if else if嵌套 if(condition) statement else if(condition) statement2 ... switch语句 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 char ch; while(cin &amp;gt;&amp;gt;</description>
+    </item>
     
     <item>
       <title>C&#43;&#43;primer学习笔记(三)</title>

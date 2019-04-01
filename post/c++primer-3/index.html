@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-03-31T13:32:24&#43;08:00" />
 <meta itemprop="dateModified" content="2019-03-31T13:32:24&#43;08:00" />
-<meta itemprop="wordCount" content="3042">
+<meta itemprop="wordCount" content="3039">
 
 
 
@@ -132,7 +132,7 @@
         <div class="post-category">
             <a href="/categories/c&#43;&#43;/"> c&#43;&#43; </a>
             </div>
-          <span class="more-meta"> 3042 words </span>
+          <span class="more-meta"> 3039 words </span>
           <span class="more-meta"> 7 mins read </span>
         
       </div>
@@ -209,26 +209,18 @@
 </div>
 </div>
 <ul>
-<li><p>赋值运算优先级较低，所以在条件语句中，赋值部分通常加上括号，如：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-<span class="k">while</span><span class="p">((</span><span class="n">i</span><span class="o">=</span><span class="n">get_value</span><span class="p">())</span><span class="o">!=</span><span class="mi">42</span><span class="p">){</span>
-<span class="c1">//anything
-</span><span class="c1"></span><span class="p">}</span>
-</code></pre></td></tr></table>
-</div>
-</div>
+<li>赋值运算优先级较低，所以在条件语句中，赋值部分通常加上括号，如：
+<code>cpp
+int i;
+while((i=get_value())!=42){
+//anything
+}
+</code></li>
+</ul>
+
 <h2 id="递增递减运算符">递增递减运算符</h2>
 
-<p>分前置版本和后置版本。前置版本先加1，然后将改变后的对象作为求值结果，后置版本也会将运算对象加1，但是求值结果是运算对象改变之前那个值的副本。</p></li>
-</ul>
+<p>分前置版本和后置版本。前置版本先加1，然后将改变后的对象作为求值结果，后置版本也会将运算对象加1，但是求值结果是运算对象改变之前那个值的副本。</p>
 
 <p><img src="https://ws1.sinaimg.cn/large/005Sd4WIly1g1ly0wv1zrj310o0c8k9p.jpg" alt="" />
 <img src="https://ws1.sinaimg.cn/large/005Sd4WIgy1g1ly4nq3bwj310o0fme1k.jpg" alt="" /></p>
@@ -435,7 +427,11 @@ sizeof运算符的结果部分地依赖于其作用的类型：</p>
           <a href="/tags/c&#43;&#43;/">c&#43;&#43;</a>
           </div>
       <nav class="post-nav">
-        
+        <a class="prev" href="/post/c&#43;&#43;primer-4/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">C&#43;&#43;primer学习笔记(三)</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
         <a class="next" href="/post/c&#43;&#43;primer-2/">
             <span class="next-text nav-default">C&#43;&#43;primer学习笔记(二)</span>
             <span class="next-text nav-mobile">Next</span>
