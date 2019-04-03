@@ -6,10 +6,19 @@
     <description>Recent content in c&#43;&#43; on JackyLove的小窝</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 31 Mar 2019 17:33:53 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 03 Apr 2019 20:30:05 +0800</lastBuildDate>
     
 	<atom:link href="https://www.jackylove.me/categories/c++/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>C&#43;&#43;primer学习笔记(五)</title>
+      <link>https://www.jackylove.me/post/c&#43;&#43;primer-5/</link>
+      <pubDate>Wed, 03 Apr 2019 20:30:05 +0800</pubDate>
+      
+      <guid>https://www.jackylove.me/post/c&#43;&#43;primer-5/</guid>
+      <description>函数 函数是一个命名了的代码块，我们可以通过调用函数来重复使用该段代码，而不用麻烦地敲这些代码。函数可以有0个或多个参数，而且（通常）会产生一</description>
+    </item>
     
     <item>
       <title>C&#43;&#43;primer学习笔记(四)</title>
