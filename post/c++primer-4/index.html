@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-03-31T17:33:53&#43;08:00" />
 <meta itemprop="dateModified" content="2019-03-31T17:33:53&#43;08:00" />
-<meta itemprop="wordCount" content="334">
+<meta itemprop="wordCount" content="1145">
 
 
 
@@ -132,8 +132,8 @@
         <div class="post-category">
             <a href="/categories/c&#43;&#43;/"> c&#43;&#43; </a>
             </div>
-          <span class="more-meta"> 334 words </span>
-          <span class="more-meta"> 1 min read </span>
+          <span class="more-meta"> 1145 words </span>
+          <span class="more-meta"> 3 mins read </span>
         
       </div>
     </header>
@@ -151,6 +151,12 @@
 <li><a href="#switch语句">switch语句</a></li>
 </ul></li>
 <li><a href="#迭代语句">迭代语句</a></li>
+<li><a href="#跳转语句">跳转语句</a></li>
+<li><a href="#try语句块和异常处理">try语句块和异常处理</a>
+<ul>
+<li><a href="#throw表达式">throw表达式</a></li>
+<li><a href="#try语句块">try语句块</a></li>
+</ul></li>
 </ul></li>
 </ul>
 </nav>
@@ -287,6 +293,72 @@
 </code></pre></td></tr></table>
 </div>
 </div>
+<h2 id="跳转语句">跳转语句</h2>
+
+<p>c++语言提供了4种跳转语句：break、continue、goto和return。
+break跳出离它最近的单层循环。
+continue跳过这次循环从下一次循环的头部开始。
+goto无条件跳转到带标签的语句中。（尽量不要使用goto，除非你&hellip;)</p>
+
+<h2 id="try语句块和异常处理">try语句块和异常处理</h2>
+
+<p>异常处理机制为程序中异常检测和异常处理这两部分的协作提供支持。在C++语言中，异常处理包括：</p>
+
+<p><img src="https://ws1.sinaimg.cn/large/005Sd4WIgy1g1po1hw4osj30ze0cyk0f.jpg" alt="" /></p>
+
+<h3 id="throw表达式">throw表达式</h3>
+
+<p>throw表达式包含关键字throw和紧随其后的一个表达式，其中表达式的类型就是抛出的异常类型。throw表达式后面通常紧跟一个分号，从而构成一条表达式语句。比如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">throw</span> <span class="nf">runtime_error</span><span class="p">(</span><span class="s">&#34;Data must....&#34;</span><span class="p">);</span><span class="c1">//在这异常的类似就是runtime_error。
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="try语句块">try语句块</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">try</span><span class="p">{</span>
+    <span class="n">program</span><span class="o">-</span><span class="n">statements</span>
+<span class="p">}</span><span class="k">catch</span><span class="p">(</span><span class="n">exception</span><span class="o">-</span><span class="n">declaration</span><span class="p">){</span>
+    <span class="n">handler</span><span class="o">-</span><span class="n">statements</span>
+<span class="p">}</span><span class="k">catch</span><span class="p">(</span><span class="n">exception</span><span class="o">-</span><span class="n">declaration</span><span class="p">){</span>
+    <span class="n">handler</span><span class="o">-</span><span class="n">statements</span>
+<span class="p">}</span><span class="c1">//...
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>异常抛出与函数调用链相反，是从内向外逐层抛出，若最终没有找到对应的catch，则程序转到terminate的标准库函数。该函数的行为与系统有关，一般情况下，执行该函数将导致程序非正常退出。
+<img src="https://ws1.sinaimg.cn/large/005Sd4WIgy1g1posp4fj8j310u0c4wvq.jpg" alt="" />
+<img src="https://ws1.sinaimg.cn/large/005Sd4WIly1g1poumkl0xj310u0aswsp.jpg" alt="" /></p>
+
+<p>c++标准库定义了一组类，用于报告标准库函数遇到的问题。
+它们分别定义再4个头文件中：
+- exception头文件定义了最通用的异常类exception，它只报告异常的发生，不提供任何额外信息。
+- stdexcept头文件定义了几种常用的异常类。
+- new头文件定义了bad_alloc异常类型。
+- type_info头文件定义了bad_cast异常类型。</p>
+
+<p><img src="https://ws1.sinaimg.cn/large/005Sd4WIgy1g1ppnxtjcqj31060fqak9.jpg" alt="" /></p>
+
+<p>我们只能以默认初始化的方式初始化exception、bad_alloc和bad_cast对象，不允许为这些对象提供初始值。</p>
+
+<p>其它异常类型的行为则恰好相反：应该使用string对象或者C风格字符串初始化这些类型的对象，但是不允许使用默认初始化的方式。当创建此类对象时，必须提供初始化。</p>
+
+<p>异常类型只定义了一个名为what的成员函数，该函数没有任何参数，返回值是一个指向C风格字符串，用于提供关于异常的一些文本信息。</p>
+
     </div>
 
     <div class="post-copyright">
