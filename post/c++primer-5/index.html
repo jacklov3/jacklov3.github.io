@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-04-03T20:30:05&#43;08:00" />
 <meta itemprop="dateModified" content="2019-04-03T20:30:05&#43;08:00" />
-<meta itemprop="wordCount" content="1624">
+<meta itemprop="wordCount" content="2908">
 
 
 
@@ -132,8 +132,8 @@
         <div class="post-category">
             <a href="/categories/c&#43;&#43;/"> c&#43;&#43; </a>
             </div>
-          <span class="more-meta"> 1624 words </span>
-          <span class="more-meta"> 4 mins read </span>
+          <span class="more-meta"> 2908 words </span>
+          <span class="more-meta"> 6 mins read </span>
         
       </div>
     </header>
@@ -160,6 +160,16 @@
 <li><a href="#const形参和实参">const形参和实参</a></li>
 <li><a href="#尽量使用常量引用">尽量使用常量引用</a></li>
 <li><a href="#数组形参">数组形参</a></li>
+<li><a href="#数组引用形参">数组引用形参</a></li>
+<li><a href="#传递多维数组">传递多维数组</a></li>
+<li><a href="#main处理命令行选项">main处理命令行选项</a></li>
+<li><a href="#含有可变形参的函数">含有可变形参的函数</a></li>
+</ul></li>
+<li><a href="#返回类型和return语句">返回类型和return语句</a>
+<ul>
+<li><a href="#有返回值的函数">有返回值的函数</a></li>
+<li><a href="#值是如何被返回的">值是如何被返回的</a></li>
+<li><a href="#不要返回局部对象的引用或指针">不要返回局部对象的引用或指针</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -254,6 +264,197 @@
 <p>把函数不会改变的形参定义为（普通的）引用是一种比较常见的错误，这么做带给函数的调用者一种误导，即函数可以修改它的实参的值。此外，使用引用而非常引用也会限制函数能接受的实参类型。我们不能把const对象、字面值或者需要类型转换的对象传递给普通的引用类型。</p>
 
 <h3 id="数组形参">数组形参</h3>
+
+<p>数组的两个特性：
+-  不允许拷贝数组
+-  使用数组时通常会将其转换成指针</p>
+
+<p>所以我们为函数传递一个数组时，实际上传递的是指向数组首元素的指针。虽然不能传递值，但是我们可以把形参写出类似数组的形式：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span><span class="o">*</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span><span class="p">[]);</span>
+<span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span><span class="p">[</span><span class="mi">10</span><span class="p">]);</span><span class="c1">//这里的10并不一定是确定的数，只表示我们期望数组含有的元素个数
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>因为数组是以指针的形式传递给函数的，所以我们不知道数组的大小，所以我们还提供需要额外的信息，有三种方法：</p>
+
+<ul>
+<li>使用标记指定数组长度</li>
+</ul>
+
+<p>管理数组实参的第一种方法是要求数组本身包含一个结束标记。典型的例子是C风格的字符串。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"> <span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">p</span><span class="p">)</span>
+ <span class="p">{</span>
+     <span class="k">if</span><span class="p">(</span><span class="n">cp</span><span class="p">)</span>
+        <span class="k">while</span><span class="p">(</span><span class="o">*</span><span class="n">cp</span><span class="p">)</span>
+            <span class="n">cout</span><span class="o">&lt;&lt;*</span><span class="n">cp</span><span class="o">++</span><span class="p">;</span>
+ <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>使用标准库规范</li>
+</ul>
+
+<p>管理数组实参的第二种技术是传递指向数组首元素和尾后元素的指针：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"> <span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span> <span class="o">*</span><span class="n">beg</span><span class="p">,</span> <span class="k">const</span> <span class="kt">int</span> <span class="o">*</span><span class="n">end</span><span class="p">)</span>
+ <span class="p">{</span>
+     <span class="k">while</span><span class="p">(</span><span class="n">beg</span><span class="o">!=</span><span class="n">end</span><span class="p">)</span>
+        <span class="n">cout</span><span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">beg</span><span class="o">++</span> <span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+ <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>显式传递一个表示数组大小的形参</li>
+</ul>
+
+<p>第三种管理数组实参的方法是专门传递一个表示数组大小的参数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span> <span class="o">*</span><span class="n">ia</span><span class="p">,</span><span class="n">size_t</span> <span class="n">size</span><span class="p">){</span>
+    <span class="k">for</span><span class="p">(</span><span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">!=</span><span class="n">size</span><span class="p">;</span><span class="o">++</span><span class="n">i</span><span class="p">){</span>
+        <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">ia</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="数组引用形参">数组引用形参</h3>
+
+<p>我们也可以把形参定义为数组的引用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="kt">int</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">arr</span><span class="p">)[</span><span class="mi">10</span><span class="p">]){</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">elem</span><span class="p">:</span> <span class="n">arr</span><span class="p">)</span>
+        <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">elem</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="传递多维数组">传递多维数组</h3>
+
+<p>由于在C++种，所谓的多维数组其实就是数组的数组，所以我们传递多维数组的指针时是传递的指向数组首元素的指针，而首元素本身是一个数组，所以该指针是一个指向数组的指针。数组第二维的大小都是数组类型的一部分，不能省略：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">matrix</span><span class="p">)[</span><span class="mi">10</span><span class="p">],</span> <span class="kt">int</span> <span class="n">rowSize</span><span class="p">){</span><span class="cm">/*...*/</span><span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="main处理命令行选项">main处理命令行选项</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span><span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[]){...};</span><span class="c1">//第二哥形参argv是一个数组，它的元素是指向C风格的字符串。或者
+</span><span class="c1"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span><span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">){...};</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>我们传递给程序参数：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">$prog</span> -d -o ofile data0</code></pre></td></tr></table>
+</div>
+</div>
+<p>在这argc就是5，而第一个元素指向程序名，最后一个元素值为0。
+即argv[0]=&ldquo;prog&rdquo; &hellip;argv[4]=&ldquo;data0&rdquo;, argv[5]=0</p>
+
+<h3 id="含有可变形参的函数">含有可变形参的函数</h3>
+
+<p>为了处理不同数量实参的函数，C++11新标准提供了两种主要的方法：</p>
+
+<ul>
+<li>若所有的实参类型相同，传递一个名为initializer_list的标准库类型</li>
+</ul>
+
+<p>例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">void</span> <span class="nf">error_msg</span><span class="p">(</span><span class="n">initializer_list</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">i1</span><span class="p">);</span><span class="c1">//传递相同类型的参数
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>若实参类型不同，编写一种特殊函数: 可变参数模版</li>
+</ul>
+
+<h2 id="返回类型和return语句">返回类型和return语句</h2>
+
+<p>return有两种，即return；和return expression；
+return；只能用在返回类型为void的函数中，不过在void中不函数中不必非要return语句，因为它会在最后一句后面隐式执行return，不过可以使用return提前结束该函数。</p>
+
+<h3 id="有返回值的函数">有返回值的函数</h3>
+
+<p>对于有返回类型的函数，return语句返回值的类型必须与函数的返回类型相同，或者能隐式地转换成函数的返回类型。</p>
+
+<h3 id="值是如何被返回的">值是如何被返回的</h3>
+
+<p>返回一个值的方式和初始化一个变量或者形参的方式完全一样：返回的值用于初始化调用点的一个临时量，该临时量就是函数调用的结果。</p>
+
+<h3 id="不要返回局部对象的引用或指针">不要返回局部对象的引用或指针</h3>
+
+<p>函数完成后，它所占用的存储空间也随之被释放掉。因此，函数终止意味着局部对象的引用将指向不再有效的内存区域：
+```cpp
+//严重错误：这个函数试图返回局部对象的引用
+const string &amp;manip(){
+    string ret;
+    if(!ret.empty())
+        return ret; //错误：返回局部对象的引用！
+    else
+        return &ldquo;Empty&rdquo;;//错误：&rdquo;Empty&rdquo;是一个局部临时量
+}
+要想确保返回值安全，我们不妨自问一下：引用所引的是在函数之前已经存在的哪个对象吗？</p>
 
     </div>
 
