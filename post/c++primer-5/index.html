@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-04-03T20:30:05&#43;08:00" />
 <meta itemprop="dateModified" content="2019-04-03T20:30:05&#43;08:00" />
-<meta itemprop="wordCount" content="2908">
+<meta itemprop="wordCount" content="3749">
 
 
 
@@ -132,8 +132,8 @@
         <div class="post-category">
             <a href="/categories/c&#43;&#43;/"> c&#43;&#43; </a>
             </div>
-          <span class="more-meta"> 2908 words </span>
-          <span class="more-meta"> 6 mins read </span>
+          <span class="more-meta"> 3749 words </span>
+          <span class="more-meta"> 8 mins read </span>
         
       </div>
     </header>
@@ -170,6 +170,12 @@
 <li><a href="#有返回值的函数">有返回值的函数</a></li>
 <li><a href="#值是如何被返回的">值是如何被返回的</a></li>
 <li><a href="#不要返回局部对象的引用或指针">不要返回局部对象的引用或指针</a></li>
+<li><a href="#主函数main的返回值">主函数main的返回值</a></li>
+<li><a href="#返回数组指针">返回数组指针</a>
+<ul>
+<li><a href="#使用尾置返回类型">使用尾置返回类型</a></li>
+<li><a href="#使用decltype">使用decltype</a></li>
+</ul></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -444,18 +450,100 @@ return；只能用在返回类型为void的函数中，不过在void中不函数
 
 <h3 id="不要返回局部对象的引用或指针">不要返回局部对象的引用或指针</h3>
 
-<p>函数完成后，它所占用的存储空间也随之被释放掉。因此，函数终止意味着局部对象的引用将指向不再有效的内存区域：
-```cpp
-//严重错误：这个函数试图返回局部对象的引用
-const string &amp;manip(){
-    string ret;
-    if(!ret.empty())
-        return ret; //错误：返回局部对象的引用！
-    else
-        return &ldquo;Empty&rdquo;;//错误：&rdquo;Empty&rdquo;是一个局部临时量
-}
-要想确保返回值安全，我们不妨自问一下：引用所引的是在函数之前已经存在的哪个对象吗？</p>
+<p>函数完成后，它所占用的存储空间也随之被释放掉。因此，函数终止意味着局部对象的引用将指向不再有效的内存区域：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="c1">//严重错误：这个函数试图返回局部对象的引用
+</span><span class="c1"></span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">manip</span><span class="p">(){</span>
+    <span class="n">string</span> <span class="n">ret</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">ret</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">ret</span><span class="p">;</span> <span class="c1">//错误：返回局部对象的引用！
+</span><span class="c1"></span>    <span class="k">else</span>
+        <span class="k">return</span> <span class="s">&#34;Empty&#34;</span><span class="p">;</span><span class="c1">//错误：&#34;Empty&#34;是一个局部临时量
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>要想确保返回值安全，我们不妨自问一下：引用所引的是在函数之前已经存在的哪个对象吗？</p>
 
+<p>返回局部对象的引用是错误的，同样，返回局部对象的指针也是错误的。
+一旦函数完成，局部对象被释放，指针将指向一个不存在的对象。</p>
+
+<p>引用返回左值
+函数的返回类型决定函数调用是否是左值。调用一个返回引用的函数得到左值，其它返回类型得到右值。</p>
+
+<p>C++11标准使我们可以返回由花括号包围的值的列表。类似于其他返回结果，此处的列表也用来对表示函数返回的临时量进行初始化。</p>
+
+<h3 id="主函数main的返回值">主函数main的返回值</h3>
+
+<p>我们允许main函数没有return语句直接结束，编译器会隐式地插入一条返回0的return语句。
+main函数的返回值可以看做是状态指示器。返回0表示执行成功，返回其他值表示执行失败。为了使返回值与机器无关，cstdlib头文件定义了两个预处理变量用于表示成功和失败：EXIT_FAILURE和EXIT_SUCCESS</p>
+
+<p>递归函数：一个函数调用自身，称该函数为递归函数，在递归函数中，我们必须要有一条跳出递归的语句，否则，程序将耗尽栈空间。</p>
+
+<h3 id="返回数组指针">返回数组指针</h3>
+
+<p>因为数组不能被拷贝，所以函数不能返回数组。不过我们可以返回数组的指针或引用。
+我们可以使用类型别名来简化这种函数的声明。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">typedef</span> <span class="kt">int</span> <span class="n">arrT</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>
+<span class="k">using</span> <span class="n">arrT</span> <span class="o">=</span> <span class="kt">int</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span><span class="c1">//等价上面的声明
+</span><span class="c1"></span><span class="n">arrT</span><span class="o">*</span> <span class="nf">func</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">);</span><span class="c1">//func返回一个指向含有10个整数的数组的指针
+</span><span class="c1">//若要不使用类型别名，我们则要声明成如下形式
+</span><span class="c1"></span><span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">func</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">))[</span><span class="mi">10</span><span class="p">];</span><span class="c1">//我们可以把该函数名和形参一起看做是指针名，方便理解
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<h4 id="使用尾置返回类型">使用尾置返回类型</h4>
+
+<p>在C++11新标准中还有一种可以简化上述func声明的方法，叫做尾置返回类型。任何函数的定义都可以使用尾置返回类型，但是这种形式对于返回类型比较复杂的函数最有效，例如返回类型是数组的指针或者数组的引用。上述func声明的方法可以使用尾置返回类型写成如下形式：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">auto</span> <span class="nf">func</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">int</span><span class="p">(</span><span class="o">*</span><span class="p">)[</span><span class="mi">10</span><span class="p">];</span><span class="err">对比上面的声明简洁的多</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<h4 id="使用decltype">使用decltype</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">int</span> <span class="n">odd</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">9</span><span class="p">};</span>
+<span class="kt">int</span> <span class="n">even</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">};</span>
+<span class="k">decltype</span><span class="p">(</span><span class="n">odd</span><span class="p">)</span> <span class="o">*</span><span class="n">arrptr</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">){</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">i</span><span class="o">%</span><span class="mi">2</span><span class="p">)</span><span class="o">?</span> <span class="o">&amp;</span><span class="nl">odd</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">even</span><span class="p">;</span><span class="c1">//返回一个指向数组的指针
+</span><span class="c1"></span><span class="p">}</span>
+<span class="c1">//该方法类似类型别名，因为decltype作用于数组名时返回一个数组类型
+</span></code></pre></td></tr></table>
+</div>
+</div>
     </div>
 
     <div class="post-copyright">
