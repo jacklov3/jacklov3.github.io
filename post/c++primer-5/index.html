@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-04-03T20:30:05&#43;08:00" />
 <meta itemprop="dateModified" content="2019-04-03T20:30:05&#43;08:00" />
-<meta itemprop="wordCount" content="3749">
+<meta itemprop="wordCount" content="5388">
 
 
 
@@ -132,8 +132,8 @@
         <div class="post-category">
             <a href="/categories/c&#43;&#43;/"> c&#43;&#43; </a>
             </div>
-          <span class="more-meta"> 3749 words </span>
-          <span class="more-meta"> 8 mins read </span>
+          <span class="more-meta"> 5388 words </span>
+          <span class="more-meta"> 11 mins read </span>
         
       </div>
     </header>
@@ -176,6 +176,17 @@
 <li><a href="#使用尾置返回类型">使用尾置返回类型</a></li>
 <li><a href="#使用decltype">使用decltype</a></li>
 </ul></li>
+</ul></li>
+<li><a href="#函数重载">函数重载</a>
+<ul>
+<li><a href="#重载和const形参">重载和const形参</a></li>
+<li><a href="#const-cast-和重载">const_cast 和重载</a></li>
+</ul></li>
+<li><a href="#特殊用途语言特性">特殊用途语言特性</a>
+<ul>
+<li><a href="#默认实参">默认实参</a></li>
+<li><a href="#内联函数和constexpr函数">内联函数和constexpr函数</a></li>
+<li><a href="#调试帮助">调试帮助</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -542,6 +553,162 @@ main函数的返回值可以看做是状态指示器。返回0表示执行成功
 </span><span class="c1"></span><span class="p">}</span>
 <span class="c1">//该方法类似类型别名，因为decltype作用于数组名时返回一个数组类型
 </span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="函数重载">函数重载</h2>
+
+<p>函数重载指的是同一作用域内的几个函数名字相同但形参列表不同的函数。</p>
+
+<p>对于重载的函数来说，它们应该在形参数量或形参类型上有所不同。</p>
+
+<ul>
+<li>不允许两个函数除了返回类型外其他所有的要素都相同。</li>
+<li>省略参数名的两个函数其实是一个函数声明</li>
+</ul>
+
+<h3 id="重载和const形参">重载和const形参</h3>
+
+<p>顶层const不影响传入的函数对象</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">Record</span> <span class="nf">lookup</span><span class="p">(</span><span class="n">Phone</span><span class="p">);</span>
+<span class="n">Record</span> <span class="nf">lookup</span><span class="p">(</span><span class="k">const</span> <span class="n">Phone</span><span class="p">);</span><span class="c1">//重复声明了Record lookup
+</span><span class="c1"></span>
+<span class="n">Record</span> <span class="nf">lookup</span><span class="p">(</span><span class="n">Phone</span><span class="o">*</span><span class="p">);</span>
+<span class="n">Record</span> <span class="nf">lookup</span><span class="p">(</span><span class="n">Phone</span><span class="o">*</span> <span class="k">const</span><span class="p">);</span><span class="c1">//重复声明了Record lookup(Phone*)
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>另一方面，如果形参是某种类型的指针或引用，则通过区分其指向的是常量对象还是非常量对象可以实现函数重载。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">Record</span> <span class="nf">lookup</span><span class="p">(</span><span class="n">Account</span><span class="o">&amp;</span><span class="p">);</span><span class="c1">//函数作用于Account的引用
+</span><span class="c1"></span><span class="n">Record</span> <span class="nf">lookup</span><span class="p">(</span><span class="k">const</span> <span class="n">Account</span><span class="o">&amp;</span><span class="p">);</span><span class="c1">//新函数，作用于常量引用
+</span><span class="c1"></span>
+<span class="n">Record</span> <span class="nf">lookup</span><span class="p">(</span><span class="n">Account</span><span class="o">*</span><span class="p">);</span><span class="c1">//新函数作用于指向Account的指针
+</span><span class="c1"></span><span class="n">Record</span> <span class="nf">lookup</span><span class="p">(</span><span class="k">const</span> <span class="n">Account</span><span class="o">*</span><span class="p">);</span><span class="c1">//新函数，作用于指向常量的指针
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="const-cast-和重载">const_cast 和重载</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">shorterString</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">s1</span><span class="p">,</span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">s2</span><span class="p">){</span>
+    <span class="k">return</span> <span class="n">s1</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">&lt;=</span><span class="n">s2</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">?</span><span class="nl">s1</span><span class="p">:</span><span class="n">s2</span><span class="p">;</span>
+<span class="p">}</span><span class="cm">/*我们可以对两个非常量的string实参调用这个函数，但返回的结果仍然是const string的引用。我们可以定义一个新的storterString函数，来得到当实参不是常量时的普通引用*/</span>
+
+<span class="n">string</span> <span class="o">&amp;</span> <span class="n">shorterString</span><span class="p">(</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">s1</span><span class="p">,</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">s2</span><span class="p">){</span>
+    <span class="k">auto</span> <span class="o">&amp;</span><span class="n">r</span> <span class="o">=</span> <span class="n">shorterString</span><span class="p">(</span><span class="k">const_cast</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;&gt;</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span><span class="k">const_cast</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span><span class="p">)(</span><span class="n">s2</span><span class="p">));</span>
+    <span class="k">return</span> <span class="k">const_cast</span><span class="o">&lt;</span><span class="n">string</span> <span class="o">&amp;&gt;</span><span class="p">(</span><span class="n">r</span><span class="p">);</span>
+    <span class="c1">//传入的实参是非常量的，我们可以把它们转换成常量版本的来调用常量版本的函数，最后我们把该函数的结果返回的常量引用转换成非常量的（因为该函数返回的常量引用本身绑定在非常量版本的实参上，所以是安全的）
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="特殊用途语言特性">特殊用途语言特性</h2>
+
+<p>默认实参、内联函数和constexpr函数</p>
+
+<h3 id="默认实参">默认实参</h3>
+
+<p>在设置默认实参时，一旦某个形参被赋予了默认值，它后面的所有形参都必须有默认值，所以默认参数通常放在函数的右侧。</p>
+
+<p>对于在给定的作用域中，函数声明虽然可以多次，但是一个形参只能被赋予一次默认实参。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">string</span> <span class="nf">screen</span><span class="p">(</span><span class="n">h</span><span class="p">,</span><span class="n">w</span><span class="p">,</span><span class="kt">char</span><span class="o">=</span><span class="sc">&#39; &#39;</span><span class="p">);</span>
+<span class="n">string</span> <span class="nf">screen</span><span class="p">(</span><span class="n">h</span><span class="p">,</span><span class="n">w</span><span class="p">,</span><span class="kt">char</span><span class="o">=</span><span class="sc">&#39;*&#39;</span><span class="p">);</span><span class="c1">//错误，重复声明
+</span><span class="c1"></span><span class="n">string</span> <span class="nf">screen</span><span class="p">(</span><span class="n">h</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span><span class="n">w</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span><span class="kt">char</span><span class="p">);</span><span class="c1">//正确
+</span><span class="c1"></span>
+<span class="kt">void</span> <span class="nf">f2</span><span class="p">(){</span>
+    <span class="n">sz</span> <span class="n">h</span><span class="o">=</span><span class="mi">100</span><span class="p">;</span>
+    <span class="n">screen</span><span class="p">();</span><span class="c1">//调用screen(h=24,w=80,char=&#39; &#39;),局部变量不能作为默认实参
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="内联函数和constexpr函数">内联函数和constexpr函数</h3>
+
+<p>对于一些简单的，操作规模较小的函数，我们可以将其声明为内联函数来避免函数调用的开销，内联函数的声明就是在函数返回类型前面加上关键字inline（一般放在函数定义处即可，不必也不该放在函数声明上影响我们对该函数功能的判断，它只是一种实现方式），在编译时就会在调用点直接将其展开。内联说明只是向编译器发出的一个请求，编译器可以忽略这个请求。</p>
+
+<p>constexpr函数是指能用于常量表达式的函数。定义constexpr函数的方法与其他函数类似，不过函数的返回类型及所有形参的类型都得是字面值类型，而且函数体中必须有且只有一条return语句。（C++11)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">constexpr</span> <span class="kt">int</span> <span class="nf">new_sz</span><span class="p">(){</span><span class="k">return</span> <span class="mi">42</span><span class="p">;}</span>
+<span class="k">constexpr</span> <span class="kt">int</span> <span class="n">foo</span> <span class="o">=</span> <span class="n">new_sz</span><span class="p">();</span><span class="c1">//使用constexpr的原因是其值能在编译阶段就确定,节省程序运行开销
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>内联函数和constexpr通常<strong>定义</strong>在头文件中。</p>
+
+<h3 id="调试帮助">调试帮助</h3>
+
+<p>类似于头文件保护的技术，我们可以在程序中包含一些用于调试的代码在开发的时候使用，当程序向发布时，要先屏蔽掉调试代码。这种方法用到两项预处理功能：assert和NDEBUG。</p>
+
+<p>assert是一种预处理宏，它使用一个表达式作为它的条件：
+assert(expr);首先对expr求值，如果表达式为假（即0），assert输出信息并终止程序的执行。如果表达式为真（即非0），assert什么也不做。</p>
+
+<p>NDEBUG预处理变量，若定义了NDEBUG则assert什么也不做。默认状态下没有定义NDEBUG，此时assert将执行运行时检查，我们可以使用#define定义NDEBUG，从而关闭调试状态。除此之外，我们还可以使用NDEBUG编写自己的条件调试代码。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span> <span class="n">ia</span><span class="p">[],</span><span class="n">size_t</span> <span class="n">size</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="cp">#ifndef NDEBUG
+</span><span class="cp"></span>        <span class="c1">//__func__是编译器定义的一个局部静态变量，用于存放函数的名字
+</span><span class="c1"></span>        <span class="n">cerr</span><span class="o">&lt;&lt;</span><span class="n">__func__</span><span class="o">&lt;&lt;</span><span class="s">&#34;:array size is&#34;</span><span class="o">&lt;&lt;</span><span class="n">size</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+    <span class="cp">#endif
+</span><span class="cp"></span>    <span class="c1">//....
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
 </div>
     </div>
