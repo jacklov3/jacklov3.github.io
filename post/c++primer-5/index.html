@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-04-03T20:30:05&#43;08:00" />
 <meta itemprop="dateModified" content="2019-04-03T20:30:05&#43;08:00" />
-<meta itemprop="wordCount" content="5388">
+<meta itemprop="wordCount" content="6148">
 
 
 
@@ -132,8 +132,8 @@
         <div class="post-category">
             <a href="/categories/c&#43;&#43;/"> c&#43;&#43; </a>
             </div>
-          <span class="more-meta"> 5388 words </span>
-          <span class="more-meta"> 11 mins read </span>
+          <span class="more-meta"> 6148 words </span>
+          <span class="more-meta"> 13 mins read </span>
         
       </div>
     </header>
@@ -187,6 +187,10 @@
 <li><a href="#默认实参">默认实参</a></li>
 <li><a href="#内联函数和constexpr函数">内联函数和constexpr函数</a></li>
 <li><a href="#调试帮助">调试帮助</a></li>
+</ul></li>
+<li><a href="#函数指针">函数指针</a>
+<ul>
+<li><a href="#返回指向函数的指针">返回指向函数的指针</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -708,6 +712,88 @@ assert(expr);首先对expr求值，如果表达式为假（即0），assert输�
     <span class="cp">#endif
 </span><span class="cp"></span>    <span class="c1">//....
 </span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="函数指针">函数指针</h2>
+
+<p>函数指针指向的是函数而非对象。和其他指针一样，函数指针指向某种特定类型。函数的类型由它的返回类型和形参类型共同决定，与函数名无关。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">bool</span> <span class="nf">lengthCompare</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="p">,</span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="p">);</span>
+<span class="c1">//声明一个函数指针，只需要用指针替换函数名即可
+</span><span class="c1"></span><span class="kt">bool</span> <span class="p">(</span><span class="o">*</span><span class="n">pf</span><span class="p">)(</span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="p">,</span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="p">);</span><span class="c1">//声明了一个函数指针，未初始化
+</span><span class="c1"></span>
+<span class="c1">//使用函数指针，当我们把函数名作为一个值使用时，该函数自动地转换成指针。例如：
+</span><span class="c1"></span>
+<span class="n">pf</span> <span class="o">=</span> <span class="n">lengthCompare</span><span class="p">;</span><span class="c1">//pf指向名为lengthCompare的函数
+</span><span class="c1"></span><span class="n">pf</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">lengthCompare</span><span class="p">;</span><span class="c1">//等价的赋值语句：取地址符是可选的
+</span><span class="c1"></span>
+<span class="c1">//我们还可以直接使用指向函数的指针调用该函数，无须提前解引用指针：
+</span><span class="c1"></span><span class="kt">bool</span> <span class="n">b1</span> <span class="o">=</span> <span class="n">pf</span><span class="p">(</span><span class="s">&#34;hello&#34;</span><span class="p">,</span><span class="s">&#34;world&#34;</span><span class="p">);</span><span class="c1">//调用lengthCompare
+</span><span class="c1"></span><span class="kt">bool</span> <span class="n">b1</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">pf</span><span class="p">)(</span><span class="s">&#34;hello&#34;</span><span class="p">,</span><span class="s">&#34;world&#34;</span><span class="p">);</span><span class="c1">//一个等价的调用
+</span><span class="c1"></span><span class="kt">bool</span> <span class="n">b1</span> <span class="o">=</span> <span class="n">lengthCompare</span><span class="p">(</span><span class="s">&#34;hello&#34;</span><span class="p">,</span><span class="s">&#34;world&#34;</span><span class="p">);</span><span class="c1">//另一个等价的调用
+</span><span class="c1"></span>
+<span class="c1">//和数组类似，虽然不能定义函数类型的形参，但是形参可以是指向函数的指针。
+</span><span class="c1"></span><span class="kt">void</span> <span class="nf">useBigger</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">s1</span><span class="p">,</span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">s2</span><span class="p">,</span><span class="kt">bool</span> <span class="n">pf</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="p">,</span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="p">));</span>
+<span class="c1">//等价的声明
+</span><span class="c1"></span><span class="kt">void</span> <span class="nf">useBigger</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">s1</span><span class="p">,</span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">s2</span><span class="p">,</span><span class="kt">bool</span> <span class="p">(</span><span class="o">*</span><span class="n">pf</span><span class="p">)(</span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="p">,</span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="p">));</span>
+
+<span class="c1">//我们可以把函数作为实参使用，此时它会自动转换成指针：
+</span><span class="c1"></span><span class="n">useBigger</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span><span class="n">s2</span><span class="p">,</span><span class="n">lengthCompare</span><span class="p">);</span>
+
+<span class="c1">//类型别名简化声明,Func和Func2是函数类型
+</span><span class="c1"></span><span class="k">typedef</span> <span class="kt">bool</span> <span class="n">Func</span><span class="err">（</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span><span class="p">,</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span><span class="p">);</span>
+<span class="k">typedef</span> <span class="nf">decltype</span><span class="p">(</span><span class="n">lengthCompare</span><span class="p">)</span> <span class="n">Func2</span><span class="p">;</span>
+
+<span class="c1">//FuncP和FuncP2是指向函数的指针
+</span><span class="c1"></span><span class="k">typedef</span> <span class="nf">bool</span><span class="p">(</span><span class="o">*</span><span class="n">FuncP</span><span class="p">)(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span><span class="p">,</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span><span class="p">);</span>
+<span class="k">typedef</span> <span class="nf">decltype</span><span class="p">(</span><span class="n">lengthCompare</span><span class="p">)</span> <span class="o">*</span><span class="n">FuncP2</span><span class="p">;</span><span class="c1">//等价声明，decltype得到的是函数类型，声明指针还要加上一个*号
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="返回指向函数的指针">返回指向函数的指针</h3>
+
+<p>和数组类似，虽然不能返回一个函数，但是能返回指向函数类型的指针。具体类比<strong>返回数组指针</strong>那节。</p>
+
+<p>推荐使用尾置返回类型的方式:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">auto</span> <span class="nf">f1</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="kt">int</span><span class="o">*</span><span class="p">,</span><span class="kt">int</span><span class="p">);</span>
 </code></pre></td></tr></table>
 </div>
 </div>
