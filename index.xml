@@ -6,10 +6,19 @@
     <description>Recent content on JackyLove的小窝</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 03 Apr 2019 20:30:05 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 08 Apr 2019 10:27:20 +0800</lastBuildDate>
     
 	<atom:link href="https://www.jackylove.me/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>C&#43;&#43;primer学习笔记(六)</title>
+      <link>https://www.jackylove.me/post/c&#43;&#43;primer-6/</link>
+      <pubDate>Mon, 08 Apr 2019 10:27:20 +0800</pubDate>
+      
+      <guid>https://www.jackylove.me/post/c&#43;&#43;primer-6/</guid>
+      <description>类 类的基本思想是数据抽象和封装。数据抽象是一种依赖于接口和实现分离的编程技术。类的接口包括用户所能执行的操作：类的实现则包括类的数据成员、负</description>
+    </item>
     
     <item>
       <title>C&#43;&#43;primer学习笔记(五)</title>
