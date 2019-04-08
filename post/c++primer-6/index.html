@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-04-08T10:27:20&#43;08:00" />
 <meta itemprop="dateModified" content="2019-04-08T10:27:20&#43;08:00" />
-<meta itemprop="wordCount" content="150">
+<meta itemprop="wordCount" content="940">
 
 
 
@@ -132,8 +132,8 @@
         <div class="post-category">
             <a href="/categories/c&#43;&#43;/"> c&#43;&#43; </a>
             </div>
-          <span class="more-meta"> 150 words </span>
-          <span class="more-meta"> 1 min read </span>
+          <span class="more-meta"> 940 words </span>
+          <span class="more-meta"> 2 mins read </span>
         
       </div>
     </header>
@@ -143,7 +143,15 @@
   <div class="post-toc-content">
     <nav id="TableOfContents">
 <ul>
-<li><a href="#类">类</a></li>
+<li><a href="#类">类</a>
+<ul>
+<li><a href="#类的定义">类的定义</a>
+<ul>
+<li><a href="#this指针">this指针</a></li>
+<li><a href="#const成员函数">const成员函数</a></li>
+<li><a href="#类作用域和成员函数">类作用域和成员函数</a></li>
+</ul></li>
+</ul></li>
 </ul>
 </nav>
   </div>
@@ -156,6 +164,58 @@
 <p>类的基本思想是<strong>数据抽象</strong>和<strong>封装</strong>。数据抽象是一种依赖于<strong>接口</strong>和<strong>实现</strong>分离的编程技术。类的接口包括用户所能执行的操作：类的实现则包括类的数据成员、负责接口实现的函数体以及定义类所需的各种私有函数。</p>
 
 <p>封装实现了类的接口和实现的分离。封装后的类隐藏了它的实现细节，也就是说，类的用户只能使用接口而无法访问实现部分。</p>
+
+<h2 id="类的定义">类的定义</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">class</span><span class="err"> 类名{
+</span><span class="err">    //成员变量
+</span><span class="err">    //成员函数
+</span><span class="err">};//此处的分号不能少
+</span><span class="err">/*
+</span><span class="err">对于成员函数，我们可以将其定义在类内或者类外，对于简单的函数我们一般将其定义在类体内，它是隐式的</span><span class="nc">inline函数</span><span class="err">。对于其它复杂的函数，我们将其定义在类外。我们也可以在类外定义非接口函数*/</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="this指针">this指针</h3>
+
+<p>一般在我们调用成员函数时，实际上是在替某个对象调用它。成员函数通过一个名为this的额外的隐式参数来访问调用它的那个对象。当我们调用一个成员函数时，用请求该函数的对象地址初始化this。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="c1">//如
+</span><span class="c1"></span><span class="n">total</span><span class="p">.</span><span class="n">isbn</span><span class="p">();</span>
+<span class="c1">//则大概就是将total的地址传递给this指针
+</span><span class="c1"></span><span class="nl">Sales_data</span><span class="p">:</span><span class="n">isbn</span><span class="p">(</span><span class="o">&amp;</span><span class="n">total</span><span class="p">);</span>
+<span class="cm">/*我们在成员函数体内可以直接使用this指针，任何对类成员的直接访问都被看做是this的隐式引用，例如当使用bookNO这个成员变量时，它隐式的以this-&gt;bookNo引用。因为this的目的总是指向“这个对象”，所以this是一个常量指针
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="const成员函数">const成员函数</h3>
+
+<p>我们通过在成员函数的参数列表之后加上一个const关键字来产生const成员函数，这里的const的作用是修改隐式this指针的类型。</p>
+
+<p>默认情况下，this的类型是指向类类型非常量版本的常量指针，也就是它指向的是一个非常量对象，这使的它可以改变该对象的值。有时，我们需要使用常量对象调用普通的成员函数而不改变该对象的值，而非常量指针又不能用于初始化常量对象，所以我们需要将该this指针变成指向常量的常量指针，又因为this是隐式的，所以我们通过在成员函数后面加上const关键字来达到这一效果。这样的成员函数被称作常量成员函数。</p>
+
+<p>常量对象，以及常量对象的引用或指针都只能调用常量成员函数。</p>
+
+<h3 id="类作用域和成员函数">类作用域和成员函数</h3>
+
+<p>类是一个作用域，它的成员函数的定义嵌套在类的作用域内。成员变量可以定义在成员函数后面，而成员函数照样可以使用该成员变量，因为编译器先编译成员的声明，再编译成员函数体。</p>
 
     </div>
 
