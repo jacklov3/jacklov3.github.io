@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-04-08T10:27:20&#43;08:00" />
 <meta itemprop="dateModified" content="2019-04-08T10:27:20&#43;08:00" />
-<meta itemprop="wordCount" content="940">
+<meta itemprop="wordCount" content="2199">
 
 
 
@@ -132,8 +132,8 @@
         <div class="post-category">
             <a href="/categories/c&#43;&#43;/"> c&#43;&#43; </a>
             </div>
-          <span class="more-meta"> 940 words </span>
-          <span class="more-meta"> 2 mins read </span>
+          <span class="more-meta"> 2199 words </span>
+          <span class="more-meta"> 5 mins read </span>
         
       </div>
     </header>
@@ -150,7 +150,11 @@
 <li><a href="#this指针">this指针</a></li>
 <li><a href="#const成员函数">const成员函数</a></li>
 <li><a href="#类作用域和成员函数">类作用域和成员函数</a></li>
+<li><a href="#定义类相关的非成员函数">定义类相关的非成员函数</a></li>
+<li><a href="#构造函数">构造函数</a></li>
+<li><a href="#拷贝-赋值和析构">拷贝、赋值和析构</a></li>
 </ul></li>
+<li><a href="#访问控制与封装">访问控制与封装</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -216,6 +220,92 @@
 <h3 id="类作用域和成员函数">类作用域和成员函数</h3>
 
 <p>类是一个作用域，它的成员函数的定义嵌套在类的作用域内。成员变量可以定义在成员函数后面，而成员函数照样可以使用该成员变量，因为编译器先编译成员的声明，再编译成员函数体。</p>
+
+<p>在类的外部定义成员函数，我们需要保持它的定义与声明匹配，例如const成员函数定义时也得加上const，同时类外部定义的成员的名字必须包含它所属的类名，这样在类外定义的函数也在类作用域内，可以直接访问类的成员。</p>
+
+<p>定义一个返回this对象的函数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">Sales_data</span><span class="o">&amp;</span> <span class="n">Sales_data</span><span class="o">::</span><span class="n">combine</span><span class="p">(</span><span class="k">const</span> <span class="n">Sales_data</span> <span class="o">&amp;</span><span class="n">rhs</span><span class="p">){</span>
+    <span class="n">units_sold</span> <span class="o">+=</span> <span class="n">rhs</span><span class="p">.</span><span class="n">units_sold</span><span class="p">;</span>
+    <span class="n">revenue</span> <span class="o">+=</span> <span class="n">rhs</span><span class="p">.</span><span class="n">revenue</span><span class="p">;</span>
+    <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">//返回引用
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="定义类相关的非成员函数">定义类相关的非成员函数</h3>
+
+<p>类的作者常常需要定义一些辅助函数，如add、read和print等。这些属于类的接口的组成部分，但是不属于类本身。</p>
+
+<p>一般来说，如果非成员函数是接口的组成部分，则这些函数的声明应该与类在同一个头文件内。</p>
+
+<h3 id="构造函数">构造函数</h3>
+
+<p>每个类都分别定义了它的对象被初始化的方式，类通过一个或几个特殊的成员函数来控制其对象的初始化过程，这些函数叫做<strong>构造函数</strong>。</p>
+
+<p>构造函数的名字和类名相同。和其它函数不一样，构造函数没有返回类型，构造函数不能被声明为const的。</p>
+
+<p>默认情况下，若我们没有定义自己的构造函数，编译器会为我们生成默认的构造函数。其初始化规则如下：
+- 如果存在类内的初始值，用它来初始化成员。
+- 否则，默认初始化该成员。</p>
+
+<p>某些类不能依赖于合成的默认构造函数：
+- 编译器只有在没有任何构造函数时才会生成默认构造函数，若我们定义了其它构造函数，则除非我们再定义一个默认的构造函数，否则类将没有默认构造函数。
+- 合成的默认构造函数可能执行错误的操作。如定义在块内的内置类型或复合类型（如数组和指针）的对象被默认初始化，则它们的值将是未定义的。因此，含有内置类型或复合类型成员的类应该在类的内部初始化这些成语，或者定义一个自己的默认构造函数。
+- 有的时候编译器不能为某些类合成默认的构造函数。例如，如果类中包含一个其它类类型的成员且这个成员的类型没有默认构造函数，那么编译器将无法初始化该成员。对于这样的类来说，我们必须自定义默认构造函数，否则该类将没有可用的默认构造函数。</p>
+
+<p>定义一个Sales_data的构造函数来说明：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">class</span><span class="err"> </span><span class="nc">Sales_data</span><span class="p">{</span>
+    <span class="n">Sales_data</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span><span class="cm">/*C++11标准运行我们通过此来要求编译器生成默认构造函数，这是因为我们定义了其它的构造函数，所以也需要默认的构造函数，此外这个默认构造函数有效是因为我们为内置类型的数据成员提供了初始值。否则需要使用下面的构造函数初始值列表。*/</span>
+    <span class="n">Sales_data</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">)</span><span class="o">:</span><span class="n">bookNo</span><span class="p">(</span><span class="n">s</span><span class="p">){}</span>
+    <span class="n">Sales_data</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="n">n</span><span class="p">,</span><span class="kt">double</span> <span class="n">p</span><span class="p">)</span><span class="o">:</span><span class="n">bookNo</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="n">units_sold</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">revenue</span><span class="p">(</span><span class="n">p</span><span class="o">*</span><span class="n">n</span><span class="p">){}</span><span class="c1">//构造函数初始化列表
+</span><span class="c1"></span>    <span class="n">Sales_data</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">istream</span> <span class="o">&amp;</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">isbn</span><span class="p">()</span> <span class="k">const</span><span class="p">{</span><span class="k">return</span> <span class="n">bookNo</span><span class="p">;}</span>
+    <span class="n">Sales_data</span><span class="o">&amp;</span> <span class="n">combine</span><span class="p">(</span><span class="k">const</span> <span class="n">Sales_data</span><span class="o">&amp;</span><span class="p">);</span>
+    <span class="kt">double</span> <span class="nf">avg_price</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">bookNo</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="n">units_sold</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">double</span> <span class="n">revenue</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="拷贝-赋值和析构">拷贝、赋值和析构</h3>
+
+<p>除了定义类的对象如何初始化之外，类还需要控制拷贝、赋值和销毁对象时发生的行为。对象在几种情况下会被拷贝，如我们初始化变量以及以值的方式传递或返回一个对象等。当我们使用赋值运算符时会发生对象的赋值操作。当对象不再存在时执行销毁的操作，比如一个局部对象会在创建它的块结束时被销毁。</p>
+
+<p>若我们不主动定义这些操作，则编译器将替我们合成它们。一般来说，编译器生成的版本将对对象的每个成员执行拷贝、赋值和销毁操作。</p>
+
+<p>和构造函数类似，某些类不能依赖于合成的版本：
+当类需要分配类对象之外的资源时，合成的版本常常失效。如管理动态内存。</p>
+
+<h2 id="访问控制与封装">访问控制与封装</h2>
 
     </div>
 
