@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-04-03T20:30:05&#43;08:00" />
 <meta itemprop="dateModified" content="2019-04-03T20:30:05&#43;08:00" />
-<meta itemprop="wordCount" content="6148">
+<meta itemprop="wordCount" content="6144">
 
 
 
@@ -132,7 +132,7 @@
         <div class="post-category">
             <a href="/categories/c&#43;&#43;/"> c&#43;&#43; </a>
             </div>
-          <span class="more-meta"> 6148 words </span>
+          <span class="more-meta"> 6144 words </span>
           <span class="more-meta"> 13 mins read </span>
         
       </div>
@@ -226,9 +226,12 @@
 
 <h3 id="局部对象">局部对象</h3>
 
-<p>在C++中，名字有作用域，对象有生命周期。
-- 名字的作用域是程序文本的一部分，名字在其中可见。
-- 对象的生命周期是程序执行过程中该对象存在的一段时间。</p>
+<p>在C++中，名字有作用域，对象有生命周期。</p>
+
+<ul>
+<li>名字的作用域是程序文本的一部分，名字在其中可见。</li>
+<li>对象的生命周期是程序执行过程中该对象存在的一段时间。</li>
+</ul>
 
 <p>函数体是一个语句块，块构成一个新的作用域，形参和函数体内部定义的变量统称为局部变量。它们对函数而言是“局部”的，仅在函数的作用域内可见，同时局部变量还会隐藏在外层作用域中同名的其它所有声明中。</p>
 
@@ -286,9 +289,12 @@
 
 <h3 id="数组形参">数组形参</h3>
 
-<p>数组的两个特性：
--  不允许拷贝数组
--  使用数组时通常会将其转换成指针</p>
+<p>数组的两个特性：</p>
+
+<ul>
+<li>不允许拷贝数组</li>
+<li>使用数组时通常会将其转换成指针</li>
+</ul>
 
 <p>所以我们为函数传递一个数组时，实际上传递的是指向数组首元素的指针。虽然不能传递值，但是我们可以把形参写出类似数组的形式：</p>
 <div class="highlight"><div class="chroma">
