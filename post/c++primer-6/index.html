@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-04-08T10:27:20&#43;08:00" />
 <meta itemprop="dateModified" content="2019-04-08T10:27:20&#43;08:00" />
-<meta itemprop="wordCount" content="3005">
+<meta itemprop="wordCount" content="3743">
 
 
 
@@ -132,8 +132,8 @@
         <div class="post-category">
             <a href="/categories/c&#43;&#43;/"> c&#43;&#43; </a>
             </div>
-          <span class="more-meta"> 3005 words </span>
-          <span class="more-meta"> 6 mins read </span>
+          <span class="more-meta"> 3743 words </span>
+          <span class="more-meta"> 8 mins read </span>
         
       </div>
     </header>
@@ -160,6 +160,11 @@
 <li><a href="#可变数据成员">可变数据成员</a></li>
 <li><a href="#类的前向声明">类的前向声明</a></li>
 <li><a href="#友元再探">友元再探</a></li>
+</ul></li>
+<li><a href="#类的作用域">类的作用域</a></li>
+<li><a href="#构造函数再探">构造函数再探</a>
+<ul>
+<li><a href="#默认实参和构造函数">默认实参和构造函数</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -356,6 +361,83 @@
 <p>把其它类定义为友元，则该友元类的成员函数可以访问此类包括非公有成员在内的所有成员（要小心）。</p>
 
 <p>此外我们还可以令成员函数作为友元，不过需要满足声明与定义的依赖关系来设计程序。</p>
+
+<h2 id="类的作用域">类的作用域</h2>
+
+<p>一个类就是一个作用域，因此，我们在类外定义成员函数时需要加上类的前缀名表示其后的所有内容都是在类作用域内的，可以直接使用。此外若返回类型为另一个类类型时，我们也需要加上该类前缀以表示该返回类型是属于哪个类的。</p>
+
+<p>名字查找：</p>
+
+<ul>
+<li>首先，在名字所在的块中寻找其声明语句，只考虑在名字的使用之前出现的声明。</li>
+<li>如果没找到，继续查找外层作用域</li>
+<li>如果最终没有找到匹配的声明，则程序报错。</li>
+</ul>
+
+<p>类的定义分两步处理：</p>
+
+<ul>
+<li>首先，编译成员的声明</li>
+<li>直到类全部可见后才编译函数体。</li>
+</ul>
+
+<p>类型名的定义通常出现在类的开始处，这样就能确保所有使用该类型的成员都出现在类名的定义之后。</p>
+
+<p>成员函数中使用的名字按照如下方式解析：</p>
+
+<ul>
+<li>首先，在成员函数内查找该名字的声明。和前面一样，只有在函数使用之前出现的声明才被考虑。</li>
+<li>如果在成员函数内没有找到，则在类内继续查找，这时类的所有成员都可以被考虑。</li>
+<li>如果类内也没找到该名字的声明，在成员函数定义之前的作用域内继续查找。</li>
+</ul>
+
+<h2 id="构造函数再探">构造函数再探</h2>
+
+<p>在构造函数时，我们可以选择初始化或者赋值，但是对于某些类型成员来说，我们必须将其初始化，如成员是const或者引用，或者成员属于某种类类型且该类没有定义默认构造函数时。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">class</span><span class="err"> </span><span class="nc">ConstRef</span><span class="p">{</span>
+    <span class="k">public</span><span class="o">:</span>
+        <span class="n">ConstRef</span><span class="p">(</span><span class="kt">int</span> <span class="n">ii</span><span class="p">);</span>
+    <span class="k">private</span><span class="o">:</span>
+        <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+        <span class="k">const</span> <span class="kt">int</span> <span class="n">ci</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="o">&amp;</span><span class="n">ri</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="c1">//错误，ci和ri必须被初始化
+</span><span class="c1"></span><span class="n">ConstRef</span><span class="o">::</span><span class="n">ConstRef</span><span class="p">(</span><span class="kt">int</span> <span class="n">ii</span><span class="p">){</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">ii</span><span class="p">;</span>
+    <span class="n">ci</span> <span class="o">=</span> <span class="n">ii</span><span class="p">;</span><span class="c1">//错误：不能给const赋值
+</span><span class="c1"></span>    <span class="n">ri</span> <span class="o">=</span><span class="n">i</span><span class="p">;</span> <span class="c1">//错误：ri没被初始化
+</span><span class="c1"></span><span class="p">}</span>
+<span class="c1">//正确：显式地初始化引用和const成员
+</span><span class="c1"></span><span class="n">ConstRef</span><span class="o">::</span><span class="n">ConstRef</span> <span class="p">(</span><span class="kt">int</span> <span class="n">ii</span><span class="p">)</span><span class="o">:</span><span class="n">i</span><span class="p">(</span><span class="n">ii</span><span class="p">),</span><span class="n">ci</span><span class="p">(</span><span class="n">ii</span><span class="p">),</span><span class="n">ri</span><span class="p">(</span><span class="n">i</span><span class="p">){}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>成员初始化的顺序与它们在类定义中的出现顺序一致：第一个成员先被初始化，然后第二个，以此类推。构造函数初始值列表中初始值的前后位置关系不会影响实际的初始化顺序。</p>
+
+<p>最好令构造函数初始值的顺序与成员声明的顺序保持一致。而且如果可能的话，尽量避免使用某些成员初始化其它成员。</p>
+
+<h3 id="默认实参和构造函数">默认实参和构造函数</h3>
 
     </div>
 
