@@ -6,10 +6,19 @@
     <description>Recent content in Posts on JackyLove的小窝</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 08 Apr 2019 10:27:20 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 15 Apr 2019 19:41:10 +0800</lastBuildDate>
     
 	<atom:link href="https://www.jackylove.me/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Python 1</title>
+      <link>https://www.jackylove.me/post/python-1/</link>
+      <pubDate>Mon, 15 Apr 2019 19:41:10 +0800</pubDate>
+      
+      <guid>https://www.jackylove.me/post/python-1/</guid>
+      <description>Python大蟒蛇 哈哈，第一次使用谷歌翻译页面的时候打开编程语言翻译的时候吓我一条，python大蟒蛇，ruby红宝石，我总是在想这蛇和宝石</description>
+    </item>
     
     <item>
       <title>C&#43;&#43;primer学习笔记(六)</title>
