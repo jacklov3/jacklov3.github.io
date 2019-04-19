@@ -6,10 +6,19 @@
     <description>Recent content in 编程语言 on JackyLove的小窝</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 15 Apr 2019 19:41:10 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 19 Apr 2019 20:39:46 +0800</lastBuildDate>
     
 	<atom:link href="https://www.jackylove.me/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>C&#43;&#43;primer学习笔记(七)</title>
+      <link>https://www.jackylove.me/post/c&#43;&#43;primer-7/</link>
+      <pubDate>Fri, 19 Apr 2019 20:39:46 +0800</pubDate>
+      
+      <guid>https://www.jackylove.me/post/c&#43;&#43;primer-7/</guid>
+      <description>C++语言内置和许多标准库供我们使用，使我们能更加快速高效地进行开发。标准库的核心是很多容器类和一族泛型算法，标准库会去关注那些薄记操作的细</description>
+    </item>
     
     <item>
       <title>Python简介</title>
