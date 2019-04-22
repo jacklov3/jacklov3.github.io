@@ -6,10 +6,19 @@
     <description>Recent content on JackyLove的小窝</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 19 Apr 2019 20:39:46 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 22 Apr 2019 21:08:14 +0800</lastBuildDate>
     
 	<atom:link href="https://www.jackylove.me/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Python基础语法</title>
+      <link>https://www.jackylove.me/post/python-2/</link>
+      <pubDate>Mon, 22 Apr 2019 21:08:14 +0800</pubDate>
+      
+      <guid>https://www.jackylove.me/post/python-2/</guid>
+      <description>python基础语法 编程语言类型无非那几种，只是可能各个语言的形式或表达不同，对于python 整数： 任意进制表示都行 浮点数： 字符串：可以用单</description>
+    </item>
     
     <item>
       <title>C&#43;&#43;primer学习笔记(七)</title>
