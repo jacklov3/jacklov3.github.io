@@ -6,10 +6,19 @@
     <description>Recent content in Posts on JackyLove的小窝</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 22 Apr 2019 21:08:14 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 26 Apr 2019 17:16:32 +0800</lastBuildDate>
     
 	<atom:link href="https://www.jackylove.me/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Git常用命令</title>
+      <link>https://www.jackylove.me/post/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</link>
+      <pubDate>Fri, 26 Apr 2019 17:16:32 +0800</pubDate>
+      
+      <guid>https://www.jackylove.me/post/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</guid>
+      <description>Git常见命令操作 Git作为现在最流行的版本控制系统，我们所有人都应该学会使用。奈何命令记不住（本人记性太差），遂记录之。😁 创建一个git仓</description>
+    </item>
     
     <item>
       <title>Python基础语法</title>
