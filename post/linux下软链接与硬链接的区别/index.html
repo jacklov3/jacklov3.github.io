@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-04-29T23:45:41&#43;08:00" />
 <meta itemprop="dateModified" content="2019-04-29T23:45:41&#43;08:00" />
-<meta itemprop="wordCount" content="262">
+<meta itemprop="wordCount" content="408">
 
 
 
@@ -132,7 +132,7 @@
         <div class="post-category">
             <a href="/categories/linux/"> linux </a>
             </div>
-          <span class="more-meta"> 262 words </span>
+          <span class="more-meta"> 408 words </span>
           <span class="more-meta"> 1 min read </span>
         
       </div>
@@ -158,9 +158,24 @@
 <ul>
 <li><p>inode节点保存除文件名和文件内容外的所有内容，例如文件的权限，文件的所有者和属组，文件大小、文件的一些时间等。每个文件占用一个inode，但是innode不记录文件名，<strong>文件名记录在文件所在目录的block中</strong>。inode默认大小是128Byte。</p></li>
 
-<li><p>block记录实际的文件内容</p></li>
+<li><p>block记录实际的文件内容,它的大小可以是1KB、2KB、4KB，默认是4KB。文件可以占用多个block，这些block可以是连续的，也可以是分散的。</p></li>
 </ul>
 
+<p>建立链接的基本命令格式如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ ln <span class="o">[</span>选项<span class="o">]</span> 源文件 目标文件
+<span class="c1">#选项：</span>
+<span class="c1">#-s： 建立软链接，否则建立硬链接</span>
+<span class="c1">#-f: 强制。如果目标文件已经存在，则删除目标文件后再建立链接文件。</span></code></pre></td></tr></table>
+</div>
+</div>
     </div>
 
     <div class="post-copyright">
