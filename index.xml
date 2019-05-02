@@ -6,10 +6,19 @@
     <description>Recent content on JackyLove的小窝</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 29 Apr 2019 23:45:41 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 02 May 2019 22:33:58 +0800</lastBuildDate>
     
 	<atom:link href="https://www.jackylove.me/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>增加一种有效的思维学习方法</title>
+      <link>https://www.jackylove.me/post/%E5%A2%9E%E5%8A%A0%E4%B8%80%E7%A7%8D%E6%9C%89%E6%95%88%E7%9A%84%E6%80%9D%E7%BB%B4%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Thu, 02 May 2019 22:33:58 +0800</pubDate>
+      
+      <guid>https://www.jackylove.me/post/%E5%A2%9E%E5%8A%A0%E4%B8%80%E7%A7%8D%E6%9C%89%E6%95%88%E7%9A%84%E6%80%9D%E7%BB%B4%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/</guid>
+      <description>思维导图 平时学习多了，即使是记忆性好，做了笔记也很难从字里行间里再次找到复杂的重要知识点。有一次，我看见了思维导图，我才感觉这就是我想要的梳</description>
+    </item>
     
     <item>
       <title>Linux下软链接与硬链接的区别</title>
