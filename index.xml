@@ -6,10 +6,19 @@
     <description>Recent content on JackyLove的小窝</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 02 May 2019 22:33:58 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 05 May 2019 22:55:00 +0800</lastBuildDate>
     
 	<atom:link href="https://www.jackylove.me/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>认识Docker</title>
+      <link>https://www.jackylove.me/post/%E8%AE%A4%E8%AF%86docker/</link>
+      <pubDate>Sun, 05 May 2019 22:55:00 +0800</pubDate>
+      
+      <guid>https://www.jackylove.me/post/%E8%AE%A4%E8%AF%86docker/</guid>
+      <description>Docker作为现在最火的容器解决方案已经风靡全球 说来惭愧，docker火了这么久，我还没有去了解，真是&amp;hellip;&amp;hellip;，这</description>
+    </item>
     
     <item>
       <title>增加一种有效的思维学习方法</title>
