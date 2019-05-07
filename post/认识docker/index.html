@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-05-05T22:55:00&#43;08:00" />
 <meta itemprop="dateModified" content="2019-05-05T22:55:00&#43;08:00" />
-<meta itemprop="wordCount" content="286">
+<meta itemprop="wordCount" content="1889">
 
 
 
@@ -132,8 +132,8 @@
         <div class="post-category">
             <a href="/categories/linux/"> linux </a>
             </div>
-          <span class="more-meta"> 286 words </span>
-          <span class="more-meta"> 1 min read </span>
+          <span class="more-meta"> 1889 words </span>
+          <span class="more-meta"> 4 mins read </span>
         
       </div>
     </header>
@@ -146,6 +146,13 @@
 <li><a href="#docker作为现在最火的容器解决方案已经风靡全球">Docker作为现在最火的容器解决方案已经风靡全球</a>
 <ul>
 <li><a href="#什么是docker">什么是docker</a></li>
+<li><a href="#docker的安装方式">docker的安装方式</a></li>
+<li><a href="#docker中的镜像-容器-和库">docker中的镜像、容器、和库</a></li>
+<li><a href="#docker-命令">docker 命令</a></li>
+<li><a href="#制作我们自己的镜像">制作我们自己的镜像</a>
+<ul>
+<li><a href="#什么是dockerfile文件">什么是dockerfile文件</a></li>
+</ul></li>
 </ul></li>
 </ul>
 </nav>
@@ -167,7 +174,128 @@ B：不可能，我这运行的好好的。</p>
 
 <p>docker作为应用容器就是为了解决应用部署环境的问题，以达到一个镜像随处运行。</p>
 
-<p>首先，我们需要了解容器与虚拟机的概念。</p>
+<h2 id="docker的安装方式">docker的安装方式</h2>
+
+<ul>
+<li>linux下安装（分ubuntu，centOS等）：参考官网</li>
+<li>macOS：brew cask install docker</li>
+<li>windows下安装，下载可执行文件一路向下</li>
+</ul>
+
+<p>docker分CE和EE版本，一般个人使用免费的CE版本即可。EE是给企业用的，收钱的哟。</p>
+
+<h2 id="docker中的镜像-容器-和库">docker中的镜像、容器、和库</h2>
+
+<p>docker中的镜像和容器就向类与对象的关系，镜像是源代码，静止不变的，而容器是以镜像为基础再加上运行层的运行时，相当于程序与进程的关系。而库就是我们把docker镜像放置的地方，累似我们把代码放在Github上一样。</p>
+
+<h2 id="docker-命令">docker 命令</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ docker pull 库:<span class="o">[</span>tag<span class="o">]</span> <span class="c1">#拉取或下载镜像，一个镜像有不同的版本，对应不同的tag，如果不加tag，则默认拉取last版本，即最新的版本。</span>
+
+$ docker run -it 镜像名 <span class="c1">#以交互方式运行容器会进入容器内的shell环境</span>
+
+$ docker run -d -p <span class="m">80</span>:80 --name 容器名（任取） 镜像名 <span class="c1"># 以后台方式运行一个并将容器的80端口映射到宿主机的80端口上。</span>
+
+$ docker images 或docker image ls -a <span class="c1">#会展示所有本机内的镜像</span>
+
+$ docker ps -a <span class="c1">#展示所有容器，不管是运行的还是停止的，不带-a显示运行中的容器</span>
+
+$ docker stop 容器ID或名字  <span class="c1">#停止容器</span>
+
+$ docker start 容器ID或名字 <span class="c1">#启动停止的容器</span>
+
+$ docker restart 容器ID或名字  <span class="c1">#重启容器</span>
+
+$ docker rm 容器ID或名字 <span class="c1">#删除容器，删除容器前必须先停止容器</span>
+
+$ docker ps -a -q <span class="c1">#-q 选项可以只打印容器ID，我们可以搭配使用</span>
+如
+
+$ docker rm <span class="k">$(</span>docker ps -a -q<span class="k">)</span> <span class="c1">#可以删除所有容器</span>
+
+$ docker rmi 镜像名或ID <span class="c1">#删除镜像</span>
+
+$ docker system df <span class="c1">#查看实际镜像或容器占用的空间，这里注意我们的镜像占用不是简单的镜像相加，而很多镜像可能用到了公共的基础镜像，或者某些公共层等。</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>docker的镜像都是叠加层的，所以可以更加灵活和复用，不过要注意避免臃肿。</p>
+
+<h2 id="制作我们自己的镜像">制作我们自己的镜像</h2>
+
+<p>在容器使用过程中，我们如果改变了容器内的内容，默认情况下，容器运行层不会保留改变的内容到镜像中，如果我们要保存在容器运行时的改变，可以使用docker commit 命令建立新的镜像。
+不过我们要慎用docker commit，因为命令的执行，还有很多文件被改动或添加了。这还仅仅是最简单的操作，如果是安装软件包、编译构建，那会有大量的无关内容被添加进来，如果不小心清理，将会导致镜像极为臃肿。</p>
+
+<p>此外，使用 docker commit 意味着所有对镜像的操作都是黑箱操作，生成的镜像也被称为黑箱镜像，换句话说，就是除了制作镜像的人知道执行过什么命令、怎么生成的镜像，别人根本无从得知。而且，即使是这个制作镜像的人，过一段时间后也无法记清具体在操作的。</p>
+
+<p>注意： docker commit 命令除了学习之外，还有一些特殊的应用场合，比如被入侵后保存现场等。但是，不要使用 docker commit 定制镜像，定制镜像应该使用 Dockerfile 来完成。</p>
+
+<h3 id="什么是dockerfile文件">什么是dockerfile文件</h3>
+
+<p>镜像的定制实际上就是定制每一层所添加的配置、文件。如果我们可以把每一层修改、安装、构建、操作的命令都写入一个脚本，用这个脚本来构建、定制镜像，那么之前提及的无法重复的问题、镜像构建透明性的问题、体积的问题就都会解决。这个脚本就是 Dockerfile。</p>
+
+<p>dockerfile 文件内容一般为</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">FROM    基础镜像或/scratch <span class="c1">#基础镜像可以是带特定服务或运行环境的如nginx、pythn等，还可以是操作系统镜像如ubuntu、centOS等。此外，还可以是一个空白镜像，所写的RUN将作为镜像的第一层，这种方式实际上很常见，对于linux下静态编译的程序来说，并不需要有操作系统提供运行时支持，所需要的一切库都已经在可执行文件里了。因此直接 FROM scratch 会让镜像体积更加小巧。使用 Go 语言 开发的应用很多会使用这种方式来制作镜像，这也是为什么有人认为 Go 是特别适合容器微服务架构的语言的原因之一。</span>
+
+
+RUN     需要执行的一些shell命令或exec格式的命令
+RUN     <span class="m">2</span> <span class="c1">#RUN的每一层都会建立一个层，这样会产生非常臃肿、非常多层的镜像。</span>
+
+推荐如下写法：
+
+RUN     命令1 <span class="se">\
+</span><span class="se"></span>    <span class="o">&amp;&amp;</span> 命令2 <span class="se">\
+</span><span class="se"></span>    <span class="o">&amp;&amp;</span> 清理命令 <span class="se">\
+</span><span class="se"></span>    ...
+<span class="c1">#  这样就只有一层镜像加在基础镜像上，比较简洁，而且清理了一些无关的东西。</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>```</p>
 
     </div>
 
