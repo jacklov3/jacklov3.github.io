@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>ssh使用密钥免输入密码登陆vps - JackyLove的小窝</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="JackyLove" /><meta name="description" content="ssh使用密钥登陆服务器 起因： 因为最近撸了一大波羊毛，撸了微软的azure和digitalocean的一年羊毛，其中digitalocean" /><meta name="keywords" content="Hugo, code, linux, c&#43;&#43;, python, go, javascript" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.54.0 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://www.jackylove.me/post/ssh%E4%BD%BF%E7%94%A8%E5%AF%86%E9%92%A5%E5%85%8D%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81%E7%99%BB%E9%99%86vps/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="ssh使用密钥免输入密码登陆vps" />
+<meta property="og:description" content="ssh使用密钥登陆服务器 起因： 因为最近撸了一大波羊毛，撸了微软的azure和digitalocean的一年羊毛，其中digitalocean" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.jackylove.me/post/ssh%E4%BD%BF%E7%94%A8%E5%AF%86%E9%92%A5%E5%85%8D%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81%E7%99%BB%E9%99%86vps/" />
+<meta property="article:published_time" content="2019-05-08T16:33:32&#43;08:00"/>
+<meta property="article:modified_time" content="2019-05-08T16:33:32&#43;08:00"/>
+
+<meta itemprop="name" content="ssh使用密钥免输入密码登陆vps">
+<meta itemprop="description" content="ssh使用密钥登陆服务器 起因： 因为最近撸了一大波羊毛，撸了微软的azure和digitalocean的一年羊毛，其中digitalocean">
+
+
+<meta itemprop="datePublished" content="2019-05-08T16:33:32&#43;08:00" />
+<meta itemprop="dateModified" content="2019-05-08T16:33:32&#43;08:00" />
+<meta itemprop="wordCount" content="1537">
+
+
+
+<meta itemprop="keywords" content="vps," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="ssh使用密钥免输入密码登陆vps"/>
+<meta name="twitter:description" content="ssh使用密钥登陆服务器 起因： 因为最近撸了一大波羊毛，撸了微软的azure和digitalocean的一年羊毛，其中digitalocean"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">聚散流沙</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">聚散流沙</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">ssh使用密钥免输入密码登陆vps</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-05-08 </span>
+        <div class="post-category">
+            <a href="/categories/linux/"> linux </a>
+            </div>
+          <span class="more-meta"> 1537 words </span>
+          <span class="more-meta"> 4 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#ssh使用密钥登陆服务器">ssh使用密钥登陆服务器</a>
+<ul>
+<li><a href="#生成密钥对">生成密钥对</a></li>
+<li><a href="#上传公钥到各个服务器上">上传公钥到各个服务器上</a></li>
+<li><a href="#简化配置登陆ssh">简化配置登陆ssh</a></li>
+<li><a href="#禁用root登陆和密码登陆">禁用root登陆和密码登陆</a></li>
+<li><a href="#解决ssh连接长时间不关断开的情况">解决ssh连接长时间不关断开的情况</a></li>
+</ul></li>
+<li><a href="#总结">总结</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="ssh使用密钥登陆服务器">ssh使用密钥登陆服务器</h1>
+
+<p>起因： 因为最近撸了一大波羊毛，撸了微软的azure和digitalocean的一年羊毛，其中digitalocean还送了100刀的优惠（虽然只有两个月），但是白嫖谁不要啊(难受啊，马飞飞😄),太多vps要管理了，我有懒的搭建✈️。密码太多又记不住，所以使用一对密钥，我可以一起管理所有的vps，还比密码登陆安全。本人记性太差了，遂记录一下。</p>
+
+<h2 id="生成密钥对">生成密钥对</h2>
+
+<p>若使用了github生成过密钥对的可以跳过此步骤</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 若你使用macOS或linux等，windos用xshell，putty等生成ssh密钥对</span>
+$ ssh-keygen -t rsa -C <span class="s2">&#34;name&#34;</span>
+<span class="c1"># name可以是邮箱，姓名，随便，不填也行，运行此命令后会在你的家目录的.ssh/目录下生成id_rsa,id_rsa.pub两个文件，看名字就知道了pub是公钥，另一个是私钥。</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="上传公钥到各个服务器上">上传公钥到各个服务器上</h2>
+
+<p>注意私钥要自己小心保存，公钥可以随意给你想ssh连接的服务器。</p>
+
+<p>一般公钥保存在服务器的~/.ssh/authorized_keys里
+要保证 .ssh和authorized_keys都只有用户自己有读写权限，否则验证无效</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 不过一般不用运行这里的命令，拷贝的的时候自动会创建这些文件和目录，并且会分配对应的权限</span>
+$ chmod -R <span class="m">700</span> ~/.ssh/
+$ chmod <span class="m">600</span> ~/.ssh/authorized_keys</code></pre></td></tr></table>
+</div>
+</div>
+<p>上传公钥到服务器</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 用户名可以是自己创建的账户，也可以是root账户，端口一般默认是22的可以不写，但是像瓦工这样的其它端口就要指定了，随后会叫你输入密码，如果输入密码并且确认密码是对的还拷贝公钥失败的话。可能你要先用密码登陆一下vps，因为有的vps提供商要求第一次登陆必须修改密码，随后便再运行下面的拷贝命令即可。</span>
+$ ssh-copy-id 用户名@服务器地址 <span class="o">[</span>-p 端口<span class="o">]</span>
+
+<span class="c1"># 拷贝公钥后，我们在本地就可以直接运行如下命令连接服务器了</span>
+$ ssh 用户名@地址 <span class="o">[</span>-p 端口<span class="o">]</span>
+<span class="c1"># 依旧繁琐，还要记住ip，我们接下来结束简化的配置登陆选项</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="简化配置登陆ssh">简化配置登陆ssh</h2>
+
+<p>从上面我们知道，我们登陆还要记住ip和用户名，很烦，难受😣。不过我们有别的办法呀，我们可以把这些信息记录在.ssh/config文件里,没有就新建一个，它里面的内容如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">Host band
+    HostName &lt;ip地址&gt;
+    Port <span class="m">22</span>
+    User root
+
+Host sgp
+    HostName &lt;ip地址&gt;
+    Port <span class="m">22</span>
+     User root</code></pre></td></tr></table>
+</div>
+</div>
+<p>我们以后就可以使用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ ssh band      <span class="c1"># 连接搬瓦工</span>
+$ ssh sgp       <span class="c1"># 连接新加坡</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>是不是很舒服。😌。</p>
+
+<h2 id="禁用root登陆和密码登陆">禁用root登陆和密码登陆</h2>
+
+<p>如果你很在意自己的服务器安全，可以在服务器端设置如下，我是没有设置，因为我就是一条咸鱼，哪个黑客会来搞我哦，😄。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ vim /etc/ssh/sshd_config
+
+<span class="c1"># 禁用root账户登录，非必要，但为了安全性，请配置</span>
+PermitRootLogin no
+
+<span class="c1"># 是否让 sshd 去检查用户家目录或相关档案的权限数据，这是为了担心使用者将某些重要档案的权限设错，可能会导致一些问题所致。例如使用者的 ~/.ssh/ 权限设错时，某些特殊情况下会不许用户登入</span>
+StrictModes no
+
+<span class="c1"># 是否允许用户自行使用成对的密钥系统进行登入行为，仅针对 version 2。至于自制的公钥数据就放置于用户家目录下的 .ssh/authorized_keys 内</span>
+RSAAuthentication yes
+PubkeyAuthentication yes
+AuthorizedKeysFile %h/.ssh/authorized_keys
+
+<span class="c1"># 有了证书登录了，就禁用密码登录吧，安全要紧</span>
+PasswordAuthentication no</code></pre></td></tr></table>
+</div>
+</div>
+<p>改了文件，记得重启sshd服务</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ service sshd restart</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="解决ssh连接长时间不关断开的情况">解决ssh连接长时间不关断开的情况</h2>
+
+<ul>
+<li><p>修改服务器端参数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ vim /etc/ssh/sshd_config
+<span class="c1"># 添加心跳，即服务器每60秒给客户端发一次保持连接的信号</span>
+ClientAliveInterval  <span class="m">60</span>
+<span class="c1"># 添加断开时间，60次未响应，就断开连接，防止长时间连接</span>
+ClientAliveCountMax  <span class="m">60</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>这对于多个客户端连接一个服务器好，只需要在服务端设置一次即可</p></li>
+
+<li><p>修改客户端参数</p>
+
+<p>对于我这种拥有多个服务器的大佬(破真 来说，我肯定是只修改我本机的心跳啦，不然，那么多服务器你去设置？毛病。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ vim .ssh/config
+<span class="c1"># 一样添加如下信息</span>
+ServerAliveInterval  <span class="m">60</span>
+ServerAliveCountMax  <span class="m">60</span></code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>也可以在使用ssh登陆时设置参数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 如下,不过这么繁琐的事我才不干，我选择第二种方法。</span>
+$ ssh -o <span class="nv">ServerAliveInterval</span><span class="o">=</span><span class="m">30</span> root@192.168.1.1</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="总结">总结</h1></li>
+</ul>
+
+<p>用密钥对来连接即方便又安全，何乐而不为呢？</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">JackyLove</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2019-05-08
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/vps/">vps</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/%E5%9C%A8vps%E4%B8%8A%E5%BC%80%E5%90%AFbbr%E5%8A%A0%E9%80%9F%E7%AE%97%E6%B3%95/">
+            <span class="next-text nav-default">在VPS上开启BBR加速算法</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  <span id="/post/ssh%E4%BD%BF%E7%94%A8%E5%AF%86%E9%92%A5%E5%85%8D%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81%E7%99%BB%E9%99%86vps/" class="leancloud_visitors" data-flag-title="ssh使用密钥免输入密码登陆vps">
+    <span class="post-meta-item-text">文章阅读量 </span>
+    <span class="leancloud-visitors-count">1000000</span>
+    <p></p>
+  </span>
+  <div id="vcomments"></div>
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+  <script type="text/javascript">
+    new Valine({
+        el: '#vcomments' ,
+        appId: 'xPwmFUoHVqraVIVlAt2Xch9M-gzGzoHsz',
+        appKey: 'VP1APko2CdGfydmf7xOplDur',
+        notify:  false , 
+        verify:  false , 
+        avatar:'', 
+        placeholder: '请说点什么吧...',
+        visitor:  true 
+    });
+  </script>
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://stackoverflow.com/users/8640064/jackylove" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/jacklov3" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.instagram.com/jacky1ove/" class="iconfont icon-instagram" title="instagram"></a>
+  <a href="https://www.jackylove.me/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">JackyLove</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

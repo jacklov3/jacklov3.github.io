@@ -3,6 +3,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.jackylove.me/post/ssh%E4%BD%BF%E7%94%A8%E5%AF%86%E9%92%A5%E5%85%8D%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81%E7%99%BB%E9%99%86vps/</loc>
+    <lastmod>2019-05-08T16:33:32+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://www.jackylove.me/post/%E5%9C%A8vps%E4%B8%8A%E5%BC%80%E5%90%AFbbr%E5%8A%A0%E9%80%9F%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2019-05-08T16:16:26+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -136,14 +143,14 @@
   
   <url>
     <loc>https://www.jackylove.me/</loc>
-    <lastmod>2019-05-08T16:16:26+08:00</lastmod>
+    <lastmod>2019-05-08T16:33:32+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://www.jackylove.me/post/</loc>
-    <lastmod>2019-05-08T16:16:26+08:00</lastmod>
+    <lastmod>2019-05-08T16:33:32+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -199,7 +206,7 @@
   
   <url>
     <loc>https://www.jackylove.me/categories/linux/</loc>
-    <lastmod>2019-05-08T16:16:26+08:00</lastmod>
+    <lastmod>2019-05-08T16:33:32+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -213,7 +220,7 @@
   
   <url>
     <loc>https://www.jackylove.me/tags/vps/</loc>
-    <lastmod>2019-05-08T16:16:26+08:00</lastmod>
+    <lastmod>2019-05-08T16:33:32+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

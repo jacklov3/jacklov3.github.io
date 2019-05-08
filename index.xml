@@ -6,10 +6,19 @@
     <description>Recent content on JackyLove的小窝</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 08 May 2019 16:16:26 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 08 May 2019 16:33:32 +0800</lastBuildDate>
     
 	<atom:link href="https://www.jackylove.me/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>ssh使用密钥免输入密码登陆vps</title>
+      <link>https://www.jackylove.me/post/ssh%E4%BD%BF%E7%94%A8%E5%AF%86%E9%92%A5%E5%85%8D%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81%E7%99%BB%E9%99%86vps/</link>
+      <pubDate>Wed, 08 May 2019 16:33:32 +0800</pubDate>
+      
+      <guid>https://www.jackylove.me/post/ssh%E4%BD%BF%E7%94%A8%E5%AF%86%E9%92%A5%E5%85%8D%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81%E7%99%BB%E9%99%86vps/</guid>
+      <description>ssh使用密钥登陆服务器 起因： 因为最近撸了一大波羊毛，撸了微软的azure和digitalocean的一年羊毛，其中digitalocean</description>
+    </item>
     
     <item>
       <title>在VPS上开启BBR加速算法</title>
