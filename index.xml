@@ -6,10 +6,19 @@
     <description>Recent content on JackyLove的小窝</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 05 May 2019 22:55:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 08 May 2019 16:16:26 +0800</lastBuildDate>
     
 	<atom:link href="https://www.jackylove.me/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>在VPS上开启BBR加速算法</title>
+      <link>https://www.jackylove.me/post/%E5%9C%A8vps%E4%B8%8A%E5%BC%80%E5%90%AFbbr%E5%8A%A0%E9%80%9F%E7%AE%97%E6%B3%95/</link>
+      <pubDate>Wed, 08 May 2019 16:16:26 +0800</pubDate>
+      
+      <guid>https://www.jackylove.me/post/%E5%9C%A8vps%E4%B8%8A%E5%BC%80%E5%90%AFbbr%E5%8A%A0%E9%80%9F%E7%AE%97%E6%B3%95/</guid>
+      <description>开启bbr加速算法 我们在购买vps后，装上某科学上网工具后发现速度不行，这时我们可以安装google的拥筛控制算法BBR进行加速，效果你懂的</description>
+    </item>
     
     <item>
       <title>认识Docker</title>
