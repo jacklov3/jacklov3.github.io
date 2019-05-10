@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-05-05T22:55:00&#43;08:00" />
 <meta itemprop="dateModified" content="2019-05-05T22:55:00&#43;08:00" />
-<meta itemprop="wordCount" content="1888">
+<meta itemprop="wordCount" content="2020">
 
 
 
@@ -132,8 +132,8 @@
         <div class="post-category">
             <a href="/categories/linux/"> linux </a>
             </div>
-          <span class="more-meta"> 1888 words </span>
-          <span class="more-meta"> 4 mins read </span>
+          <span class="more-meta"> 2020 words </span>
+          <span class="more-meta"> 5 mins read </span>
         
       </div>
     </header>
@@ -153,6 +153,7 @@
 <ul>
 <li><a href="#什么是dockerfile文件">什么是dockerfile文件</a></li>
 </ul></li>
+<li><a href="#为docker添加镜像加速">为docker添加镜像加速</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -295,6 +296,12 @@ RUN     命令1 <span class="se">\
 <span class="c1">#  这样就只有一层镜像加在基础镜像上，比较简洁，而且清理了一些无关的东西。</span></code></pre></td></tr></table>
 </div>
 </div>
+<p>博大精深，值得慢慢研究。</p>
+
+<h2 id="为docker添加镜像加速">为docker添加镜像加速</h2>
+
+<p>默认的docker的库是dockerhub，在国外，如果你pull一个镜像下来，你会发现，速度很慢，这时，我们就需要在docker的镜像配置文件里添加国内的源。我们可以访问这个网站<a href="https://www.daocloud.io/mirror#accelerator-doc">daoclould</a>来添加我们的源。</p>
+
     </div>
 
     <div class="post-copyright">
