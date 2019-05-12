@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-05-11T22:54:46&#43;08:00" />
 <meta itemprop="dateModified" content="2019-05-11T22:54:46&#43;08:00" />
-<meta itemprop="wordCount" content="201">
+<meta itemprop="wordCount" content="770">
 
 
 
@@ -132,8 +132,8 @@
         <div class="post-category">
             <a href="/categories/tg%E6%9C%BA%E5%99%A8%E4%BA%BA/"> tg机器人 </a>
             </div>
-          <span class="more-meta"> 201 words </span>
-          <span class="more-meta"> 1 min read </span>
+          <span class="more-meta"> 770 words </span>
+          <span class="more-meta"> 2 mins read </span>
         
       </div>
     </header>
@@ -172,6 +172,99 @@
 
 <h2 id="机器人服务端开发">机器人服务端开发</h2>
 
+<p>在tg官网介绍了一些常用的编程语言的关于tg的库，我们可以直接拿来使用，在这里我使用的是python语言来开发机器人的后端，使用的是那个star数比较少的异步库，因为看其它两个库比较啰嗦。所以我使用了这个库来实现。</p>
+
+<p>根据这个库的文档，我们就开始写代码，首先就是考虑写一个简单的天气查询机器人。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">ssl</span>
+
+<span class="kn">import</span> <span class="nn">weather</span>
+<span class="kn">from</span> <span class="nn">aiogram</span> <span class="kn">import</span> <span class="n">Bot</span><span class="p">,</span> <span class="n">Dispatcher</span><span class="p">,</span> <span class="n">executor</span><span class="p">,</span> <span class="n">types</span>
+
+<span class="n">API_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;你的机器人token&#39;</span><span class="p">;</span>
+<span class="c1"># 设置代理，因为本地开发，所以某些不可描述的事情...</span>
+<span class="n">PROXY_URL</span> <span class="o">=</span> <span class="s1">&#39;http://127.0.0.1:8001&#39;</span><span class="p">;</span>
+
+<span class="c1"># 配置日志</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+
+<span class="c1"># 初始化机器人和调度器</span>
+
+<span class="n">bot</span> <span class="o">=</span> <span class="n">Bot</span><span class="p">(</span><span class="n">API_TOKEN</span><span class="p">,</span> <span class="n">proxy</span><span class="o">=</span><span class="n">PROXY_URL</span><span class="p">)</span>
+<span class="n">dp</span> <span class="o">=</span> <span class="n">Dispatcher</span><span class="p">(</span><span class="n">bot</span><span class="p">)</span>
+
+<span class="c1">#处理/start和/help命令</span>
+<span class="nd">@dp.message_handler</span><span class="p">(</span><span class="n">commands</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">,</span><span class="s1">&#39;help&#39;</span><span class="p">])</span>
+<span class="n">async</span> <span class="k">def</span> <span class="nf">send_welcome</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;
+</span><span class="s2">    这个函数将会被回调，当客户端输入&#39;/start&#39;或者&#39;/help&#39;命令时
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="n">await</span> <span class="n">message</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&#34;欢迎来到jacklov3的垃圾机器人</span><span class="se">\n</span><span class="s2">,请问有什么可以帮助您的吗？&#34;</span><span class="p">)</span>
+
+<span class="c1">#处理天气命令，天气的代码放在另一个文件下面了</span>
+<span class="nd">@dp.message_handler</span><span class="p">(</span><span class="n">commands</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;weather&#39;</span><span class="p">])</span>
+<span class="n">async</span> <span class="k">def</span> <span class="nf">re_weather</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="o">==</span><span class="mi">8</span><span class="p">:</span>
+            <span class="n">await</span> <span class="n">message</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s1">&#39;你的用法好像有问题，应该是/weather 北京市&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">await</span> <span class="n">message</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="n">weather</span><span class="o">.</span><span class="n">get_weather</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">1</span><span class="p">]))</span>
+
+<span class="c1"># 处理上面解析不到的东西，返回</span>
+<span class="nd">@dp.message_handler</span><span class="p">()</span>
+<span class="n">async</span> <span class="k">def</span> <span class="nf">echo</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+    <span class="n">await</span> <span class="n">bot</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="nb">id</span><span class="p">,</span> <span class="s1">&#39;辣鸡，会不会用，返回给你:</span><span class="se">\t</span><span class="s1">&#39;</span><span class="o">+</span><span class="n">message</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+<span class="c1">#启动机器人服务</span>
+<span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span><span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">executor</span><span class="o">.</span><span class="n">start_polling</span><span class="p">(</span><span class="n">dp</span><span class="p">,</span> <span class="n">skip_updates</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
     </div>
 
     <div class="post-copyright">
