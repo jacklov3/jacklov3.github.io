@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-05-11T22:54:46&#43;08:00" />
 <meta itemprop="dateModified" content="2019-05-11T22:54:46&#43;08:00" />
-<meta itemprop="wordCount" content="770">
+<meta itemprop="wordCount" content="1855">
 
 
 
@@ -132,8 +132,8 @@
         <div class="post-category">
             <a href="/categories/tg%E6%9C%BA%E5%99%A8%E4%BA%BA/"> tg机器人 </a>
             </div>
-          <span class="more-meta"> 770 words </span>
-          <span class="more-meta"> 2 mins read </span>
+          <span class="more-meta"> 1855 words </span>
+          <span class="more-meta"> 4 mins read </span>
         
       </div>
     </header>
@@ -147,6 +147,7 @@
 <ul>
 <li><a href="#创建机器人">创建机器人</a></li>
 <li><a href="#机器人服务端开发">机器人服务端开发</a></li>
+<li><a href="#总结">总结</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -228,7 +229,7 @@
 <span class="kn">from</span> <span class="nn">aiogram</span> <span class="kn">import</span> <span class="n">Bot</span><span class="p">,</span> <span class="n">Dispatcher</span><span class="p">,</span> <span class="n">executor</span><span class="p">,</span> <span class="n">types</span>
 
 <span class="n">API_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;你的机器人token&#39;</span><span class="p">;</span>
-<span class="c1"># 设置代理，因为本地开发，所以某些不可描述的事情...</span>
+<span class="c1"># 设置代理，因为本地开发，所以某些不可描述的事情...，如果你要部署到vps上则需要把这个本地代理服务器删除了。</span>
 <span class="n">PROXY_URL</span> <span class="o">=</span> <span class="s1">&#39;http://127.0.0.1:8001&#39;</span><span class="p">;</span>
 
 <span class="c1"># 配置日志</span>
@@ -265,6 +266,83 @@
     <span class="n">executor</span><span class="o">.</span><span class="n">start_polling</span><span class="p">(</span><span class="n">dp</span><span class="p">,</span> <span class="n">skip_updates</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span></code></pre></td></tr></table>
 </div>
 </div>
+<p>weather.py文件用来实现查询天气的功能，这样主文件只需添加各个功能命令的处理即可，比如你以后可以创建查快递啊，聊天功能啊等。进一步丰富。完美的一匹😄。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="c1">#这里我们使用openweathermap的天气api，免费的。如果不用api的话，那就要用爬虫来解决，那就要更多的一些操作了。</span>
+<span class="n">URL</span><span class="o">=</span><span class="s1">&#39;http://api.openweathermap.org/data/2.5/weather?units=metric&amp;APPID=你的APPID&amp;lang=zh_cn&amp;q=&#39;</span>
+
+
+<span class="k">def</span> <span class="nf">get_weather</span><span class="p">(</span><span class="n">city</span><span class="p">):</span>
+        <span class="s2">&#34;&#34;&#34;
+</span><span class="s2">        根据输入的城市名获取天气
+</span><span class="s2">        :param city:
+</span><span class="s2">        :param length:
+</span><span class="s2">        :return:
+</span><span class="s2">        &#34;&#34;&#34;</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">URL</span><span class="o">+</span><span class="n">city</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;cod&#39;</span><span class="p">]</span> <span class="o">!=</span><span class="mi">200</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;哦豁，好像没有查到您要的信息,请从新检查输入的格式。&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">hello</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> 当前的天气状况为:</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">city</span>
+            <span class="n">coord</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">经度:</span><span class="si">%s</span><span class="s1">  纬度:</span><span class="si">%s</span><span class="se">\t\n</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;coord&#39;</span><span class="p">][</span><span class="s1">&#39;lon&#39;</span><span class="p">],</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;coord&#39;</span><span class="p">][</span><span class="s1">&#39;lat&#39;</span><span class="p">])</span>
+            <span class="n">weather</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">天气状况:</span><span class="si">%s</span><span class="s1">  描述:</span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;weather&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;main&#39;</span><span class="p">],</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;weather&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;description&#39;</span><span class="p">])</span>
+            <span class="n">ma</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">温度:</span><span class="si">%s</span><span class="s1">  大气压力:</span><span class="si">%s</span><span class="s1">  湿度:</span><span class="si">%s</span><span class="s1">  最低温度:</span><span class="si">%s</span><span class="s1">  最高温度:</span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;main&#39;</span><span class="p">][</span><span class="s1">&#39;temp&#39;</span><span class="p">],</span>
+                <span class="n">r</span><span class="p">[</span><span class="s1">&#39;main&#39;</span><span class="p">][</span><span class="s1">&#39;pressure&#39;</span><span class="p">],</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;main&#39;</span><span class="p">][</span><span class="s1">&#39;humidity&#39;</span><span class="p">],</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;main&#39;</span><span class="p">][</span><span class="s1">&#39;temp_min&#39;</span><span class="p">],</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;main&#39;</span><span class="p">][</span><span class="s1">&#39;temp_max&#39;</span><span class="p">])</span>
+
+            <span class="n">wind</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">风速:</span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;wind&#39;</span><span class="p">][</span><span class="s1">&#39;speed&#39;</span><span class="p">])</span>
+            <span class="n">clouds</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">云量:</span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;clouds&#39;</span><span class="p">]</span>
+            <span class="n">dt</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">数据计算时间:</span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;dt&#39;</span><span class="p">]</span>
+            <span class="n">sys</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">国家代码:</span><span class="si">%s</span><span class="s1">  日出时间:</span><span class="si">%s</span><span class="s1">  日落时间:</span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;sys&#39;</span><span class="p">][</span><span class="s1">&#39;country&#39;</span><span class="p">],</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;sys&#39;</span><span class="p">][</span><span class="s1">&#39;sunrise&#39;</span><span class="p">],</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;sys&#39;</span><span class="p">][</span><span class="s1">&#39;sunset&#39;</span><span class="p">])</span>
+
+            <span class="n">weather_now</span> <span class="o">=</span> <span class="n">hello</span><span class="o">+</span><span class="n">coord</span><span class="o">+</span><span class="n">weather</span><span class="o">+</span><span class="n">ma</span><span class="o">+</span><span class="n">wind</span><span class="o">+</span><span class="n">clouds</span><span class="o">+</span><span class="n">dt</span><span class="o">+</span><span class="n">sys</span>
+            <span class="k">return</span> <span class="n">weather_now</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">get_weather</span><span class="p">(</span><span class="s1">&#39;杭州市&#39;</span><span class="p">))</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="总结">总结</h2>
+
+<p>tg机器人的开发还是比较简单的，关键在于你想提供的功能和使用的一些库是否简洁方便等。</p>
+
     </div>
 
     <div class="post-copyright">
