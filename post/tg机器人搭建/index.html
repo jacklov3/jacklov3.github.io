@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-05-11T22:54:46&#43;08:00" />
 <meta itemprop="dateModified" content="2019-05-11T22:54:46&#43;08:00" />
-<meta itemprop="wordCount" content="1855">
+<meta itemprop="wordCount" content="1850">
 
 
 
@@ -132,7 +132,7 @@
         <div class="post-category">
             <a href="/categories/tg%E6%9C%BA%E5%99%A8%E4%BA%BA/"> tg机器人 </a>
             </div>
-          <span class="more-meta"> 1855 words </span>
+          <span class="more-meta"> 1850 words </span>
           <span class="more-meta"> 4 mins read </span>
         
       </div>
@@ -220,6 +220,7 @@
 </span><span class="lnt">40
 </span><span class="lnt">41
 </span><span class="lnt">42
+</span><span class="lnt">43
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">logging</span>
@@ -227,8 +228,9 @@
 
 <span class="kn">import</span> <span class="nn">weather</span>
 <span class="kn">from</span> <span class="nn">aiogram</span> <span class="kn">import</span> <span class="n">Bot</span><span class="p">,</span> <span class="n">Dispatcher</span><span class="p">,</span> <span class="n">executor</span><span class="p">,</span> <span class="n">types</span>
-
-<span class="n">API_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;你的机器人token&#39;</span><span class="p">;</span>
+<span class="kn">from</span> <span class="nn">config</span> <span class="kn">import</span> <span class="n">API_TOKEN</span>
+<span class="c1"># 这里推荐在config.py配置文件或环境变量换取token，开源项目config.py不加入版本控制即可。</span>
+<span class="c1"># API_TOKEN = &#39;你的机器人token&#39;;</span>
 <span class="c1"># 设置代理，因为本地开发，所以某些不可描述的事情...，如果你要部署到vps上则需要把这个本地代理服务器删除了。</span>
 <span class="n">PROXY_URL</span> <span class="o">=</span> <span class="s1">&#39;http://127.0.0.1:8001&#39;</span><span class="p">;</span>
 
@@ -305,9 +307,9 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">requests</span>
-
+<span class="kn">from</span> <span class="nn">config.py</span> <span class="kn">import</span> <span class="n">APPID</span>
 <span class="c1">#这里我们使用openweathermap的天气api，免费的。如果不用api的话，那就要用爬虫来解决，那就要更多的一些操作了。</span>
-<span class="n">URL</span><span class="o">=</span><span class="s1">&#39;http://api.openweathermap.org/data/2.5/weather?units=metric&amp;APPID=你的APPID&amp;lang=zh_cn&amp;q=&#39;</span>
+<span class="n">URL</span><span class="o">=</span><span class="s1">&#39;http://api.openweathermap.org/data/2.5/weather?units=metric&amp;APPID=</span><span class="si">%s</span><span class="s1">&amp;lang=zh_cn&amp;q=&#39;</span><span class="o">%</span><span class="n">APPID</span>
 
 
 <span class="k">def</span> <span class="nf">get_weather</span><span class="p">(</span><span class="n">city</span><span class="p">):</span>
@@ -341,7 +343,7 @@
 </div>
 <h2 id="总结">总结</h2>
 
-<p>tg机器人的开发还是比较简单的，关键在于你想提供的功能和使用的一些库是否简洁方便等。</p>
+<p>tg机器人的开发还是比较简单的，关键在于你想提供的功能和使用的一些库是否简洁方便等,后面的功能就是类似的了，可以添加一些查快递啊，ip啊，文件转换，音乐，电影查找啥的。</p>
 
     </div>
 
