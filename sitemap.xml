@@ -3,6 +3,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.jackylove.me/post/%E4%BD%BF%E7%94%A8django%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99/</loc>
+    <lastmod>2019-05-31T22:01:06+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://www.jackylove.me/post/python3%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
     <lastmod>2019-05-23T21:44:57+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -157,14 +164,14 @@
   
   <url>
     <loc>https://www.jackylove.me/</loc>
-    <lastmod>2019-05-23T21:44:57+08:00</lastmod>
+    <lastmod>2019-05-31T22:01:06+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://www.jackylove.me/post/</loc>
-    <lastmod>2019-05-23T21:44:57+08:00</lastmod>
+    <lastmod>2019-05-31T22:01:06+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -212,13 +219,6 @@
   </url>
   
   <url>
-    <loc>https://www.jackylove.me/categories/linux/</loc>
-    <lastmod>2019-05-08T16:33:32+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://www.jackylove.me/tags/linux/</loc>
     <lastmod>2019-04-29T23:45:41+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -226,8 +226,15 @@
   </url>
   
   <url>
+    <loc>https://www.jackylove.me/categories/linux/</loc>
+    <lastmod>2019-05-08T16:33:32+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://www.jackylove.me/tags/python/</loc>
-    <lastmod>2019-05-23T21:44:57+08:00</lastmod>
+    <lastmod>2019-05-31T22:01:06+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -249,6 +256,13 @@
   <url>
     <loc>https://www.jackylove.me/tags/vps/</loc>
     <lastmod>2019-05-08T16:33:32+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.jackylove.me/categories/web%E5%BC%80%E5%8F%91/</loc>
+    <lastmod>2019-05-31T22:01:06+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
