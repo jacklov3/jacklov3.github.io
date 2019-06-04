@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-05-05T22:55:00&#43;08:00" />
 <meta itemprop="dateModified" content="2019-05-05T22:55:00&#43;08:00" />
-<meta itemprop="wordCount" content="2020">
+<meta itemprop="wordCount" content="2217">
 
 
 
@@ -132,7 +132,7 @@
         <div class="post-category">
             <a href="/categories/linux/"> linux </a>
             </div>
-          <span class="more-meta"> 2020 words </span>
+          <span class="more-meta"> 2217 words </span>
           <span class="more-meta"> 5 mins read </span>
         
       </div>
@@ -279,6 +279,16 @@ $ docker system df <span class="c1">#查看实际镜像或容器占用的空间�
 </span><span class="lnt">11
 </span><span class="lnt">12
 </span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-bash" data-lang="bash">FROM    基础镜像或/scratch <span class="c1">#基础镜像可以是带特定服务或运行环境的如nginx、pythn等，还可以是操作系统镜像如ubuntu、centOS等。此外，还可以是一个空白镜像，所写的RUN将作为镜像的第一层，这种方式实际上很常见，对于linux下静态编译的程序来说，并不需要有操作系统提供运行时支持，所需要的一切库都已经在可执行文件里了。因此直接 FROM scratch 会让镜像体积更加小巧。使用 Go 语言 开发的应用很多会使用这种方式来制作镜像，这也是为什么有人认为 Go 是特别适合容器微服务架构的语言的原因之一。</span>
@@ -293,7 +303,17 @@ RUN     命令1 <span class="se">\
 </span><span class="se"></span>    <span class="o">&amp;&amp;</span> 命令2 <span class="se">\
 </span><span class="se"></span>    <span class="o">&amp;&amp;</span> 清理命令 <span class="se">\
 </span><span class="se"></span>    ...
-<span class="c1">#  这样就只有一层镜像加在基础镜像上，比较简洁，而且清理了一些无关的东西。</span></code></pre></td></tr></table>
+<span class="c1">#  这样就只有一层镜像加在基础镜像上，比较简洁，而且清理了一些无关的东西。</span>
+
+<span class="c1">#此命令是在容器运行时执行的，而上面的RUN是在构建镜像时运行的，相当于docker run时指定要运行的命令一样。docker run命令行中指定的命令参数会覆盖CMD指令</span>
+<span class="c1">#多条CMD指令存在时也只会使用最后一条</span>
+CMD <span class="o">[</span><span class="s2">&#34;/bin/bash&#34;</span>,<span class="s2">&#34;-c&#34;</span><span class="o">]</span>
+
+<span class="c1">#容器入口点，命令和CMD类似，但是区别是，docker run指定的参数会被当作参数传递给ENTRYPOINT指定的命令中</span>
+ENTRYPOINT <span class="o">[</span><span class="s2">&#34;/usr/sbin/nginx&#34;</span><span class="o">]</span>
+
+<span class="c1"># 设置当前工作目录，相当于cd</span>
+WORKDIR /app</code></pre></td></tr></table>
 </div>
 </div>
 <p>博大精深，值得慢慢研究。</p>
