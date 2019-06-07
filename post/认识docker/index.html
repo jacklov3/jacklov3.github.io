@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-05-05T22:55:00&#43;08:00" />
 <meta itemprop="dateModified" content="2019-05-05T22:55:00&#43;08:00" />
-<meta itemprop="wordCount" content="2217">
+<meta itemprop="wordCount" content="2510">
 
 
 
@@ -132,8 +132,8 @@
         <div class="post-category">
             <a href="/categories/linux/"> linux </a>
             </div>
-          <span class="more-meta"> 2217 words </span>
-          <span class="more-meta"> 5 mins read </span>
+          <span class="more-meta"> 2510 words </span>
+          <span class="more-meta"> 6 mins read </span>
         
       </div>
     </header>
@@ -289,6 +289,11 @@ $ docker system df <span class="c1">#查看实际镜像或容器占用的空间�
 </span><span class="lnt">21
 </span><span class="lnt">22
 </span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-bash" data-lang="bash">FROM    基础镜像或/scratch <span class="c1">#基础镜像可以是带特定服务或运行环境的如nginx、pythn等，还可以是操作系统镜像如ubuntu、centOS等。此外，还可以是一个空白镜像，所写的RUN将作为镜像的第一层，这种方式实际上很常见，对于linux下静态编译的程序来说，并不需要有操作系统提供运行时支持，所需要的一切库都已经在可执行文件里了。因此直接 FROM scratch 会让镜像体积更加小巧。使用 Go 语言 开发的应用很多会使用这种方式来制作镜像，这也是为什么有人认为 Go 是特别适合容器微服务架构的语言的原因之一。</span>
@@ -313,9 +318,20 @@ CMD <span class="o">[</span><span class="s2">&#34;/bin/bash&#34;</span>,<span cl
 ENTRYPOINT <span class="o">[</span><span class="s2">&#34;/usr/sbin/nginx&#34;</span><span class="o">]</span>
 
 <span class="c1"># 设置当前工作目录，相当于cd</span>
-WORKDIR /app</code></pre></td></tr></table>
+WORKDIR /app
+
+<span class="c1">#拷贝上下文所有东西到容器目录/app内</span>
+COPY . /app
+<span class="c1">#类似上面的命令，但是如果有压缩文件的话会自动解压</span>
+ADD . /app</code></pre></td></tr></table>
 </div>
 </div>
+<p>##docker三剑客
+一个dockerfile文件用于建立一个docker镜像，但是很多服务需要很多程序搭配干活，比如web项目，可能需要web服务器和后端程序和数据库一起干活。
+nginx+python+mysql等。这些服务虽然可以一起放在一个docker里面，但是终归是不太好的事情。最好的体验是一个docker跑一个程序。然后使用一些编排程序把这个docker
+编排起来运行。
+其中docker-compose就是这样一种程序，用来管理和启动多docker来运行一个项目。</p>
+
 <p>博大精深，值得慢慢研究。</p>
 
 <h2 id="为docker添加镜像加速">为docker添加镜像加速</h2>
