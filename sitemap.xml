@@ -3,6 +3,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.jackylove.me/post/python%E7%88%AC%E8%99%AB%E6%A6%82%E8%BF%B0/</loc>
+    <lastmod>2019-06-10T21:49:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://www.jackylove.me/post/%E4%BD%BF%E7%94%A8django%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99/</loc>
     <lastmod>2019-05-31T22:01:06+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -164,14 +171,14 @@
   
   <url>
     <loc>https://www.jackylove.me/</loc>
-    <lastmod>2019-05-31T22:01:06+08:00</lastmod>
+    <lastmod>2019-06-10T21:49:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://www.jackylove.me/post/</loc>
-    <lastmod>2019-05-31T22:01:06+08:00</lastmod>
+    <lastmod>2019-06-10T21:49:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -234,7 +241,7 @@
   
   <url>
     <loc>https://www.jackylove.me/tags/python/</loc>
-    <lastmod>2019-05-31T22:01:06+08:00</lastmod>
+    <lastmod>2019-06-10T21:49:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -297,7 +304,7 @@
   
   <url>
     <loc>https://www.jackylove.me/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/</loc>
-    <lastmod>2019-05-23T21:44:57+08:00</lastmod>
+    <lastmod>2019-06-10T21:49:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

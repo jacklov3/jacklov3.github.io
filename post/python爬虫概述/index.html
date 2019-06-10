@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>使用django开发个人博客网站 - JackyLove的小窝</title>
+  <title>Python爬虫概述 - JackyLove的小窝</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="JackyLove" /><meta name="description" content="使用Django开发个人博客网站 花半天时间看了下django这个python的web领域独一无二的霸主web框架，走了下流程，发现还是对用户" /><meta name="keywords" content="Hugo, code, linux, c&#43;&#43;, python, go, javascript" />
+<meta name="author" content="JackyLove" /><meta name="description" content="爬虫 对于网络爬虫，这是一个很普遍的东西。在别的语言如java，js中也有。网络世界中的数据杂乱无章，我们需要提取其中的数据并整理成我们需要的" /><meta name="keywords" content="Hugo, code, linux, c&#43;&#43;, python, go, javascript" />
 
 
 
@@ -26,7 +26,7 @@
 <meta name="generator" content="Hugo 0.54.0 with even 4.0.0" />
 
 
-<link rel="canonical" href="https://www.jackylove.me/post/%E4%BD%BF%E7%94%A8django%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99/" />
+<link rel="canonical" href="https://www.jackylove.me/post/python%E7%88%AC%E8%99%AB%E6%A6%82%E8%BF%B0/" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -38,27 +38,27 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="使用django开发个人博客网站" />
-<meta property="og:description" content="使用Django开发个人博客网站 花半天时间看了下django这个python的web领域独一无二的霸主web框架，走了下流程，发现还是对用户" />
+<meta property="og:title" content="Python爬虫概述" />
+<meta property="og:description" content="爬虫 对于网络爬虫，这是一个很普遍的东西。在别的语言如java，js中也有。网络世界中的数据杂乱无章，我们需要提取其中的数据并整理成我们需要的" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://www.jackylove.me/post/%E4%BD%BF%E7%94%A8django%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99/" />
-<meta property="article:published_time" content="2019-05-31T22:01:06&#43;08:00"/>
-<meta property="article:modified_time" content="2019-05-31T22:01:06&#43;08:00"/>
+<meta property="og:url" content="https://www.jackylove.me/post/python%E7%88%AC%E8%99%AB%E6%A6%82%E8%BF%B0/" />
+<meta property="article:published_time" content="2019-06-10T21:49:19&#43;08:00"/>
+<meta property="article:modified_time" content="2019-06-10T21:49:19&#43;08:00"/>
 
-<meta itemprop="name" content="使用django开发个人博客网站">
-<meta itemprop="description" content="使用Django开发个人博客网站 花半天时间看了下django这个python的web领域独一无二的霸主web框架，走了下流程，发现还是对用户">
+<meta itemprop="name" content="Python爬虫概述">
+<meta itemprop="description" content="爬虫 对于网络爬虫，这是一个很普遍的东西。在别的语言如java，js中也有。网络世界中的数据杂乱无章，我们需要提取其中的数据并整理成我们需要的">
 
 
-<meta itemprop="datePublished" content="2019-05-31T22:01:06&#43;08:00" />
-<meta itemprop="dateModified" content="2019-05-31T22:01:06&#43;08:00" />
-<meta itemprop="wordCount" content="502">
+<meta itemprop="datePublished" content="2019-06-10T21:49:19&#43;08:00" />
+<meta itemprop="dateModified" content="2019-06-10T21:49:19&#43;08:00" />
+<meta itemprop="wordCount" content="154">
 
 
 
 <meta itemprop="keywords" content="python," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="使用django开发个人博客网站"/>
-<meta name="twitter:description" content="使用Django开发个人博客网站 花半天时间看了下django这个python的web领域独一无二的霸主web框架，走了下流程，发现还是对用户"/>
+<meta name="twitter:title" content="Python爬虫概述"/>
+<meta name="twitter:description" content="爬虫 对于网络爬虫，这是一个很普遍的东西。在别的语言如java，js中也有。网络世界中的数据杂乱无章，我们需要提取其中的数据并整理成我们需要的"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -125,15 +125,15 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">使用django开发个人博客网站</h1>
+      <h1 class="post-title">Python爬虫概述</h1>
 
       <div class="post-meta">
-        <span class="post-time"> 2019-05-31 </span>
+        <span class="post-time"> 2019-06-10 </span>
         <div class="post-category">
-            <a href="/categories/web%E5%BC%80%E5%8F%91/"> web开发 </a>
+            <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/"> 编程语言 </a>
             </div>
-          <span class="more-meta"> 502 words </span>
-          <span class="more-meta"> 2 mins read </span>
+          <span class="more-meta"> 154 words </span>
+          <span class="more-meta"> 1 min read </span>
         
       </div>
     </header>
@@ -143,9 +143,9 @@
   <div class="post-toc-content">
     <nav id="TableOfContents">
 <ul>
-<li><a href="#使用django开发个人博客网站">使用Django开发个人博客网站</a>
+<li><a href="#爬虫">爬虫</a>
 <ul>
-<li><a href="#django的基本流程">django的基本流程</a></li>
+<li><a href="#网络爬虫的主要步骤">网络爬虫的主要步骤</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -154,21 +154,19 @@
     <div class="post-content">
       
 
-<h1 id="使用django开发个人博客网站">使用Django开发个人博客网站</h1>
+<h1 id="爬虫">爬虫</h1>
 
-<p>花半天时间看了下django这个python的web领域独一无二的霸主web框架，走了下流程，发现还是对用户挺友好的。作为一个大而全的框架，里面的功能强大，但是同时又使其失去了灵活性。但是国际上很多大网站如YouTube、instgram等都使用django来开发，肯定还是有它的魅力的。对于个人博客网站来说，使用django来开发应该说是一个挺好的选择，因为一个个人博客的开发不需要太多的灵活性，我们使用django应该能很快的开发吧。</p>
+<p>对于网络爬虫，这是一个很普遍的东西。在别的语言如java，js中也有。网络世界中的数据杂乱无章，我们需要提取其中的数据并整理成我们需要的格式，这就是网络爬虫的
+基本概念。</p>
 
-<h2 id="django的基本流程">django的基本流程</h2>
+<h2 id="网络爬虫的主要步骤">网络爬虫的主要步骤</h2>
 
-<p>在django中充分展现了它的mvc架构，在django中其中的C控制器有django自己搞定，不需要开发者自己去做。可以说它是MTV，其中M是模型，T是模版，V是视图。
-模型是orm映射的数据表类，使用orm我们可以更好地操作数据库。
-T模版是django中使用的模版语法，能更好的动态改变网页的显示效果。
-V是视图，视图函数或视图类是用来对应URL的处理的，它接受请求，并返回响应。</p>
-
-<p>在django中使用应用来更好地便是一个web应用，使得其重用性更好。这就是热插拔作用。</p>
-
-<p>TODO
-想使用django来开发一个个人博客系统。</p>
+<ol>
+<li>通过url获取网页页面信息</li>
+<li>根据正则表达式或者一些html解析方法提取我们需要的内容</li>
+<li>整理，存储提出的内容</li>
+<li>将内容用作它用。</li>
+</ol>
 
     </div>
 
@@ -180,7 +178,7 @@ V是视图，视图函数或视图类是用来对应URL的处理的，它接受�
   <p class="copyright-item">
     <span class="item-title">LastMod</span>
     <span class="item-content">
-        2019-05-31
+        2019-06-10
         
     </span>
   </p>
@@ -192,13 +190,9 @@ V是视图，视图函数或视图类是用来对应URL的处理的，它接受�
           <a href="/tags/python/">python</a>
           </div>
       <nav class="post-nav">
-        <a class="prev" href="/post/python%E7%88%AC%E8%99%AB%E6%A6%82%E8%BF%B0/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">Python爬虫概述</span>
-            <span class="prev-text nav-mobile">Prev</span>
-          </a>
-        <a class="next" href="/post/python3%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93/">
-            <span class="next-text nav-default">Python3连接数据库</span>
+        
+        <a class="next" href="/post/%E4%BD%BF%E7%94%A8django%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99/">
+            <span class="next-text nav-default">使用django开发个人博客网站</span>
             <span class="next-text nav-mobile">Next</span>
             <i class="iconfont icon-right"></i>
           </a>
@@ -207,7 +201,7 @@ V是视图，视图函数或视图类是用来对应URL的处理的，它接受�
   </article>
         </div>
         
-  <span id="/post/%E4%BD%BF%E7%94%A8django%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99/" class="leancloud_visitors" data-flag-title="使用django开发个人博客网站">
+  <span id="/post/python%E7%88%AC%E8%99%AB%E6%A6%82%E8%BF%B0/" class="leancloud_visitors" data-flag-title="Python爬虫概述">
     <span class="post-meta-item-text">文章阅读量 </span>
     <span class="leancloud-visitors-count">1000000</span>
     <p></p>
