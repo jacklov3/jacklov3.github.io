@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-06-10T21:49:19&#43;08:00" />
 <meta itemprop="dateModified" content="2019-06-10T21:49:19&#43;08:00" />
-<meta itemprop="wordCount" content="316">
+<meta itemprop="wordCount" content="494">
 
 
 
@@ -132,7 +132,7 @@
         <div class="post-category">
             <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/"> 编程语言 </a>
             </div>
-          <span class="more-meta"> 316 words </span>
+          <span class="more-meta"> 494 words </span>
           <span class="more-meta"> 1 min read </span>
         
       </div>
@@ -157,8 +157,7 @@
 
 <h1 id="爬虫">爬虫</h1>
 
-<p>对于网络爬虫，这是一个很普遍的东西。在别的语言如java，js中也有。网络世界中的数据杂乱无章，我们需要提取其中的数据并整理成我们需要的格式，这就是网络爬虫的
-基本概念。</p>
+<p>对于网络爬虫，这是一个很普遍的东西。在别的语言如java，js中也有。网络世界中的数据杂乱无章，我们需要提取其中的数据并整理成我们需要的格式，这就是网络爬虫的基本概念。</p>
 
 <h2 id="网络爬虫的主要步骤">网络爬虫的主要步骤</h2>
 
@@ -172,8 +171,39 @@
 <h2 id="python库的使用">python库的使用</h2>
 
 <p>对于http的访问，我们无需从底层开始开发，许多语言都有相应的库。python也不例外。这里只推荐python3的库。因为python2将要在2020年1月1号就不被支持了。
-python标准库中有用于http请求和处理的库是urllib和urllib3.当然这里好友使用更友好的requests第三方库。</p>
+python标准库中有用于http请求和处理的库是urllib和urllib3.当然这里可以使用对用户更友好的requests第三方库。</p>
 
+<ul>
+<li>urllib库的使用</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python">  <span class="kn">from</span> <span class="nn">urllib</span> <span class="kn">import</span> <span class="n">request</span>
+  
+  <span class="c1">#打开百度首页，返回一个response对象</span>
+  <span class="n">response</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s1">&#39;https://www.baidu.com&#39;</span><span class="p">)</span>
+  <span class="c1">#输出百度首页的文本，read方法读取的是byte字节，需要解码，用的编码格式需要看网页的编码。</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+  <span class="c1">#此外response对象还有其它属性和方法，如status和getheaders（）等</span>
+  <span class="c1">#获取响应的状态码，通过与200判断是否请求成功</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
+  <span class="c1">#获取响应头</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">getheaders</span><span class="p">())</span></code></pre></td></tr></table>
+</div>
+</div>
     </div>
 
     <div class="post-copyright">
