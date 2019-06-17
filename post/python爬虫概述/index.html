@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-06-10T21:49:19&#43;08:00" />
 <meta itemprop="dateModified" content="2019-06-10T21:49:19&#43;08:00" />
-<meta itemprop="wordCount" content="687">
+<meta itemprop="wordCount" content="1010">
 
 
 
@@ -132,8 +132,8 @@
         <div class="post-category">
             <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/"> 编程语言 </a>
             </div>
-          <span class="more-meta"> 687 words </span>
-          <span class="more-meta"> 2 mins read </span>
+          <span class="more-meta"> 1010 words </span>
+          <span class="more-meta"> 3 mins read </span>
         
       </div>
     </header>
@@ -147,6 +147,9 @@
 <ul>
 <li><a href="#网络爬虫的主要步骤">网络爬虫的主要步骤</a></li>
 <li><a href="#python库的使用">python库的使用</a></li>
+<li><a href="#对于返回的网页中中文编码错误问题">对于返回的网页中中文编码错误问题</a></li>
+<li><a href="#对于爬虫程序中最主要的限制性能的方面主要又3个方面">对于爬虫程序中最主要的限制性能的方面主要又3个方面</a></li>
+<li><a href="#处理数据">处理数据</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -204,9 +207,19 @@ python标准库中有用于http请求和处理的库是urllib和urllib3.当然�
   <span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">getheaders</span><span class="p">())</span></code></pre></td></tr></table>
 </div>
 </div>
-<p>### 对于返回的网页中中文编码错误问题</p>
+<h2 id="对于返回的网页中中文编码错误问题">对于返回的网页中中文编码错误问题</h2>
 
 <p>《HTTP权威指南》里第16章国际化里提到，如果HTTP响应中Content-Type字段没有指定charset，则默认页面是’ISO-8859-1’编码。这处理英文页面当然没有问题，但是中文页面，就会有乱码了！所以有时候，我们需要查看响应头，如果里面的content-type中没有字符编码，我们可能就需要把返回的字节通过网页中声明的字符编码给解码。</p>
+
+<h2 id="对于爬虫程序中最主要的限制性能的方面主要又3个方面">对于爬虫程序中最主要的限制性能的方面主要又3个方面</h2>
+
+<p>1.页面解析速度: 对于HTML这种结构化的格式，用正则表达式显然是最慢的，一般都使用第三方库，比如beautifulsoup4、lxml(xpath)、pyquery等。其中lxml是由c语言写的，速度最快。
+2.网络IO: 这里主要是网络IO的速度本来就慢，我们可以使用多线程或者协程的方式来加快速度。
+3.本地IO: 对于需要写入本地的爬虫程序，我们可以用一些速度快的数据库，比如Redis内存数据库。</p>
+
+<h2 id="处理数据">处理数据</h2>
+
+<p>对于爬取的数据，它肯定是有价值的。比如我们使用该数据来进行分析，或者提供服务，我们又可以使用一些科学数据分析的框架进行数据分析。我们还可以搭建一些微服务框架来给我们的系统提供数据api服务等。</p>
 
     </div>
 
