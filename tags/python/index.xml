@@ -6,10 +6,19 @@
     <description>Recent content in python on JackyLove的小窝</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 20 Jun 2019 10:07:57 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 21 Jun 2019 11:15:10 +0800</lastBuildDate>
     
 	<atom:link href="https://www.jackylove.me/tags/python/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>同步与异步、阻塞与非阻塞</title>
+      <link>https://www.jackylove.me/post/%E5%90%8C%E6%AD%A5%E4%B8%8E%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E4%B8%8E%E9%9D%9E%E9%98%BB%E5%A1%9E/</link>
+      <pubDate>Fri, 21 Jun 2019 11:15:10 +0800</pubDate>
+      
+      <guid>https://www.jackylove.me/post/%E5%90%8C%E6%AD%A5%E4%B8%8E%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E4%B8%8E%E9%9D%9E%E9%98%BB%E5%A1%9E/</guid>
+      <description>同步与异步、阻塞与非阻塞的区别 对不这些概念的理解，网上查询了下，不同的人有不同的理解，有些差别很大。 这里主要是给出我自己的理解，如果与大家不</description>
+    </item>
     
     <item>
       <title>Python3进阶笔记</title>

@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-06-10T21:49:19&#43;08:00" />
 <meta itemprop="dateModified" content="2019-06-10T21:49:19&#43;08:00" />
-<meta itemprop="wordCount" content="1041">
+<meta itemprop="wordCount" content="1043">
 
 
 
@@ -132,7 +132,7 @@
         <div class="post-category">
             <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/"> 编程语言 </a>
             </div>
-          <span class="more-meta"> 1041 words </span>
+          <span class="more-meta"> 1043 words </span>
           <span class="more-meta"> 3 mins read </span>
         
       </div>
@@ -208,16 +208,22 @@ python标准库中有用于http请求和处理的库是urllib和urllib3.当然�
 </div>
 </div>
 <ul>
-<li>requests第三方库的使用
-```
-import requests
-#获取网页
-response = requests.get(&lsquo;<a href="https://www.baidu.com',header=header">https://www.baidu.com',header=header</a>)
-读取响应</li>
+<li>requests第三方库的使用</li>
 </ul>
-
-<p>```</p>
-
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">requests</span>
+<span class="c1">#获取网页</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;https://www.baidu.com&#39;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">)</span>
+<span class="err">读取响应</span></code></pre></td></tr></table>
+</div>
+</div>
 <h2 id="对于返回的网页中中文编码错误问题">对于返回的网页中中文编码错误问题</h2>
 
 <p>《HTTP权威指南》里第16章国际化里提到，如果HTTP响应中Content-Type字段没有指定charset，则默认页面是’ISO-8859-1’编码。这处理英文页面当然没有问题，但是中文页面，就会有乱码了！所以有时候，我们需要查看响应头，如果里面的content-type中没有字符编码，我们可能就需要把返回的字节通过网页中声明的字符编码给解码。</p>
