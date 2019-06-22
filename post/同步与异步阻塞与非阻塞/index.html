@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-06-21T11:15:10&#43;08:00" />
 <meta itemprop="dateModified" content="2019-06-21T11:15:10&#43;08:00" />
-<meta itemprop="wordCount" content="4657">
+<meta itemprop="wordCount" content="6617">
 
 
 
@@ -132,8 +132,8 @@
         <div class="post-category">
             <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"> 操作系统 </a>
             </div>
-          <span class="more-meta"> 4657 words </span>
-          <span class="more-meta"> 10 mins read </span>
+          <span class="more-meta"> 6617 words </span>
+          <span class="more-meta"> 14 mins read </span>
         
       </div>
     </header>
@@ -148,7 +148,12 @@
 <li><a href="#同步与异步">同步与异步</a></li>
 <li><a href="#阻塞与非阻塞">阻塞与非阻塞</a></li>
 <li><a href="#unix网络编程中将io模型分为5类-阻塞io-非阻塞io-io复用-信号驱动-异步io">unix网络编程中将IO模型分为5类：阻塞IO，非阻塞IO，IO复用，信号驱动，异步IO。</a></li>
-<li><a href="#多进程-多线程">多进程、多线程</a></li>
+<li><a href="#多进程-多线程">多进程、多线程</a>
+<ul>
+<li><a href="#线程池">线程池</a></li>
+<li><a href="#多线程之间通信">多线程之间通信</a></li>
+<li><a href="#多进程">多进程</a></li>
+</ul></li>
 <li><a href="#io多路复用的简单例子">IO多路复用的简单例子</a></li>
 <li><a href="#协程">协程</a>
 <ul>
@@ -229,9 +234,35 @@
 </span><span class="lnt">25
 </span><span class="lnt">26
 </span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">threading</span>
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1">#创建线程有两种方式：使用threading模块的Thread构造器或者继承Thread类。</span>
+
+<span class="c1">#方法一：</span>
+<span class="kn">import</span> <span class="nn">threading</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
 <span class="c1">#模拟听歌的函数</span>
@@ -257,7 +288,195 @@
 <span class="c1">#output：</span>
 <span class="c1"># 听 龙的传人 歌完成！</span>
 <span class="c1"># 看霸王别姬电影完成！</span>
-<span class="c1"># 耗时： 10.006277322769165</span></code></pre></td></tr></table>
+<span class="c1"># 耗时： 10.006277322769165</span>
+
+
+<span class="c1">#方法二：</span>
+<span class="k">class</span> <span class="nc">MusicThread</span><span class="p">(</span><span class="n">Thread</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&#34;听 </span><span class="si">%s</span><span class="s2"> 歌完成！&#34;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">music</span> <span class="o">=</span> <span class="n">MusicThread</span><span class="p">(</span><span class="s2">&#34;爱滴魔力转圈圈！&#34;</span><span class="p">)</span>
+<span class="n">music</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">music</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;耗时：&#39;</span><span class="p">,</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">start_time</span><span class="p">)</span>
+<span class="c1">#output:</span>
+<span class="c1"># 听 爱滴魔力转圈圈！ 歌完成！</span>
+<span class="c1"># 耗时： 5.003753900527954</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="线程池">线程池</h3>
+
+<p>一般在不同的系统下，可以创建的最大的线程数是有限制的，而创建的线程过多也不太好，太费内存了，这时我们可以使用线程池。
+系统启动一个新线程的成本是比较高的，因为它涉及与操作系统的交互。在这种情形下，使用线程池可以很好地提升性能，尤其是当程序中需要创建大量生存期很短暂的线程时，更应该考虑使用线程池。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1">#创建一个线程池</span>
+<span class="c1"># pool = ThreadPoolExecutor(max_workers=5)</span>
+<span class="c1"># future1 = pool.submit(music,&#34;你曾是少年&#34;)</span>
+<span class="c1"># future2 = pool.submit(music,&#34;爱的魔力转圈圈&#34;)</span>
+<span class="c1"># print(future1.done())</span>
+<span class="c1"># print(future1.result())</span>
+
+<span class="c1">#使用map</span>
+<span class="k">with</span> <span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="k">as</span> <span class="n">pool</span><span class="p">:</span>
+    <span class="c1">#map不仅方便创建多任务，而且返回的数据也是有序的</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="nb">map</span><span class="p">(</span><span class="n">music</span><span class="p">,(</span><span class="s2">&#34;你好&#34;</span><span class="p">,</span><span class="s2">&#34;好日子&#34;</span><span class="p">,</span><span class="s2">&#34;起风了&#34;</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;--------------&#34;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="多线程之间通信">多线程之间通信</h3>
+
+<p>多线程编程难处在于由于多线程共享进程的内存空间，对于内存的修改，需要同步，不然可能会产生错误的结果，而线程同步需要加锁，不恰当的编程可能导致死锁现象。多线程之间可以使用队列或者管道来通信，能更好地解决编码难的问题。</p>
+
+<p>注意：由于python的GIL锁的原因，python中的多线程不是真正的多线程，在同一时刻只能有一个线程运行，对于计算密集型的多线程显然不适用，但是对于IO密集型的操作(例如爬虫),由于cpu都在等待该IO操作，所以单cpu等待该操作也不会有啥影响，此时多线程编码能极大提高速度，当然我们还可以使用协程来进一步提高性能。</p>
+
+<h3 id="多进程">多进程</h3>
+
+<p>由于python中的GIL锁，多线程无法并行，我们可以使用多进程来绕过GIL实现并行。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;父进程（</span><span class="si">%s</span><span class="s2">）开始执行&#34;</span><span class="o">%</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">())</span>
+<span class="c1">#开始fork一个子进程,此时会运行两个进程，两个进程的代码一样</span>
+<span class="n">pid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fork</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;进程进入：</span><span class="si">%s</span><span class="s2">&#34;</span><span class="o">%</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">())</span>
+
+<span class="c1">#如果pid为0，表示是子进程，通过pid判断是父进程还是子进程</span>
+<span class="k">if</span> <span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;子进程，其ID为（</span><span class="si">%s</span><span class="s2">），父进程ID为（</span><span class="si">%s</span><span class="s2">）&#34;</span><span class="o">%</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">(),</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()))</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;我（</span><span class="si">%s</span><span class="s2">) 创建的子进程ID为（</span><span class="si">%s</span><span class="s2">）.&#34;</span><span class="o">%</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">(),</span><span class="n">pid</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;进程结束：</span><span class="si">%s</span><span class="s2">&#34;</span><span class="o">%</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">())</span>
+<span class="c1">#父进程（69354）开始执行</span>
+<span class="c1"># 进程进入：69354</span>
+<span class="c1"># 我（69354) 创建的子进程ID为（69355）.</span>
+<span class="c1"># 进程结束：69354</span>
+<span class="c1"># 进程进入：69355</span>
+<span class="c1"># 子进程，其ID为（69355），父进程ID为（69355）</span>
+<span class="c1"># 进程结束：69355</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>不过上述代码只能在类unix下使用，widnwos没有fork函数。可以使用mulprocess库来跨平台使用，和创建线程类似,可以直接使用它的类构造器或者继承它的多进程类。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+
+<span class="k">def</span> <span class="nf">action</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">%s</span><span class="s2"> 进程的pid是</span><span class="si">%s</span><span class="se">\n</span><span class="s2"> 父进程是：</span><span class="si">%s</span><span class="s2">&#34;</span><span class="o">%</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">(),</span><span class="n">os</span><span class="o">.</span><span class="n">getppid</span><span class="p">()))</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span><span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;（</span><span class="si">%s</span><span class="s2">)主进程&#34;</span><span class="o">%</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">())</span>
+    <span class="n">mp1</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">action</span><span class="p">,</span><span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s2">&#34;进程1&#34;</span><span class="p">,))</span>
+    <span class="n">mp1</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">mp2</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">action</span><span class="p">,</span><span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s2">&#34;进程2&#34;</span><span class="p">,))</span>
+    <span class="n">mp2</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">mp2</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;主进程执行完成！&#34;</span><span class="p">)</span>
+    <span class="c1"># （69769)主进程</span>
+    <span class="c1"># 进程1</span>
+    <span class="c1"># 进程的pid是69770</span>
+    <span class="c1"># 父进程是：69769</span>
+    <span class="c1"># 进程2</span>
+    <span class="c1"># 进程的pid是69771</span>
+    <span class="c1"># 父进程是：69769</span>
+    <span class="c1"># 主进程执行完成！</span>
+
+    <span class="c1">#或者进程池</span>
+    <span class="c1">#print(&#34;（%s)主进程&#34;%os.getpid())</span>
+    <span class="c1">#with multiprocessing.Pool(processes=4) as pool:</span>
+        <span class="c1">#非阻塞</span>
+    <span class="c1">#    results = pool.map(action,(&#34;线程一&#34;,&#34;线程二&#34;,&#34;线程三&#34;,&#34;线程四&#34;))</span>
+    <span class="c1">#   print(&#34;------------&#34;)</span>
+    <span class="c1">#    for r in results:</span>
+    <span class="c1">#        print(r)</span>
+    <span class="c1">#print(&#34;主进程执行完成！&#34;)</span></code></pre></td></tr></table>
 </div>
 </div>
 <h2 id="io多路复用的简单例子">IO多路复用的简单例子</h2>
