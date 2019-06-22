@@ -164,6 +164,7 @@
 <ul>
 <li><a href="#yield-from和await">yield from和await</a></li>
 <li><a href="#为协程添加回调函数">为协程添加回调函数</a></li>
+<li><a href="#协程多任务创建">协程多任务创建</a></li>
 <li><a href="#并发http请求">并发http请求</a></li>
 </ul></li>
 </ul></li>
@@ -869,28 +870,48 @@ asyncio的sleep函数是一个协程</p>
 </div>
 </div>
 <ul>
-<li>添加回调函数
-```python
-import asyncio
-import time</li>
+<li>添加回调函数</li>
 </ul>
-
-<p>async def Hello(x):
-    await asyncio.sleep(1)
-    return &lsquo;消耗了{}秒时间！&rsquo;.format(x)</p>
-
-<p>def callback(future):
-    print(&ldquo;执行回调函数：&rdquo;,future.result())</p>
-
-<p>coroutine = Hello(1)
-loop = asyncio.get_event_loop()
-task = asyncio.ensure_future(coroutine)
-#添加回调函数
-task.add_done_callback(callback)
-loop.run_until_complete(task)</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">async</span> <span class="k">def</span> <span class="nf">Hello</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">&#39;消耗了{}秒时间！&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">future</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;执行回调函数：&#34;</span><span class="p">,</span><span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">())</span>
+<span class="n">coroutine</span> <span class="o">=</span> <span class="n">Hello</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+<span class="n">task</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">ensure_future</span><span class="p">(</span><span class="n">coroutine</span><span class="p">)</span>
+<span class="c1">#添加回调函数</span>
+<span class="n">task</span><span class="o">.</span><span class="n">add_done_callback</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>
+<span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">task</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>尽量使用ensure_future这个函数创建协程任务吧，它可以接受协程或者future对象。</p>
+
+<h4 id="协程多任务创建">协程多任务创建</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -932,56 +953,50 @@ loop.run_until_complete(task)</p>
 </span><span class="lnt">40
 </span><span class="lnt">41
 </span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">尽量使用ensure_future这个函数创建协程任务吧，它可以接受协程或者future对象。
-#### 协程多任务创建
-```python
-import asyncio
-import time
-#协程函数
-async def work(x):
-    print(&#39;开始工作&#39;)
-    await asyncio.sleep(x)
-    return &#34;%d秒后完成任务&#34;%x
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="c1">#协程函数</span>
+<span class="n">async</span> <span class="k">def</span> <span class="nf">work</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;开始工作&#39;</span><span class="p">)</span>
+    <span class="n">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">&#34;</span><span class="si">%d</span><span class="s2">秒后完成任务&#34;</span><span class="o">%</span><span class="n">x</span>
 
-#创建协程任务
-tasks =[]
-for i in range(1,5):
-    coroutine = work(i)
-    tasks.append(asyncio.ensure_future(coroutine))
+<span class="c1">#创建协程任务</span>
+<span class="n">tasks</span> <span class="o">=</span><span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">coroutine</span> <span class="o">=</span> <span class="n">work</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">tasks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">asyncio</span><span class="o">.</span><span class="n">ensure_future</span><span class="p">(</span><span class="n">coroutine</span><span class="p">))</span>
 
-#事件循环器
-loop = asyncio.get_event_loop()
-#两个方法把多任务注册到时间循环中
+<span class="c1">#事件循环器</span>
+<span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+<span class="c1">#两个方法把多任务注册到时间循环中</span>
 
-#1.asyncio.wait方法
-start_time = time.time()
-dones,pendings=loop.run_until_complete(asyncio.wait(tasks))
-for task in dones:
-    print(&#39;结果是：&#39;,task.result())
-print(&#34;耗时：&#34;,time.time()-start_time)
+<span class="c1">#1.asyncio.wait方法</span>
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">dones</span><span class="p">,</span><span class="n">pendings</span><span class="o">=</span><span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">asyncio</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">tasks</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">dones</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;结果是：&#39;</span><span class="p">,</span><span class="n">task</span><span class="o">.</span><span class="n">result</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;耗时：&#34;</span><span class="p">,</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">start_time</span><span class="p">)</span>
 
-#output：
-#开始工作
-#开始工作
-#开始工作
-#开始工作
-#结果是： 1秒后完成任务
-#结果是： 2秒后完成任务
-#结果是： 3秒后完成任务
-#结果是： 4秒后完成任务
-#耗时： 4.005151033401489
+<span class="c1">#output：</span>
+<span class="c1">#开始工作</span>
+<span class="c1">#开始工作</span>
+<span class="c1">#开始工作</span>
+<span class="c1">#开始工作</span>
+<span class="c1">#结果是： 1秒后完成任务</span>
+<span class="c1">#结果是： 2秒后完成任务</span>
+<span class="c1">#结果是： 3秒后完成任务</span>
+<span class="c1">#结果是： 4秒后完成任务</span>
+<span class="c1">#耗时： 4.005151033401489</span>
 
-#2.asyncio.gather()
-# start_time = time.time()
-# results=loop.run_until_complete(asyncio.gather(*tasks))
-# for result in results:
-#     print(&#39;结果是：&#39;,result)
-# print(&#34;耗时：&#34;,time.time()-start_time)</pre></td></tr></table>
+<span class="c1">#2.asyncio.gather()</span>
+<span class="c1"># start_time = time.time()</span>
+<span class="c1"># results=loop.run_until_complete(asyncio.gather(*tasks))</span>
+<span class="c1"># for result in results:</span>
+<span class="c1">#     print(&#39;结果是：&#39;,result)</span>
+<span class="c1"># print(&#34;耗时：&#34;,time.time()-start_time)</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>await和gather都能接受列表，不管列表里是future，还是协程。此外，await还能控制事件循环的返回，比如在第一个任务完成时返回，多少秒时间后返回等。</p>
