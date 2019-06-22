@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-06-21T11:15:10&#43;08:00" />
 <meta itemprop="dateModified" content="2019-06-21T11:15:10&#43;08:00" />
-<meta itemprop="wordCount" content="2156">
+<meta itemprop="wordCount" content="3731">
 
 
 
@@ -132,8 +132,8 @@
         <div class="post-category">
             <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"> 操作系统 </a>
             </div>
-          <span class="more-meta"> 2156 words </span>
-          <span class="more-meta"> 5 mins read </span>
+          <span class="more-meta"> 3731 words </span>
+          <span class="more-meta"> 8 mins read </span>
         
       </div>
     </header>
@@ -153,7 +153,13 @@
 <li><a href="#协程">协程</a>
 <ul>
 <li><a href="#生成器接收和生成值">生成器接收和生成值</a></li>
+<li><a href="#生成器是协程的基础">生成器是协程的基础</a></li>
 <li><a href="#原生异步协程">原生异步协程</a></li>
+<li><a href="#创建任务语句">创建任务语句</a>
+<ul>
+<li><a href="#yield-from和await">yield from和await</a></li>
+<li><a href="#为协程添加回调函数">为协程添加回调函数</a></li>
+</ul></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -336,10 +342,57 @@
 <p>yield from关键词可以从可迭代对象中生成数据。
 在python3.5以前，可以通过yield from和协程装饰器一起编写一些协程，3.5之后更加明确了协程的编写语义async、await.</p>
 
+<h3 id="生成器是协程的基础">生成器是协程的基础</h3>
+
+<p>生成器是协程实现的基础，我们可以把一个生成器变成协程</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Coroutine</span><span class="p">,</span><span class="n">Generator</span>
+<span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="nd">@asyncio.coroutine</span>
+<span class="k">def</span> <span class="nf">hello</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="c1">#异步调用asyncio.sleep(1)</span>
+    <span class="k">yield</span> <span class="kn">from</span> <span class="nn">asyncio.sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Hello,&#39;</span><span class="p">,</span><span class="n">name</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span><span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+    <span class="n">coroutine</span> <span class="o">=</span> <span class="n">hello</span><span class="p">(</span><span class="s2">&#34;World&#34;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">coroutine</span><span class="p">,</span><span class="n">Generator</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">coroutine</span><span class="p">,</span><span class="n">Coroutine</span><span class="p">))</span>
+    <span class="c1">#output:True</span>
+    <span class="c1">#        False</span>
+    <span class="c1">#这里虽然显示不是协程，但是这个生成器经过装饰器的修改，已经可以当作协程来使用了。</span></code></pre></td></tr></table>
+</div>
+</div>
 <h3 id="原生异步协程">原生异步协程</h3>
 
 <p>asyncio -&gt; 异步IO库，有啥用，牛逼就完事了。开玩笑的。
-作为目前最为强大的异步IO核心库，实现可很多功能，包括时间循环，协程调度，多线程和多进程调度。</p>
+作为目前最为强大的异步IO核心库之一，实现可很多功能，包括时间循环，协程调度，多线程和多进程调度。
+开始之前，这下概念了解一哈：
+- event_loop 事件循环：程序开启一个无限的循环，程序员会把一些函数（协程）注册到事件循环上。当满足事件发生的时候，调用相应的协程函数。
+- coroutine 协程：协程对象，指一个使用async关键字定义的函数，它的调用不会立即执行函数，而是会返回一个协程对象。协程对象需要注册到事件循环，由事件循环调用。
+- future 对象： 代表将来执行或没有执行的任务的结果。它和task上没有本质的区别
+- task 任务：一个协程对象就是一个原生可以挂起的函数，任务则是对协程进一步封装，其中包含任务的各种状态。Task 对象是 Future 的子类，它将 coroutine 和 Future 联系在一起，将 coroutine 封装成一个 Future 对象。
+- async/await 关键字：python3.5 用于定义协程的关键字，async定义一个协程，await用于挂起阻塞的异步调用接口。其作用在一定程度上类似于yield。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
@@ -384,6 +437,248 @@
 <span class="c1">#2.0077970027923584</span>
 
 <span class="c1">#可以看到100次并发也只需要2s中，而如果是同步阻塞式的代码，那就需要200s了，这个差距，真是没有对比就没有伤害啊。</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="创建任务语句">创建任务语句</h3>
+
+<p>协程可以以多任务方式来加入到事件循环中</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">async</span>  <span class="k">def</span> <span class="nf">hello</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="c1"># await asyncio.sleep(1)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Hello&#39;</span><span class="p">,</span><span class="n">name</span><span class="p">)</span>
+
+<span class="c1">#协程对象</span>
+<span class="n">coroutine</span> <span class="o">=</span> <span class="n">hello</span><span class="p">(</span><span class="s2">&#34;World&#34;</span><span class="p">)</span>
+<span class="c1">#事件循环</span>
+<span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+<span class="c1">#三种方式调用</span>
+
+<span class="c1">#1.直接调用协程</span>
+<span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">coroutine</span><span class="p">)</span>
+
+<span class="c1">#2.包装成future对象</span>
+<span class="c1"># task = asyncio.ensure_future(coroutine)</span>
+<span class="c1">#loop.run_until_complete(task)</span>
+
+<span class="c1">#3.包装成task对象来调用，task是future的子类</span>
+<span class="c1">#task = loop.create_task(coroutine)</span>
+<span class="c1">#loop.run_until_complete(task)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>从上面可以看出，事件循环支持3种对象。调用官方文档中的话来说</p>
+
+<blockquote>
+<p>We say that an object is an awaitable object if it can be used in an await expression. Many asyncio APIs are designed to accept awaitables.<br />
+There are three main types of awaitable objects: coroutines, Tasks, and Futures.</p>
+</blockquote>
+
+<h4 id="yield-from和await">yield from和await</h4>
+
+<p>注：task也是future子类
+- yield from 后面可接 可迭代对象，也可接future对象/协程对象；
+- await 后面必须要接 future对象/协程对象
+asyncio的sleep函数是一个协程</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1">#await接协程</span>
+<span class="n">async</span>  <span class="k">def</span> <span class="nf">hello</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="c1">#协程</span>
+    <span class="n">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Hello&#39;</span><span class="p">,</span><span class="n">name</span><span class="p">)</span>
+<span class="c1">#yield from接协程</span>
+<span class="k">def</span> <span class="nf">hello2</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="k">yield</span> <span class="kn">from</span> <span class="nn">asyncio.sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Hello&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+<span class="c1">#await接futurn</span>
+<span class="n">async</span> <span class="k">def</span> <span class="nf">hello3</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="n">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">ensure_future</span><span class="p">(</span><span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Hello&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+<span class="c1">#yield from接future</span>
+<span class="k">def</span> <span class="nf">hello4</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="k">yield</span> <span class="kn">from</span>  <span class="nn">asyncio.ensure_future</span><span class="p">(</span><span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Hello&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+<span class="c1">#yield from接task</span>
+<span class="k">def</span> <span class="nf">hello5</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="k">yield</span> <span class="kn">from</span>  <span class="nn">asyncio.create_task</span><span class="p">(</span><span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Hello&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<h4 id="为协程添加回调函数">为协程添加回调函数</h4>
+
+<p>异步IO，我们需要得到异步io的返回值，需要用到回调，回调的实现有两种方法：
+- 同步编程</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="n">async</span> <span class="k">def</span> <span class="nf">Hello</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">&#39;消耗了{}秒时间！&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+
+<span class="n">coroutine</span> <span class="o">=</span> <span class="n">Hello</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+
+<span class="n">task</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">ensure_future</span><span class="p">(</span><span class="n">coroutine</span><span class="p">)</span>
+<span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+<span class="c1"># task.result()返回结果</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;返回结输出结果：{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">task</span><span class="o">.</span><span class="n">result</span><span class="p">()))</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>添加回调函数
+```python
+import asyncio
+import time</li>
+</ul>
+
+<p>async def Hello(x):
+    await asyncio.sleep(1)
+    return &lsquo;消耗了{}秒时间！&rsquo;.format(x)</p>
+
+<p>def callback(future):
+    print(&ldquo;执行回调函数：&rdquo;,future.result())</p>
+
+<p>coroutine = Hello(1)
+loop = asyncio.get_event_loop()
+task = asyncio.ensure_future(coroutine)
+#添加回调函数
+task.add_done_callback(callback)
+loop.run_until_complete(task)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">#### 并发http请求
+我们知道我们可以使用requests来进行url请求，但是这个requests并不是异步的，而是同步阻塞，因此，不能用于异步并发请求。我们可以使用aiohttp来代替，来编程高并发HTTP服务端或客户端程序。一个简单的例子如下：
+```python
+import asyncio
+import time
+from aiohttp import ClientSession
+
+#多任务列表
+tasks = []
+url = &#34;https://www.baidu.com/{}&#34;
+
+async  def get_url(url):
+    async with ClientSession() as session:
+        async with session.get(url) as response:
+            #异步等待IO
+            response = await response.read()
+            print(response)
+            print(&#34;Hello,World:%s&#34;%time.time())
+
+#多任务加入列表，2000次并发
+def run():
+    for i in range(2000):
+        #future对象，和多线程中的future对象类似
+        task = asyncio.ensure_future(get_url(url.format(i)))
+        tasks.append(task)
+
+if __name__==&#34;__main__&#34;:
+    start_time = time.time()
+    loop = asyncio.get_event_loop()
+    run()
+    loop.run_until_complete(asyncio.wait(tasks))
+    print(&#34;耗时：&#34;,time.time()-start_time)
+    #耗时： 19.369337797164917
+    #2000次并发只需要19s，只是在macOS下测试的。linux或者windows可能最大并发数量有限制，可以通过不同方式修改。</pre></td></tr></table>
 </div>
 </div>
     </div>
