@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-06-21T11:15:10&#43;08:00" />
 <meta itemprop="dateModified" content="2019-06-21T11:15:10&#43;08:00" />
-<meta itemprop="wordCount" content="3731">
+<meta itemprop="wordCount" content="4657">
 
 
 
@@ -132,8 +132,8 @@
         <div class="post-category">
             <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"> 操作系统 </a>
             </div>
-          <span class="more-meta"> 3731 words </span>
-          <span class="more-meta"> 8 mins read </span>
+          <span class="more-meta"> 4657 words </span>
+          <span class="more-meta"> 10 mins read </span>
         
       </div>
     </header>
@@ -148,7 +148,7 @@
 <li><a href="#同步与异步">同步与异步</a></li>
 <li><a href="#阻塞与非阻塞">阻塞与非阻塞</a></li>
 <li><a href="#unix网络编程中将io模型分为5类-阻塞io-非阻塞io-io复用-信号驱动-异步io">unix网络编程中将IO模型分为5类：阻塞IO，非阻塞IO，IO复用，信号驱动，异步IO。</a></li>
-<li><a href="#io与多进程-多线程-协程">IO与多进程、多线程、协程</a></li>
+<li><a href="#多进程-多线程">多进程、多线程</a></li>
 <li><a href="#io多路复用的简单例子">IO多路复用的简单例子</a></li>
 <li><a href="#协程">协程</a>
 <ul>
@@ -159,6 +159,7 @@
 <ul>
 <li><a href="#yield-from和await">yield from和await</a></li>
 <li><a href="#为协程添加回调函数">为协程添加回调函数</a></li>
+<li><a href="#并发http请求">并发http请求</a></li>
 </ul></li>
 </ul></li>
 </ul></li>
@@ -196,8 +197,69 @@
 <li>异步IO，发送IO请求后，不需要等待，也不再需要发送IO请求获取结果了，等到通知后，其实是系统帮你把数据读取好了的，你等到的通知也不再是要求你去读写IO了，而是告诉你IO请求过程已经结束了。你要做的就是可以处理数据了。且同一个描述符上可能同时存在很多请求。</li>
 </ol>
 
-<h2 id="io与多进程-多线程-协程">IO与多进程、多线程、协程</h2>
+<h2 id="多进程-多线程">多进程、多线程</h2>
 
+<p>在python中，多线程和多进程编程很简单，python标准库为我们提供了方便，简单的库给我们使用。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1">#模拟听歌的函数</span>
+<span class="k">def</span> <span class="nf">music</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;听 </span><span class="si">%s</span><span class="s2"> 歌完成！&#34;</span><span class="o">%</span><span class="n">name</span><span class="p">)</span>
+
+<span class="c1">#看电影</span>
+<span class="k">def</span> <span class="nf">movie</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;看</span><span class="si">%s</span><span class="s2">电影完成！&#34;</span><span class="o">%</span><span class="n">name</span><span class="p">)</span>
+<span class="c1">#创建两个线程</span>
+<span class="n">thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">music</span><span class="p">,</span><span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s2">&#34;龙的传人&#34;</span><span class="p">,))</span>
+<span class="n">thread2</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">movie</span><span class="p">,</span><span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s2">&#34;霸王别姬&#34;</span><span class="p">,))</span>
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="c1">#开始运行的线程</span>
+<span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">thread2</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="c1">#阻塞当前线程，在该线程结束前不向下执行</span>
+<span class="n">thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+<span class="n">thread2</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;耗时：&#39;</span><span class="p">,</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">start_time</span><span class="p">)</span>
+<span class="c1">#output：</span>
+<span class="c1"># 听 龙的传人 歌完成！</span>
+<span class="c1"># 看霸王别姬电影完成！</span>
+<span class="c1"># 耗时： 10.006277322769165</span></code></pre></td></tr></table>
+</div>
+</div>
 <h2 id="io多路复用的简单例子">IO多路复用的简单例子</h2>
 
 <p>IO多用复用主要依靠select、poll和epoll，可以实现多并发编程。不过IO多路复用其实对句柄的操作也是同步阻塞的。</p>
@@ -643,42 +705,137 @@ loop.run_until_complete(task)</p>
 </span><span class="lnt">32
 </span><span class="lnt">33
 </span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
 </span></pre></td>
 <td class="lntd">
-<pre class="chroma">#### 并发http请求
-我们知道我们可以使用requests来进行url请求，但是这个requests并不是异步的，而是同步阻塞，因此，不能用于异步并发请求。我们可以使用aiohttp来代替，来编程高并发HTTP服务端或客户端程序。一个简单的例子如下：
+<pre class="chroma">尽量使用ensure_future这个函数创建协程任务吧，它可以接受协程或者future对象。
+#### 协程多任务创建
 ```python
 import asyncio
 import time
-from aiohttp import ClientSession
+#协程函数
+async def work(x):
+    print(&#39;开始工作&#39;)
+    await asyncio.sleep(x)
+    return &#34;%d秒后完成任务&#34;%x
 
-#多任务列表
-tasks = []
-url = &#34;https://www.baidu.com/{}&#34;
+#创建协程任务
+tasks =[]
+for i in range(1,5):
+    coroutine = work(i)
+    tasks.append(asyncio.ensure_future(coroutine))
 
-async  def get_url(url):
-    async with ClientSession() as session:
-        async with session.get(url) as response:
-            #异步等待IO
-            response = await response.read()
-            print(response)
-            print(&#34;Hello,World:%s&#34;%time.time())
+#事件循环器
+loop = asyncio.get_event_loop()
+#两个方法把多任务注册到时间循环中
 
-#多任务加入列表，2000次并发
-def run():
-    for i in range(2000):
-        #future对象，和多线程中的future对象类似
-        task = asyncio.ensure_future(get_url(url.format(i)))
-        tasks.append(task)
+#1.asyncio.wait方法
+start_time = time.time()
+dones,pendings=loop.run_until_complete(asyncio.wait(tasks))
+for task in dones:
+    print(&#39;结果是：&#39;,task.result())
+print(&#34;耗时：&#34;,time.time()-start_time)
 
-if __name__==&#34;__main__&#34;:
-    start_time = time.time()
-    loop = asyncio.get_event_loop()
-    run()
-    loop.run_until_complete(asyncio.wait(tasks))
-    print(&#34;耗时：&#34;,time.time()-start_time)
-    #耗时： 19.369337797164917
-    #2000次并发只需要19s，只是在macOS下测试的。linux或者windows可能最大并发数量有限制，可以通过不同方式修改。</pre></td></tr></table>
+#output：
+#开始工作
+#开始工作
+#开始工作
+#开始工作
+#结果是： 1秒后完成任务
+#结果是： 2秒后完成任务
+#结果是： 3秒后完成任务
+#结果是： 4秒后完成任务
+#耗时： 4.005151033401489
+
+#2.asyncio.gather()
+# start_time = time.time()
+# results=loop.run_until_complete(asyncio.gather(*tasks))
+# for result in results:
+#     print(&#39;结果是：&#39;,result)
+# print(&#34;耗时：&#34;,time.time()-start_time)</pre></td></tr></table>
+</div>
+</div>
+<p>await和gather都能接受列表，不管列表里是future，还是协程。此外，await还能控制事件循环的返回，比如在第一个任务完成时返回，多少秒时间后返回等。</p>
+
+<h4 id="并发http请求">并发http请求</h4>
+
+<p>我们知道我们可以使用requests来进行url请求，但是这个requests并不是异步的，而是同步阻塞，因此，不能用于异步并发请求。我们可以使用aiohttp来代替，来编程高并发HTTP服务端或客户端程序。一个简单的例子如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">aiohttp</span> <span class="kn">import</span> <span class="n">ClientSession</span>
+
+<span class="c1">#多任务列表</span>
+<span class="n">tasks</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&#34;https://www.baidu.com/{}&#34;</span>
+
+<span class="n">async</span>  <span class="k">def</span> <span class="nf">get_url</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="n">async</span> <span class="k">with</span> <span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+        <span class="n">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+            <span class="c1">#异步等待IO</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">await</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Hello,World:</span><span class="si">%s</span><span class="s2">&#34;</span><span class="o">%</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+
+<span class="c1">#多任务加入列表，2000次并发</span>
+<span class="k">def</span> <span class="nf">run</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2000</span><span class="p">):</span>
+        <span class="c1">#future对象，和多线程中的future对象类似</span>
+        <span class="n">task</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">ensure_future</span><span class="p">(</span><span class="n">get_url</span><span class="p">(</span><span class="n">url</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)))</span>
+        <span class="n">tasks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span><span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+    <span class="n">run</span><span class="p">()</span>
+    <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">asyncio</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">tasks</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;耗时：&#34;</span><span class="p">,</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">start_time</span><span class="p">)</span>
+    <span class="c1">#耗时： 19.369337797164917</span>
+    <span class="c1">#2000次并发只需要19s，只是在macOS下测试的。linux或者windows可能最大并发数量有限制，可以通过不同方式修改。</span></code></pre></td></tr></table>
 </div>
 </div>
     </div>
