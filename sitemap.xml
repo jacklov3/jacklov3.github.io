@@ -240,15 +240,15 @@
   </url>
   
   <url>
-    <loc>https://www.jackylove.me/tags/linux/</loc>
-    <lastmod>2019-04-29T23:45:41+08:00</lastmod>
+    <loc>https://www.jackylove.me/categories/linux/</loc>
+    <lastmod>2019-05-08T16:33:32+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://www.jackylove.me/categories/linux/</loc>
-    <lastmod>2019-05-08T16:33:32+08:00</lastmod>
+    <loc>https://www.jackylove.me/tags/linux/</loc>
+    <lastmod>2019-04-29T23:45:41+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
