@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Lvm卷组管理 - JackyLove的小窝</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="JackyLove" /><meta name="description" content="LVM卷组 传统分区使用固定大小分区，重新调整大小十分麻烦(往往可能要重新装系统）。LVM是一种可用在Linux内核的逻辑分卷管理器；可用于管" /><meta name="keywords" content="Hugo, code, linux, c&#43;&#43;, python, go, javascript" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.54.0 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://www.jackylove.me/post/lvm%E5%8D%B7%E7%BB%84%E7%AE%A1%E7%90%86/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Lvm卷组管理" />
+<meta property="og:description" content="LVM卷组 传统分区使用固定大小分区，重新调整大小十分麻烦(往往可能要重新装系统）。LVM是一种可用在Linux内核的逻辑分卷管理器；可用于管" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.jackylove.me/post/lvm%E5%8D%B7%E7%BB%84%E7%AE%A1%E7%90%86/" />
+<meta property="article:published_time" content="2019-07-20T14:30:33&#43;08:00"/>
+<meta property="article:modified_time" content="2019-07-20T14:30:33&#43;08:00"/>
+
+<meta itemprop="name" content="Lvm卷组管理">
+<meta itemprop="description" content="LVM卷组 传统分区使用固定大小分区，重新调整大小十分麻烦(往往可能要重新装系统）。LVM是一种可用在Linux内核的逻辑分卷管理器；可用于管">
+
+
+<meta itemprop="datePublished" content="2019-07-20T14:30:33&#43;08:00" />
+<meta itemprop="dateModified" content="2019-07-20T14:30:33&#43;08:00" />
+<meta itemprop="wordCount" content="2649">
+
+
+
+<meta itemprop="keywords" content="linux," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Lvm卷组管理"/>
+<meta name="twitter:description" content="LVM卷组 传统分区使用固定大小分区，重新调整大小十分麻烦(往往可能要重新装系统）。LVM是一种可用在Linux内核的逻辑分卷管理器；可用于管"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">聚散流沙</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">聚散流沙</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Lvm卷组管理</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-07-20 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"> 操作系统 </a>
+            </div>
+          <span class="more-meta"> 2649 words </span>
+          <span class="more-meta"> 6 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#lvm卷组">LVM卷组</a>
+<ul>
+<li><a href="#lvm的基本组成">LVM的基本组成</a>
+<ul>
+<li><a href="#创建lvm物理分区-pv">创建LVM物理分区(PV):</a></li>
+<li><a href="#创建卷组">创建卷组</a></li>
+<li><a href="#创建逻辑卷">创建逻辑卷</a></li>
+</ul></li>
+<li><a href="#调整逻辑卷的大小">调整逻辑卷的大小</a>
+<ul>
+<li><a href="#单独设置文件系统大小">单独设置文件系统大小</a></li>
+<li><a href="#将物理卷加入到卷组中">将物理卷加入到卷组中</a></li>
+</ul></li>
+<li><a href="#lvm的优缺点">LVM的优缺点</a>
+<ul>
+<li><a href="#优点">优点</a></li>
+<li><a href="#缺点">缺点</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="lvm卷组">LVM卷组</h1>
+
+<p>传统分区使用固定大小分区，重新调整大小十分麻烦(往往可能要重新装系统）。LVM是一种可用在Linux内核的逻辑分卷管理器；可用于管理磁盘驱动器或其他类似的大容量存储设备。LVM利用Linux内核的device-mapper功能来实现存储系统的虚拟化（系统分区独立于底层硬件）。通过LVM，你可以实现存储空间的抽象化并在上面建立虚拟分区（virtual partitions），可以更简便地扩大和缩小分区，可以增删分区时无需担心某个硬盘上没有足够的连续空间，避免为正在使用的磁盘重新分区的麻烦、为调整分区而不得不移动其他分区的不便。</p>
+
+<p>LVM可以创建和管理“逻辑”卷，而不是直接使用物理硬盘。可以让管理员弹性的管理逻辑卷的扩大缩小，操作简单，而不损坏已存储的数据。可以随意将新的硬盘添加到LVM，以直接扩展已经存在的逻辑卷。LVM并不需要重启就可以让内核知道分区的存在。</p>
+
+<h2 id="lvm的基本组成">LVM的基本组成</h2>
+
+<p><strong>物理卷(PV)</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">一个可供存储LVM的块设备. 例如: 一块硬盘, 一个MBR或GPT分区, 一个回环文件, 一个被内核映射的设备 (例如 dm-crypt).它包含一个特殊的LVM头。</pre></td></tr></table>
+</div>
+</div>
+<p><strong>卷组(VG)</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">物理卷的一个组，作为存放逻辑卷的容器。 PEs are allocated from a VG for a LV.</pre></td></tr></table>
+</div>
+</div>
+<p><strong>逻辑卷(LV)</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">&#34;虚拟/逻辑卷&#34;存放在一个卷组中并由物理块组成。是一个类似于物理设备的块设备，例如，你可以直接在它上面创建一个文件系统文件系统。</pre></td></tr></table>
+</div>
+</div>
+<p><strong>物理块(PE)</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">一个卷组中最小的连续区域(默认为4 MiB)，多个物理块将被分配给一个逻辑卷。你可以把它看成物理卷的一部分，这部分可以被分配给一个逻辑卷。</pre></td></tr></table>
+</div>
+</div>
+<p>## LVM的操作</p>
+
+<h3 id="创建lvm物理分区-pv">创建LVM物理分区(PV):</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># fdisk命令用于创建磁盘分区,比如我们有一个新的磁盘sdb</span>
+$ fdisk /dev/sdb
+<span class="c1"># 进入交互式环境，输入m帮助</span>
+<span class="c1"># 查看帮助发现 p 可以输出当前分区表</span>
+<span class="c1"># 输入 n 创建新的分区，后面根据提示创建主分区，分区大小等，如果只创建一个分区的话，直接回车即可</span>
+<span class="c1"># 分区创建好后，我们需要把新的分区给LVM管理(所以需要改变分区的格式)</span>
+<span class="c1"># 输入 t ，后面提示输入分区类型(也就是有dos字样的)，输入 8e 代表lvm</span>
+<span class="c1">#输入w保存并退出</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>假设上面我们创建了两个分区 /dev/sdb1 /dev/sdb2
+现在创建pv物理卷</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">$ pvcreate /dev/sdb1
+$ pvcreate /dev/sdb2
+<span class="c1">#pvdisplay查看物理卷信息</span>
+$ pvdisplay
+<span class="c1">#pvremove 删除物理卷</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="创建卷组">创建卷组</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#创建卷组 volume-group1</span>
+$ vgcreate volume-group1 /dev/sdb1 /dev/sdb2
+<span class="c1">#vgdisplay 查看卷组信息</span>
+$ vgdisplay 
+<span class="c1">#删除卷组</span>
+$ vgremove volume-group1</code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="创建逻辑卷">创建逻辑卷</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#创建一个逻辑卷</span>
+$ lvcreate -L 100G -n lv1 volume-group1
+<span class="c1">#查看逻辑卷</span>
+$ lvdisplay
+<span class="c1">#创建好逻辑卷后，可以格式化系统并挂载在目录上，和正常的分区没什么区别</span>
+$ mkfs.ext4 /dev/volume-group1/lv1
+$ mkdir /lvm-mount
+$ mount /dev/volume-group1/lv1 /lvm-mount/ 
+<span class="c1">#然后其它卸载分区的操作和一般分区一样</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="调整逻辑卷的大小">调整逻辑卷的大小</h2>
+
+<p>调整逻辑卷大小的功能是LVM最有用的功能，我们把vg卷看作一个水池，一个水池里的水是物理卷，我们的逻辑卷是一种抽象的概念，它使用的空间是vg中的水，它不管你的水是属于磁盘1还是磁盘2，这都由LVM分配。</p>
+
+<p>逻辑卷
+&gt; 小贴士|lvresize(8)提供一些与lvextend(8)和lvreduce(8)相同的命令与选项，并同时允许两种类型的操作。然而，这几个命令都提供一个-r/&ndash;resizefs选项，使用fsadm(8)在调整逻辑卷时同时调整其中的文件系统（支持ext2, ext3, ext4, ReiserFS 和 XFS ）。 因此，对普通使用来说，使用lvresize}和&ndash;resizefs将会更容易, 除非您有特定的需求或希望完全控制流程。</p>
+
+<blockquote>
+<p>警告: 尽管扩大一个文件系统可以“在线”(on-line，也就是当它已挂载时)完成，甚至对根分区。缩小一个文件系统却往往要求先卸载（umount）它，以避免丢失数据。请先确保你的文件系统支持相关操作。</p>
+</blockquote>
+
+<p>同时缩小逻辑卷和其文件系统
+注意: 只有ext2，ext3，ext4，ReiserFS和 XFS 文件系统支持以下操作。对于其他文件系统，请参见### 单独调整逻辑卷和其文件系统大小。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#将MyVolGroup组中的逻辑卷mediavol扩大10GiB，并同时扩大其文件系统</span>
+$ lvresize -L +10G --resizefs MyVolGroup/mediavol
+<span class="c1">#将MyVolGroup组中的逻辑卷mediavol大小调整为15GiB，并同时调整其文件系统：</span>
+$ lvresize -L 15G --resizefs MyVolGroup/mediavol
+<span class="c1"># 将卷组中的所有剩余空间分配给mediavol：</span>
+$ lvresize -l +100%FREE --resizefs MyVolGroup/mediavol</code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="单独设置文件系统大小">单独设置文件系统大小</h3>
+
+<p>对于不支持fsadm(8)的文件系统，请在缩小逻辑卷前或扩大逻辑卷后，使用适当的工具来调整文件系统的大小。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 先将MyVolGroup组中的逻辑卷mediavol扩大2 GiB，但不调整其文件系统：</span>
+$ lvresize -L +2G MyVolGroup/mediavol
+<span class="c1"># 然后在调整其文件系统，是其达到逻辑卷的大小：（以ext4为例）</span>
+$ resize2fs /dev/MyVolGroup/mediavol
+<span class="c1">#要将逻辑卷mediavol缩小500 MiB，先计算调整后文件系统的大小并调整文件系统(以ext4为例)：</span>
+$ resize2fs /dev/MyVolGroup/mediavol 调整后的大小
+<span class="c1"># 然后再缩小逻辑卷的大小：</span>
+$ lvresize -L -500M MyVolGroup/mediavol</code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="将物理卷加入到卷组中">将物理卷加入到卷组中</h3>
+
+<p>有时候vg中可用的磁盘空间没有了，我们需要扩容vg。我们需要创建一个新的pv并加入到vg中。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 创建一个sdc1分区和上面操作一样</span>
+$ fisk /dev/sdc
+<span class="c1"># 创建一个pv分区</span>
+$ pvcreate /dev/sdc1
+<span class="c1"># 扩容卷组</span>
+$ vgextend VolGroup00 /dev/sdb1</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="lvm的优缺点">LVM的优缺点</h2>
+
+<h3 id="优点">优点</h3>
+
+<p>比起普通的硬盘分区管理方式，LVM更富于灵活性：</p>
+
+<ul>
+<li>将多块硬盘看作一块大硬盘</li>
+<li>使用逻辑卷（LV），可以创建跨越众多硬盘空间的分区。</li>
+<li>可以创建小的逻辑卷（LV），在空间不足时再动态调整它的大小。</li>
+<li>在调整逻辑卷（LV）大小时可以不用考虑逻辑卷在硬盘上的位置，不用担心没有可用的连续空间。</li>
+<li>可以在线（online）对逻辑卷（LV）和卷组（VG）进行创建、删除、调整大小等操作。不过LVM上的文件系统也需要重新调整大小，好在某些文件系统（例如ext4）也支持在线操作。</li>
+<li>无需重新启动服务，就可以将服务中用到的逻辑卷（LV）在线（online）/动态（live）迁移至别的硬盘上。</li>
+<li>允许创建快照，可以保存文件系统的备份，同时使服务的下线时间（downtime）降低到最小。</li>
+<li>支持各种设备映射目标（device-mapper targets），包括透明文件系统加密和缓存常用数据（caching of frequently used data）。这将允许你创建一个包含一个或多个磁盘、并用LUKS加密的系统，使用LVM on top 可轻松地管理和调这些整独立的加密卷 （例如. /, /home, /backup等) 并免去开机时多次输入密钥的麻烦。</li>
+</ul>
+
+<h3 id="缺点">缺点</h3>
+
+<ul>
+<li>在系统设置时需要更复杂的额外步骤。</li>
+<li>Windows系统并不支持LVM，若使用双系统，你将无法在Windows上访问LVM分区。</li>
+</ul>
+
+<p>参考</p>
+
+<p>1.<a href="https://wiki.archlinux.org/index.php/LVM_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">LVM-archwiki</a><br />
+2.<a href="https://linux.cn/article-3218-1.html">Linux LVM简明教程</a><br />
+3.<a href="https://www.thegeekdiary.com/lvm-error-cant-open-devsdx-exclusively-mounted-filesystem/">常见错误：Can’t open /dev/sdx exclusively. Mounted filesystem?</a></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">JackyLove</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2019-07-20
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/linux/">linux</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/%E5%AD%A6%E4%B8%80%E6%B3%A2%E7%AE%97%E6%B3%95/">
+            <span class="next-text nav-default">数据结构与算法(-)</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  <span id="/post/lvm%E5%8D%B7%E7%BB%84%E7%AE%A1%E7%90%86/" class="leancloud_visitors" data-flag-title="Lvm卷组管理">
+    <span class="post-meta-item-text">文章阅读量 </span>
+    <span class="leancloud-visitors-count">1000000</span>
+    <p></p>
+  </span>
+  <div id="vcomments"></div>
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+  <script type="text/javascript">
+    new Valine({
+        el: '#vcomments' ,
+        appId: 'xPwmFUoHVqraVIVlAt2Xch9M-gzGzoHsz',
+        appKey: 'VP1APko2CdGfydmf7xOplDur',
+        notify:  false , 
+        verify:  false , 
+        avatar:'', 
+        placeholder: '请说点什么吧...',
+        visitor:  true 
+    });
+  </script>
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://stackoverflow.com/users/8640064/jackylove" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/jacklov3" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.instagram.com/jacky1ove/" class="iconfont icon-instagram" title="instagram"></a>
+  <a href="https://www.jackylove.me/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">JackyLove</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
