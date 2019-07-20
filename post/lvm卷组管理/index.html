@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-07-20T14:30:33&#43;08:00" />
 <meta itemprop="dateModified" content="2019-07-20T14:30:33&#43;08:00" />
-<meta itemprop="wordCount" content="2649">
+<meta itemprop="wordCount" content="2648">
 
 
 
@@ -132,7 +132,7 @@
         <div class="post-category">
             <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"> 操作系统 </a>
             </div>
-          <span class="more-meta"> 2649 words </span>
+          <span class="more-meta"> 2648 words </span>
           <span class="more-meta"> 6 mins read </span>
         
       </div>
@@ -145,7 +145,8 @@
 <ul>
 <li><a href="#lvm卷组">LVM卷组</a>
 <ul>
-<li><a href="#lvm的基本组成">LVM的基本组成</a>
+<li><a href="#lvm的基本组成">LVM的基本组成</a></li>
+<li><a href="#lvm的操作">LVM的操作</a>
 <ul>
 <li><a href="#创建lvm物理分区-pv">创建LVM物理分区(PV):</a></li>
 <li><a href="#创建卷组">创建卷组</a></li>
@@ -213,12 +214,12 @@
 <pre class="chroma">一个卷组中最小的连续区域(默认为4 MiB)，多个物理块将被分配给一个逻辑卷。你可以把它看成物理卷的一部分，这部分可以被分配给一个逻辑卷。</pre></td></tr></table>
 </div>
 </div>
-<p>## LVM的操作</p>
+<h2 id="lvm的操作">LVM的操作</h2>
 
 <h3 id="创建lvm物理分区-pv">创建LVM物理分区(PV):</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -228,7 +229,7 @@
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># fdisk命令用于创建磁盘分区,比如我们有一个新的磁盘sdb</span>
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># fdisk命令用于创建磁盘分区,比如我们有一个新的磁盘sdb</span>
 $ fdisk /dev/sdb
 <span class="c1"># 进入交互式环境，输入m帮助</span>
 <span class="c1"># 查看帮助发现 p 可以输出当前分区表</span>
