@@ -371,7 +371,7 @@ $ lvresize -L -500M MyVolGroup/mediavol</code></pre></td></tr></table>
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 创建一个sdc1分区和上面操作一样</span>
-$ fisk /dev/sdc
+$ fdisk /dev/sdc
 <span class="c1"># 创建一个pv分区</span>
 $ pvcreate /dev/sdc1
 <span class="c1"># 扩容卷组</span>
