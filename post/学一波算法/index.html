@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-07-19T18:59:15&#43;08:00" />
 <meta itemprop="dateModified" content="2019-07-19T18:59:15&#43;08:00" />
-<meta itemprop="wordCount" content="589">
+<meta itemprop="wordCount" content="673">
 
 
 
@@ -132,7 +132,7 @@
         <div class="post-category">
             <a href="/categories/%E7%AE%97%E6%B3%95/"> 算法 </a>
             </div>
-          <span class="more-meta"> 589 words </span>
+          <span class="more-meta"> 673 words </span>
           <span class="more-meta"> 2 mins read </span>
         
       </div>
@@ -265,9 +265,53 @@
 </div>
 <p>输出: 1 2 3 4 5 6 7 8 9 10<br />
 时间复杂度：O(n^2)  &ndash;&gt; 两层for循环，最坏时间复杂度n^2<br />
-空间复杂度：O(0) &ndash;&gt; 没有使用额外的存储空间，所以空间复杂度为0</p>
+空间复杂度：O(0) &ndash;&gt; 没有使用额外的存储空间，所以空间复杂度为0
+稳定性：稳定</p>
 
 <h3 id="简单选择排序">简单选择排序</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">swap</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span><span class="kt">int</span> <span class="o">*</span><span class="n">b</span><span class="p">){</span>
+    <span class="kt">int</span> <span class="n">temp</span> <span class="o">=</span> <span class="o">*</span><span class="n">a</span><span class="p">;</span>
+    <span class="o">*</span><span class="n">a</span><span class="o">=*</span><span class="n">b</span><span class="p">;</span>
+    <span class="o">*</span><span class="n">b</span><span class="o">=</span><span class="n">temp</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">select_sort</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span><span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="kt">int</span> <span class="n">min</span><span class="o">=</span><span class="n">i</span><span class="p">;</span><span class="c1">//记录最小值的下标
+</span><span class="c1"></span>        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">){</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">&lt;</span><span class="n">a</span><span class="p">[</span><span class="n">min</span><span class="p">]){</span>
+                <span class="n">min</span><span class="o">=</span><span class="n">j</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="n">swap</span><span class="p">(</span><span class="o">&amp;</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="o">&amp;</span><span class="n">a</span><span class="p">[</span><span class="n">min</span><span class="p">]);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>时间复杂度 :O(n^2)
+空间复杂度 :O(0)
+稳定性：稳定</p>
 
 <h3 id="插入排序">插入排序</h3>
 
