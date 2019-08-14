@@ -6,10 +6,19 @@
     <description>Recent content on JackyLove的小窝</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 20 Jul 2019 14:30:33 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 14 Aug 2019 16:29:59 +0800</lastBuildDate>
     
 	<atom:link href="https://www.jackylove.me/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>简单的Go</title>
+      <link>https://www.jackylove.me/post/%E7%AE%80%E5%8D%95%E7%9A%84go/</link>
+      <pubDate>Wed, 14 Aug 2019 16:29:59 +0800</pubDate>
+      
+      <guid>https://www.jackylove.me/post/%E7%AE%80%E5%8D%95%E7%9A%84go/</guid>
+      <description>21世纪的C语言 Go语言作为google团队开发的一门编译型语言，具有高效开发效率和运行效率，深受国内程序员的喜欢，被誉为“21世纪的C语言</description>
+    </item>
     
     <item>
       <title>Lvm卷组管理</title>

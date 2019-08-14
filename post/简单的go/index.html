@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>简单的Go - JackyLove的小窝</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="JackyLove" /><meta name="description" content="21世纪的C语言 Go语言作为google团队开发的一门编译型语言，具有高效开发效率和运行效率，深受国内程序员的喜欢，被誉为“21世纪的C语言" /><meta name="keywords" content="Hugo, code, linux, c&#43;&#43;, python, go, javascript" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.54.0 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://www.jackylove.me/post/%E7%AE%80%E5%8D%95%E7%9A%84go/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="简单的Go" />
+<meta property="og:description" content="21世纪的C语言 Go语言作为google团队开发的一门编译型语言，具有高效开发效率和运行效率，深受国内程序员的喜欢，被誉为“21世纪的C语言" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.jackylove.me/post/%E7%AE%80%E5%8D%95%E7%9A%84go/" />
+<meta property="article:published_time" content="2019-08-14T16:29:59&#43;08:00"/>
+<meta property="article:modified_time" content="2019-08-14T16:29:59&#43;08:00"/>
+
+<meta itemprop="name" content="简单的Go">
+<meta itemprop="description" content="21世纪的C语言 Go语言作为google团队开发的一门编译型语言，具有高效开发效率和运行效率，深受国内程序员的喜欢，被誉为“21世纪的C语言">
+
+
+<meta itemprop="datePublished" content="2019-08-14T16:29:59&#43;08:00" />
+<meta itemprop="dateModified" content="2019-08-14T16:29:59&#43;08:00" />
+<meta itemprop="wordCount" content="3783">
+
+
+
+<meta itemprop="keywords" content="Golang," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="简单的Go"/>
+<meta name="twitter:description" content="21世纪的C语言 Go语言作为google团队开发的一门编译型语言，具有高效开发效率和运行效率，深受国内程序员的喜欢，被誉为“21世纪的C语言"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">聚散流沙</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">聚散流沙</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">简单的Go</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-08-14 </span>
+        <div class="post-category">
+            <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/"> 编程语言 </a>
+            </div>
+          <span class="more-meta"> 3783 words </span>
+          <span class="more-meta"> 8 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#21世纪的c语言">21世纪的C语言</a>
+<ul>
+<li><a href="#go的基础语法">go的基础语法</a>
+<ul>
+<li><a href="#go的内置基础类型">go的内置基础类型</a></li>
+<li><a href="#go的变量和常量声明">go的变量和常量声明</a></li>
+<li><a href="#go的复合类型">go的复合类型</a>
+<ul>
+<li><a href="#array">array</a></li>
+<li><a href="#slice">slice</a></li>
+<li><a href="#map">map</a></li>
+</ul></li>
+<li><a href="#go中的make和new">go中的make和new</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="21世纪的c语言">21世纪的C语言</h1>
+
+<p>Go语言作为google团队开发的一门编译型语言，具有高效开发效率和运行效率，深受国内程序员的喜欢，被誉为“21世纪的C语言”（主要是C语言作为上世纪的产物，在当今信息爆炸的时代实在是有点难以解决开发效率低下的问题）而Go语言在开发效率和性能方面取了一个折中。</p>
+
+<p>Go语言的创始人都是大牛，有unix的创始人和utf-8的创始人等(所以go天生支持utf-8编码)。</p>
+
+<h2 id="go的基础语法">go的基础语法</h2>
+
+<p>Go环境的安装就不说了，和其它语言一样，在Go官网找到download，对应自己的系统安装即可。</p>
+
+<p>其实语言学多了之后，各种编程语言的语法大致都是相通的，但是不同语言却又有着自己的特色(这正是不同语言吸引人的地方)，如Go语言在语言层面支持并发大概是最大的吸引人的地方了。</p>
+
+<h3 id="go的内置基础类型">go的内置基础类型</h3>
+
+<ul>
+<li>布尔型 bool，值是true或false，默认是false</li>
+<li>整数类型
+&gt;整数类型有无符号和带符号两种。Go同时支持int和uint，这两种类型的长度相同，但具体长度取决于不同编译器的实现。Go里面也有直接定义好位数的类型：rune, int8, int16, int32, int64和byte, uint8, uint16, uint32, uint64。其中rune是int32的别称，byte是uint8的别称。</li>
+<li>浮点数类型
+&gt;浮点数类型有float32和float64两种，默认是float64</li>
+<li>复数类型：有complex128和complex64两种</li>
+
+<li><p>字符串
+&gt;go中的字符串是utf-8字符集编码的，用&rdquo;&ldquo;或者`<code>括号扩起来，它的类型是string。</code>`是用来包含多行字符串。</p>
+
+<blockquote>
+<p>go中字符串是不可变的。如果需要改变(1.可以将string转换成[]byte后改变然后再转换成string 2.可以使用切片操作)</p>
+
+<h3 id="go的变量和常量声明">go的变量和常量声明</h3>
+
+<p>go语言中的变量声明和C语言中的不同，它是变量名放在变量类型前面的，这点Go的官网有解释。go中的变量只声明未初始化时的的默认值是零值（string 为&rdquo;&ldquo;,bool 为flase，整型为0等）而非c/c++语言中的垃圾数据
+```go
+//定义一个名称为“variableName”，类型为&rdquo;type&rdquo;的变量
+var variableName type</p>
+</blockquote></li>
+</ul>
+
+<p>//定义三个类型都是“type”的变量
+var vname1, vname2, vname3 type</p>
+
+<p>//初始化“variableName”的变量为“value”值，类型是“type”
+var variableName type = value</p>
+
+<p>/*
+    定义三个类型都是&rdquo;type&rdquo;的变量,并且分别初始化为相应的值
+    vname1为v1，vname2为v2，vname3为v3
+*/
+var vname1, vname2, vname3 type= v1, v2, v3</p>
+
+<p>/*
+    定义三个变量，它们分别初始化为相应的值
+    vname1为v1，vname2为v2，vname3为v3
+    然后Go会根据其相应值的类型来帮你初始化它们
+*/
+var vname1, vname2, vname3 = v1, v2, v3</p>
+
+<p>//注意：这种初始化方式只能用在函数内，全局的变量声明还是需要使用var
+/*
+    定义三个变量，它们分别初始化为相应的值
+    vname1为v1，vname2为v2，vname3为v3
+    编译器会根据初始化的值自动推导出相应的类型
+*/
+vname1, vname2, vname3 := v1, v2, v3</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">常量
+所谓常量，也就是在程序编译阶段就确定下来的值，而程序在运行时无法改变该值。在Go语言中，常量可定义为数值、布尔值或字符串等类型。
+```go
+// go的常量语法
+const constantName = value
+//如果需要，也可以明确指定常量的类型：
+const Pi float32 = 3.1415926</pre></td></tr></table>
+</div>
+</div>
+<p>go语言可以通过分组声明来简化变量或常量声明。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">import</span> <span class="s">&#34;fmt&#34;</span>
+<span class="kn">import</span> <span class="s">&#34;os&#34;</span>
+
+<span class="kd">const</span> <span class="nx">i</span> <span class="p">=</span> <span class="mi">10</span>
+<span class="kd">const</span> <span class="nx">pi</span> <span class="p">=</span> <span class="mf">3.14159</span>
+<span class="kd">const</span> <span class="nx">prefix</span> <span class="p">=</span> <span class="s">&#34;Go_&#34;</span>
+
+<span class="kd">var</span> <span class="nx">i</span> <span class="kt">int</span>
+<span class="kd">var</span> <span class="nx">pi</span> <span class="kt">float32</span>
+<span class="kd">var</span> <span class="nx">prefix</span> <span class="kt">string</span>
+
+<span class="c1">//上面的声明形式可以写成下面的简化形式，这也是老司机的常用写法
+</span><span class="c1"></span><span class="kn">import</span><span class="p">(</span>
+    <span class="s">&#34;fmt&#34;</span>
+    <span class="s">&#34;os&#34;</span>
+<span class="p">)</span>
+
+<span class="kd">const</span><span class="p">(</span>
+    <span class="nx">i</span> <span class="p">=</span> <span class="mi">10</span>
+    <span class="nx">pi</span> <span class="p">=</span> <span class="mf">3.1415</span>
+    <span class="nx">prefix</span> <span class="p">=</span> <span class="s">&#34;Go_&#34;</span>
+<span class="p">)</span>
+
+<span class="kd">var</span><span class="p">(</span>
+    <span class="nx">i</span> <span class="kt">int</span>
+    <span class="nx">pi</span> <span class="kt">float32</span>
+    <span class="nx">prefix</span> <span class="kt">string</span>
+<span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>go中的iota枚举值</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">const</span><span class="p">(</span>
+    <span class="nx">x</span> <span class="p">=</span> <span class="kc">iota</span>  <span class="c1">// x == 0
+</span><span class="c1"></span>    <span class="nx">y</span> <span class="p">=</span> <span class="kc">iota</span>  <span class="c1">// y == 1
+</span><span class="c1"></span>    <span class="nx">z</span> <span class="p">=</span> <span class="kc">iota</span>  <span class="c1">// z == 2
+</span><span class="c1"></span>    <span class="nx">w</span>  <span class="c1">// 常量声明省略值时，默认和之前一个值的字面相同。这里隐式地说w = iota，因此w == 3。其实上面y和z可同样不用&#34;= iota&#34;
+</span><span class="c1"></span><span class="p">)</span>
+
+<span class="kd">const</span> <span class="nx">v</span> <span class="p">=</span> <span class="kc">iota</span> <span class="c1">// 每遇到一个const关键字，iota就会重置，此时v == 0
+</span><span class="c1"></span>
+<span class="kd">const</span> <span class="p">(</span> 
+  <span class="nx">e</span><span class="p">,</span> <span class="nx">f</span><span class="p">,</span> <span class="nx">g</span> <span class="p">=</span> <span class="kc">iota</span><span class="p">,</span> <span class="kc">iota</span><span class="p">,</span> <span class="kc">iota</span> <span class="c1">//e=0,f=0,g=0 iota在同一行值相同
+</span><span class="c1"></span><span class="p">)</span>
+
+<span class="kd">const</span> <span class="err">（</span>
+    <span class="nx">a</span> <span class="p">=</span> <span class="kc">iota</span>    <span class="nx">a</span><span class="p">=</span><span class="mi">0</span>
+    <span class="nx">b</span> <span class="p">=</span> <span class="s">&#34;B&#34;</span>
+    <span class="nx">c</span> <span class="p">=</span> <span class="kc">iota</span>    <span class="c1">//c=2
+</span><span class="c1"></span>    <span class="nx">d</span><span class="p">,</span><span class="nx">e</span><span class="p">,</span><span class="nx">f</span> <span class="p">=</span> <span class="kc">iota</span><span class="p">,</span><span class="kc">iota</span><span class="p">,</span><span class="kc">iota</span> <span class="c1">//d=3,e=3,f=3
+</span><span class="c1"></span>    <span class="nx">g</span> <span class="c1">//g = 4
+</span><span class="c1"></span><span class="err">）</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="go的复合类型">go的复合类型</h3>
+
+<p>go中有3大值得注意的复合类型，分别是array,slice,map。具体就是数组，切片和字典(键值对)</p>
+
+<h4 id="array">array</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">//声明数组
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">arr</span> <span class="p">[</span><span class="nx">n</span><span class="p">]</span><span class="kd">type</span> <span class="c1">//在[n]type中，n表示数组的长度，type表示存储元素的类型。对数组的操作和其它语言类似，都是通过[]来进行读取或赋值：
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">arr</span> <span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="kt">int</span>
+
+<span class="nx">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">=</span><span class="mi">1</span>
+<span class="nx">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">]=</span><span class="mi">2</span>
+
+<span class="c1">//另一种初始化方式
+</span><span class="c1"></span><span class="nx">a</span> <span class="o">:=</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span> <span class="c1">// 声明了一个长度为3的int数组
+</span><span class="c1"></span>
+<span class="nx">b</span> <span class="o">:=</span> <span class="p">[</span><span class="mi">10</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span> <span class="c1">// 声明了一个长度为10的int数组，其中前三个元素初始化为1、2、3，其它默认为0
+</span><span class="c1"></span>
+<span class="nx">c</span> <span class="o">:=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">}</span> <span class="c1">// 可以省略长度而采用`...`的方式，Go会自动根据元素个数来计算长度
+</span><span class="c1"></span>
+<span class="c1">//注意： 由于长度也是数组类型的一部分，因此[3]int与[4]int是不同的类型，数组也就不能改变长度。数组之间的赋值是值的赋值，即当把一个数组作为参数传入函数的时候，传入的其实是该数组的副本，而不是它的指针。如果要使用指针，那么就需要用到后面介绍的slice类型了。
+</span><span class="c1"></span>
+<span class="c1">//多维数组
+</span><span class="c1">// 声明了一个二维数组，该数组以两个数组作为元素，其中每个数组中又有4个int类型的元素
+</span><span class="c1"></span><span class="nx">doubleArray</span> <span class="o">:=</span> <span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span><span class="kt">int</span><span class="p">{[</span><span class="mi">4</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">},</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">}}</span>
+
+<span class="c1">// 上面的声明可以简化，直接忽略内部的类型
+</span><span class="c1"></span><span class="nx">easyArray</span> <span class="o">:=</span> <span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span><span class="kt">int</span><span class="p">{{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">},</span> <span class="p">{</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">}}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h4 id="slice">slice</h4>
+
+<p>其实由于数组在Go中是值类型，而且不够灵活，我们需要一种“动态数组”，slice是一个底层数组的引用，而不是真正的数组</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 和声明array一样，只是少了长度
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">fslice</span> <span class="p">[]</span><span class="kt">int</span>
+<span class="c1">//声明并初始化
+</span><span class="c1"></span><span class="nx">slice</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">byte</span> <span class="p">{</span><span class="sc">&#39;a&#39;</span><span class="p">,</span> <span class="sc">&#39;b&#39;</span><span class="p">,</span> <span class="sc">&#39;c&#39;</span><span class="p">,</span> <span class="sc">&#39;d&#39;</span><span class="p">}</span>
+
+<span class="c1">//slice可以从一个数组或一个已经存在的slice中再次声明。slice通过array[i:j]来获取，其中i是数组的开始位置，j是结束位置，但不包含array[j]，它的长度是j-i
+</span><span class="c1"></span>
+<span class="c1">// 声明一个含有10个元素元素类型为byte的数组
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">ar</span> <span class="p">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">]</span><span class="kt">byte</span> <span class="p">{</span><span class="sc">&#39;a&#39;</span><span class="p">,</span> <span class="sc">&#39;b&#39;</span><span class="p">,</span> <span class="sc">&#39;c&#39;</span><span class="p">,</span> <span class="sc">&#39;d&#39;</span><span class="p">,</span> <span class="sc">&#39;e&#39;</span><span class="p">,</span> <span class="sc">&#39;f&#39;</span><span class="p">,</span> <span class="sc">&#39;g&#39;</span><span class="p">,</span> <span class="sc">&#39;h&#39;</span><span class="p">,</span> <span class="sc">&#39;i&#39;</span><span class="p">,</span> <span class="sc">&#39;j&#39;</span><span class="p">}</span>
+
+<span class="c1">// 声明两个含有byte的slice
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="p">[]</span><span class="kt">byte</span>
+
+<span class="c1">// a指向数组的第3个元素开始，并到第五个元素结束，
+</span><span class="c1"></span><span class="nx">a</span> <span class="p">=</span> <span class="nx">ar</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span>
+<span class="c1">//现在a含有的元素: ar[2]、ar[3]和ar[4]
+</span><span class="c1"></span>
+<span class="c1">// b是数组ar的另一个slice
+</span><span class="c1"></span><span class="nx">b</span> <span class="p">=</span> <span class="nx">ar</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span>
+<span class="c1">// b的元素是：ar[3]和ar[4]
+</span><span class="c1"></span>
+<span class="o">//</span><span class="nx">注意</span><span class="err">：</span><span class="nx">slice是引用类型</span><span class="err">，</span><span class="nx">所以当引用改变其中元素的值时</span><span class="err">，</span><span class="nx">其它的所有引用都会改变该值</span><span class="err">。</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>从概念上面来说slice像一个结构体，这个结构体包含了三个元素：
+- 一个指针，指向数组中slice指定的开始位置
+- 长度(len)，即slice的长度
+- 容量(cap)，也就是slice开始位置到数组的最后位置的长度</p>
+
+<p>对于slice有几个有用的内置函数：</p>
+
+<ul>
+<li>len 获取slice的长度</li>
+<li>cap 获取slice的最大容量</li>
+<li>append 向slice里面追加一个或者多个元素，然后返回一个和slice一样类型的slice</li>
+<li>copy 函数copy从源slice的src中复制元素到目标dst，并且返回复制的元素的个数</li>
+</ul>
+
+<p>注：append函数会改变slice所引用的数组的内容，从而影响到引用同一数组的其它slice。 但当slice中没有剩余空间（即(cap-len) == 0）时，此时将动态分配新的数组空间。返回的slice数组指针将指向这个空间，而原数组的内容将保持不变；其它引用此数组的slice则不受影响。</p>
+
+<h4 id="map">map</h4>
+
+<p>map类似Python中字典的概念，它的格式为map[keyType]valueType</p>
+
+<p>我们看下面的代码，map的读取和设置也类似slice一样，通过key来操作，只是slice的index只能是｀int｀类型，而map多了很多类型，可以是int，可以是string及所有完全定义了==与!=操作的类型。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 声明一个key是字符串，值为int的字典,这种方式的声明需要在使用之前使用make初始化
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">numbers</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span>
+<span class="c1">// 另一种map的声明方式
+</span><span class="c1"></span><span class="nx">numbers</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span><span class="p">)</span>
+<span class="nx">numbers</span><span class="p">[</span><span class="s">&#34;one&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="mi">1</span>  <span class="c1">//赋值
+</span><span class="c1"></span><span class="nx">numbers</span><span class="p">[</span><span class="s">&#34;ten&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="mi">10</span> <span class="c1">//赋值
+</span><span class="c1"></span><span class="nx">numbers</span><span class="p">[</span><span class="s">&#34;three&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="mi">3</span>
+
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;第三个数字是: &#34;</span><span class="p">,</span> <span class="nx">numbers</span><span class="p">[</span><span class="s">&#34;three&#34;</span><span class="p">])</span> <span class="c1">// 读取数据
+</span><span class="c1">// 打印出来如:第三个数字是: 3
+</span><span class="c1"></span>
+<span class="c1">// 初始化一个字典
+</span><span class="c1"></span><span class="nx">rating</span> <span class="o">:=</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">float32</span><span class="p">{</span><span class="s">&#34;C&#34;</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="s">&#34;Go&#34;</span><span class="p">:</span><span class="mf">4.5</span><span class="p">,</span> <span class="s">&#34;Python&#34;</span><span class="p">:</span><span class="mf">4.5</span><span class="p">,</span> <span class="s">&#34;C++&#34;</span><span class="p">:</span><span class="mi">2</span> <span class="p">}</span>
+<span class="c1">// map有两个返回值，第二个返回值，如果不存在key，那么ok为false，如果存在ok为true
+</span><span class="c1"></span><span class="nx">csharpRating</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">rating</span><span class="p">[</span><span class="s">&#34;C#&#34;</span><span class="p">]</span>
+<span class="k">if</span> <span class="nx">ok</span> <span class="p">{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;C# is in the map and its rating is &#34;</span><span class="p">,</span> <span class="nx">csharpRating</span><span class="p">)</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;We have no rating associated with C# in the map&#34;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="nb">delete</span><span class="p">(</span><span class="nx">rating</span><span class="p">,</span> <span class="s">&#34;C&#34;</span><span class="p">)</span>  <span class="o">//</span> <span class="nx">删除key为C的元素</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>使用map过程中需要注意的几点：</p>
+
+<ul>
+<li>map是无序的，每次打印出来的map都会不一样，它不能通过index获取，而必须通过key获取</li>
+<li>map的长度是不固定的，也就是和slice一样，也是一种引用类型</li>
+<li>内置的len函数同样适用于map，返回map拥有的key的数量</li>
+<li>map的值可以很方便的修改，通过numbers[&ldquo;one&rdquo;]=11可以很容易的把key为one的字典值改为11</li>
+<li>map和其他基本型别不同，它不是thread-safe，在多个go-routine存取时，必须使用mutex lock机制</li>
+</ul>
+
+<h3 id="go中的make和new">go中的make和new</h3>
+
+<p>make用于内建类型（map、slice 和channel）的内存分配。new用于各种类型的内存分配。
+- new返回指针类型，指向分配了对应类型的内存地址，以零值填冲内存空间
+- make返回的是值类型，并且只能用于map、slice和channel，初始化了内部的数据(非零值)</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">JackyLove</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2019-08-14
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/golang/">Golang</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/lvm%E5%8D%B7%E7%BB%84%E7%AE%A1%E7%90%86/">
+            <span class="next-text nav-default">Lvm卷组管理</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  <span id="/post/%E7%AE%80%E5%8D%95%E7%9A%84go/" class="leancloud_visitors" data-flag-title="简单的Go">
+    <span class="post-meta-item-text">文章阅读量 </span>
+    <span class="leancloud-visitors-count">1000000</span>
+    <p></p>
+  </span>
+  <div id="vcomments"></div>
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+  <script type="text/javascript">
+    new Valine({
+        el: '#vcomments' ,
+        appId: 'xPwmFUoHVqraVIVlAt2Xch9M-gzGzoHsz',
+        appKey: 'VP1APko2CdGfydmf7xOplDur',
+        notify:  false , 
+        verify:  false , 
+        avatar:'', 
+        placeholder: '请说点什么吧...',
+        visitor:  true 
+    });
+  </script>
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://stackoverflow.com/users/8640064/jackylove" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/jacklov3" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.instagram.com/jacky1ove/" class="iconfont icon-instagram" title="instagram"></a>
+  <a href="https://www.jackylove.me/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">JackyLove</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Golang on JackyLove的小窝</title>
+    <link>https://www.jackylove.me/tags/golang/</link>
+    <description>Recent content in Golang on JackyLove的小窝</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 14 Aug 2019 16:29:59 +0800</lastBuildDate>
+    
+	<atom:link href="https://www.jackylove.me/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>简单的Go</title>
+      <link>https://www.jackylove.me/post/%E7%AE%80%E5%8D%95%E7%9A%84go/</link>
+      <pubDate>Wed, 14 Aug 2019 16:29:59 +0800</pubDate>
+      
+      <guid>https://www.jackylove.me/post/%E7%AE%80%E5%8D%95%E7%9A%84go/</guid>
+      <description>21世纪的C语言 Go语言作为google团队开发的一门编译型语言，具有高效开发效率和运行效率，深受国内程序员的喜欢，被誉为“21世纪的C语言</description>
+    </item>
+    
+  </channel>
+</rss>
