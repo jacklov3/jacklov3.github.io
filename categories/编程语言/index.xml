@@ -6,10 +6,19 @@
     <description>Recent content in 编程语言 on JackyLove的小窝</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 14 Aug 2019 16:29:59 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 15 Aug 2019 15:08:22 +0800</lastBuildDate>
     
 	<atom:link href="https://www.jackylove.me/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Go中的面向对象和接口</title>
+      <link>https://www.jackylove.me/post/go%E4%B8%AD%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%92%8C%E6%8E%A5%E5%8F%A3/</link>
+      <pubDate>Thu, 15 Aug 2019 15:08:22 +0800</pubDate>
+      
+      <guid>https://www.jackylove.me/post/go%E4%B8%AD%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%92%8C%E6%8E%A5%E5%8F%A3/</guid>
+      <description>Go中的面向对象和接口 严格来讲，go中并没有传统的面向对象的严格语法，但是可以通过组合来实现。 前一篇Go的博文中，我们提到了struct，我</description>
+    </item>
     
     <item>
       <title>简单的Go</title>

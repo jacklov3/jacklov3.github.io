@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Go中的面向对象和接口 - JackyLove的小窝</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="JackyLove" /><meta name="description" content="Go中的面向对象和接口 严格来讲，go中并没有传统的面向对象的严格语法，但是可以通过组合来实现。 前一篇Go的博文中，我们提到了struct，我" /><meta name="keywords" content="Hugo, code, linux, c&#43;&#43;, python, go, javascript" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.54.0 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://www.jackylove.me/post/go%E4%B8%AD%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%92%8C%E6%8E%A5%E5%8F%A3/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Go中的面向对象和接口" />
+<meta property="og:description" content="Go中的面向对象和接口 严格来讲，go中并没有传统的面向对象的严格语法，但是可以通过组合来实现。 前一篇Go的博文中，我们提到了struct，我" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.jackylove.me/post/go%E4%B8%AD%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%92%8C%E6%8E%A5%E5%8F%A3/" />
+<meta property="article:published_time" content="2019-08-15T15:08:22&#43;08:00"/>
+<meta property="article:modified_time" content="2019-08-15T15:08:22&#43;08:00"/>
+
+<meta itemprop="name" content="Go中的面向对象和接口">
+<meta itemprop="description" content="Go中的面向对象和接口 严格来讲，go中并没有传统的面向对象的严格语法，但是可以通过组合来实现。 前一篇Go的博文中，我们提到了struct，我">
+
+
+<meta itemprop="datePublished" content="2019-08-15T15:08:22&#43;08:00" />
+<meta itemprop="dateModified" content="2019-08-15T15:08:22&#43;08:00" />
+<meta itemprop="wordCount" content="3167">
+
+
+
+<meta itemprop="keywords" content="Golang," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Go中的面向对象和接口"/>
+<meta name="twitter:description" content="Go中的面向对象和接口 严格来讲，go中并没有传统的面向对象的严格语法，但是可以通过组合来实现。 前一篇Go的博文中，我们提到了struct，我"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">聚散流沙</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">聚散流沙</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Go中的面向对象和接口</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-08-15 </span>
+        <div class="post-category">
+            <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/"> 编程语言 </a>
+            </div>
+          <span class="more-meta"> 3167 words </span>
+          <span class="more-meta"> 7 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#go中的面向对象和接口">Go中的面向对象和接口</a>
+<ul>
+<li><a href="#method继承">method继承</a></li>
+<li><a href="#method重写">method重写</a></li>
+<li><a href="#interface">interface</a>
+<ul>
+<li><a href="#什么是interface">什么是interface？</a></li>
+<li><a href="#interface值">interface值</a></li>
+<li><a href="#空interface">空interface</a></li>
+<li><a href="#interface变量存储的类型">interface变量存储的类型</a></li>
+<li><a href="#反射">反射</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="go中的面向对象和接口">Go中的面向对象和接口</h1>
+
+<p>严格来讲，go中并没有传统的面向对象的严格语法，但是可以通过组合来实现。
+前一篇Go的博文中，我们提到了struct，我们在别的面向对象的语言中，我们定义class对象的类型和方法封装。在Go中，不是严格地内部封装，而是通过一个叫做方法的函数来实现对象的行为的。</p>
+
+<p>方法是一种带有接收者的函数，称为method</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Rectangle</span> <span class="kd">struct</span><span class="p">{</span>
+	<span class="nx">width</span><span class="p">,</span><span class="nx">height</span> <span class="kt">float64</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">Circle</span> <span class="kd">struct</span><span class="p">{</span>
+	<span class="nx">radius</span> <span class="kt">float64</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">r</span> <span class="nx">Rectangle</span><span class="p">)</span> <span class="nf">area</span><span class="p">()</span><span class="kt">float64</span><span class="p">{</span>
+	<span class="k">return</span> <span class="nx">r</span><span class="p">.</span><span class="nx">height</span><span class="o">*</span><span class="nx">r</span><span class="p">.</span><span class="nx">width</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="nx">Circle</span><span class="p">)</span> <span class="nf">area</span><span class="p">()</span><span class="kt">float64</span><span class="p">{</span>
+	<span class="k">return</span> <span class="nx">c</span><span class="p">.</span><span class="nx">radius</span><span class="o">*</span><span class="nx">c</span><span class="p">.</span><span class="nx">radius</span><span class="o">*</span><span class="nx">math</span><span class="p">.</span><span class="nx">Pi</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">main</span><span class="p">(){</span>
+	<span class="nx">r1</span>  <span class="o">:=</span><span class="nx">Rectangle</span><span class="p">{</span><span class="mi">12</span><span class="p">,</span><span class="mi">2</span><span class="p">}</span>
+	<span class="nx">r2</span> <span class="o">:=</span><span class="nx">Rectangle</span><span class="p">{</span><span class="mi">9</span><span class="p">,</span><span class="mi">4</span><span class="p">}</span>
+	<span class="nx">c1</span> <span class="o">:=</span><span class="nx">Circle</span><span class="p">{</span><span class="mi">10</span><span class="p">}</span>
+	<span class="nx">c2</span> <span class="o">:=</span><span class="nx">Circle</span><span class="p">{</span><span class="mi">25</span><span class="p">}</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">r1</span><span class="p">.</span><span class="nf">area</span><span class="p">())</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">r2</span><span class="p">.</span><span class="nf">area</span><span class="p">())</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">c1</span><span class="p">.</span><span class="nf">area</span><span class="p">())</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">c2</span><span class="p">.</span><span class="nf">area</span><span class="p">())</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>在使用method的时候重要注意几点</p>
+
+<ul>
+<li>虽然method的名字一模一样，但是如果接收者不一样，那么method就不一样</li>
+<li>method里面可以访问接收者的字段</li>
+<li>调用method通过.访问，就像struct里面访问字段一样</li>
+</ul>
+
+<p>method不仅可以作用在struct上，我们可以定义在自定义的类型、内置类型等。自定义类型是type定义的别名</p>
+
+<p>我们可以定义方法的接受者为指针，这样不仅可以减少拷贝的开销，对于需要修改原数据的方法，我们必须传入一个指针。传入指针后，我们在方法内部可以直接通过&rdquo;.&ldquo;访问它的属性，而不需要像C语言一样解引用。Go会自动解引用。</p>
+
+<h2 id="method继承">method继承</h2>
+
+<p>前一篇博文讲到了匿名字段的继承，在这也是一样的，struct的匿名字段实现了某个method，也会被继承过来。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Humen</span> <span class="kd">struct</span><span class="p">{</span>
+	<span class="nx">name</span> <span class="kt">string</span>
+	<span class="nx">age</span> <span class="kt">int</span>
+	<span class="nx">phone</span> <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">Student</span> <span class="kd">struct</span><span class="p">{</span>
+	<span class="nx">Humen</span> 
+	<span class="nx">shcool</span> <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">Employee</span> <span class="kd">struct</span><span class="p">{</span>
+	<span class="nx">Humen</span> 
+	<span class="nx">company</span> <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">h</span> <span class="o">*</span><span class="nx">Humen</span><span class="p">)</span> <span class="nf">SayHi</span><span class="p">(){</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Hi,I am %s you can call me on %s\n&#34;</span><span class="p">,</span><span class="nx">h</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span><span class="nx">h</span><span class="p">.</span><span class="nx">phone</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">main</span><span class="p">(){</span>
+	<span class="nx">mark</span> <span class="o">:=</span> <span class="nx">Student</span><span class="p">{</span><span class="nx">Humen</span><span class="p">{</span><span class="s">&#34;Mark&#34;</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="s">&#34;222-222-YYYY&#34;</span><span class="p">},</span><span class="s">&#34;MIT&#34;</span><span class="p">}</span>
+	<span class="nx">sam</span> <span class="o">:=</span><span class="nx">Employee</span><span class="p">{</span><span class="nx">Humen</span><span class="p">{</span><span class="s">&#34;Sam&#34;</span><span class="p">,</span><span class="mi">45</span><span class="p">,</span><span class="s">&#34;111-888-XXXX&#34;</span><span class="p">},</span><span class="s">&#34;Golang Inc&#34;</span><span class="p">}</span>
+	<span class="nx">mark</span><span class="p">.</span><span class="nf">SayHi</span><span class="p">()</span>
+	<span class="nx">sam</span><span class="p">.</span><span class="nf">SayHi</span><span class="p">()</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="method重写">method重写</h2>
+
+<p>在上面的例子中，如果Employee想要实现自己的SayHi，怎么办。和匿名字段冲突一样的道理，我们可以在Employee上面定义一个method，重写匿名字段的方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">e</span> <span class="o">*</span><span class="nx">Employee</span><span class="p">)</span> <span class="nf">SayHi</span><span class="p">(){</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Hi, I am %s,I work at %s. Call me on %s\n&#34;</span><span class="p">,</span><span class="nx">e</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span><span class="nx">e</span><span class="p">.</span><span class="nx">company</span><span class="p">,</span><span class="nx">e</span><span class="p">.</span><span class="nx">phone</span><span class="p">)</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="interface">interface</h2>
+
+<p>Go语言中最精妙的设计应该算interface了。它可以简单方便的实现多态。</p>
+
+<h3 id="什么是interface">什么是interface？</h3>
+
+<p>简单地说,interface 是一组method的组合，我们通过interface来定义对象的一组行为。注意是方法的集合不是函数的集合。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Humen</span> <span class="kd">struct</span><span class="p">{</span>
+	<span class="nx">name</span> <span class="kt">string</span>
+	<span class="nx">age</span> <span class="kt">int</span>
+	<span class="nx">phone</span> <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">Student</span> <span class="kd">struct</span><span class="p">{</span>
+	<span class="nx">Humen</span> <span class="c1">//匿名字段
+</span><span class="c1"></span>	<span class="nx">school</span> <span class="kt">string</span>
+	<span class="nx">locan</span> <span class="kt">float32</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">Employee</span> <span class="kd">struct</span><span class="p">{</span>
+	<span class="nx">Humen</span> <span class="c1">//匿名字段
+</span><span class="c1"></span>	<span class="nx">company</span> <span class="kt">string</span>
+	<span class="nx">money</span> <span class="kt">float32</span>
+<span class="p">}</span>
+<span class="c1">//Humen 对象实现了Sayhello方法
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">h</span> <span class="o">*</span><span class="nx">Humen</span><span class="p">)</span> <span class="nf">Sayhello</span><span class="p">(){</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;你好，我是%s,今年%d岁，我的电话号码是%s&#34;</span><span class="p">,</span><span class="nx">h</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span><span class="nx">h</span><span class="p">.</span><span class="nx">age</span><span class="p">,</span><span class="nx">h</span><span class="p">.</span><span class="nx">phone</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">//Humen 对象实现了Sing方法
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">h</span> <span class="o">*</span><span class="nx">Humen</span><span class="p">)</span><span class="nf">Sing</span><span class="p">(</span><span class="nx">geci</span> <span class="kt">string</span><span class="p">){</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;不如唱歌，我正在唱%s&#34;</span><span class="p">,</span><span class="nx">geci</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="c1">//Humen 对象实现了Dump方法
+</span><span class="c1"></span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">h</span> <span class="o">*</span><span class="nx">Humen</span><span class="p">)</span><span class="nf">Dump</span><span class="p">(</span><span class="nx">length</span> <span class="kt">int</span><span class="p">){</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;我可以跳%d米&#34;</span><span class="p">,</span><span class="nx">length</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">//Employee 重载Humen的Sayhello方法
+</span><span class="c1"></span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">e</span> <span class="o">*</span><span class="nx">Employee</span><span class="p">)</span> <span class="nf">Sayhello</span><span class="p">(){</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;我叫%s，我今年%d岁了，我的电话号码是%s，我目前工作在%s公司，月薪%f&#34;</span><span class="p">,</span><span class="nx">e</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span><span class="nx">e</span><span class="p">.</span><span class="nx">age</span><span class="p">,</span><span class="nx">e</span><span class="p">.</span><span class="nx">phone</span><span class="p">,</span><span class="nx">e</span><span class="p">.</span><span class="nx">company</span><span class="p">,</span><span class="nx">e</span><span class="p">.</span><span class="nx">money</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">//Student 实现了BorrowMoney方法
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">Student</span><span class="p">)</span><span class="nf">BorrowMoney</span><span class="p">(</span><span class="nx">amount</span> <span class="kt">float32</span><span class="p">){</span>
+	<span class="nx">s</span><span class="p">.</span><span class="nx">locan</span> <span class="o">+=</span><span class="nx">amount</span>
+<span class="p">}</span>
+<span class="c1">//Employee实现SpendSalary方法
+</span><span class="c1"></span><span class="kd">func</span><span class="p">(</span><span class="nx">e</span> <span class="o">*</span><span class="nx">Employee</span><span class="p">)</span> <span class="nf">SpendSalary</span><span class="p">(</span><span class="nx">amount</span> <span class="kt">float32</span><span class="p">){</span>
+	<span class="nx">e</span><span class="p">.</span><span class="nx">money</span> <span class="o">-=</span><span class="nx">amount</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">Men</span> <span class="kd">interface</span><span class="p">{</span>
+	<span class="nf">Sayhello</span><span class="p">()</span>
+	<span class="nf">Sing</span><span class="p">(</span><span class="nx">geci</span> <span class="kt">string</span><span class="p">)</span>
+	<span class="nf">Dump</span><span class="p">(</span><span class="nx">length</span> <span class="kt">int</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">YoungChap</span> <span class="kd">interface</span><span class="p">{</span>
+	<span class="nf">Sayhello</span><span class="p">()</span>
+	<span class="nf">Sing</span><span class="p">(</span><span class="nx">geci</span> <span class="kt">string</span><span class="p">)</span>
+	<span class="nf">BorrowMoney</span><span class="p">(</span><span class="nx">amount</span> <span class="kt">float32</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">ElderlyGent</span> <span class="kd">interface</span><span class="p">{</span>
+	<span class="nf">Sayhello</span><span class="p">()</span>
+	<span class="nf">Sing</span><span class="p">(</span><span class="nx">geci</span> <span class="kt">string</span><span class="p">)</span>
+	<span class="nf">SpendSalary</span><span class="p">(</span><span class="nx">amount</span> <span class="kt">float32</span><span class="p">)</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>通过上面的代码我们可以知道，interface可以被任意的对象实现。我们看到上面的Men interface被Human、Student和Employee实现。同理，一个对象可以实现任意多个interface，例如上面的Student实现了Men和YoungChap两个interface。</p>
+
+<h3 id="interface值">interface值</h3>
+
+<p>interface作为一种方法的集合，如果我们定义了一个interface的变量，则这个变量里面可以存实现这个接口的任意类型的对象。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Humen</span> <span class="kd">struct</span><span class="p">{</span>
+	<span class="nx">name</span> <span class="kt">string</span>
+	<span class="nx">age</span> <span class="kt">int</span>
+	<span class="nx">phone</span> <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">Student</span> <span class="kd">struct</span><span class="p">{</span>
+	<span class="nx">Humen</span> <span class="c1">//匿名字段
+</span><span class="c1"></span>	<span class="nx">school</span> <span class="kt">string</span>
+	<span class="nx">locan</span> <span class="kt">float32</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">Employee</span> <span class="kd">struct</span><span class="p">{</span>
+	<span class="nx">Humen</span> <span class="c1">//匿名字段
+</span><span class="c1"></span>	<span class="nx">company</span> <span class="kt">string</span>
+	<span class="nx">money</span> <span class="kt">float32</span>
+<span class="p">}</span>
+<span class="c1">//Humen 对象实现了Sayhello方法
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">h</span> <span class="o">*</span><span class="nx">Humen</span><span class="p">)</span> <span class="nf">Sayhello</span><span class="p">(){</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;你好，我是%s,今年%d岁，我的电话号码是%s&#34;</span><span class="p">,</span><span class="nx">h</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span><span class="nx">h</span><span class="p">.</span><span class="nx">age</span><span class="p">,</span><span class="nx">h</span><span class="p">.</span><span class="nx">phone</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">//Humen 对象实现了Sing方法
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">h</span> <span class="o">*</span><span class="nx">Humen</span><span class="p">)</span><span class="nf">Sing</span><span class="p">(</span><span class="nx">geci</span> <span class="kt">string</span><span class="p">){</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;不如唱歌，我正在唱: %s\n&#34;</span><span class="p">,</span><span class="nx">geci</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">//Humen 对象实现了Dump方法
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">h</span> <span class="o">*</span><span class="nx">Humen</span><span class="p">)</span><span class="nf">Dump</span><span class="p">(</span><span class="nx">length</span> <span class="kt">int</span><span class="p">){</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;我可以跳%d米\n&#34;</span><span class="p">,</span><span class="nx">length</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">//Employee 重载Humen的Sayhello方法
+</span><span class="c1"></span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">e</span> <span class="o">*</span><span class="nx">Employee</span><span class="p">)</span> <span class="nf">Sayhello</span><span class="p">(){</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;我叫%s，我今年%d岁了，我的电话号码是%s，我目前工作在%s公司，月薪%f\n&#34;</span><span class="p">,</span><span class="nx">e</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span><span class="nx">e</span><span class="p">.</span><span class="nx">age</span><span class="p">,</span><span class="nx">e</span><span class="p">.</span><span class="nx">phone</span><span class="p">,</span><span class="nx">e</span><span class="p">.</span><span class="nx">company</span><span class="p">,</span><span class="nx">e</span><span class="p">.</span><span class="nx">money</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">//Student 实现了BorrowMoney方法
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">Student</span><span class="p">)</span><span class="nf">BorrowMoney</span><span class="p">(</span><span class="nx">amount</span> <span class="kt">float32</span><span class="p">){</span>
+	<span class="nx">s</span><span class="p">.</span><span class="nx">locan</span> <span class="o">+=</span><span class="nx">amount</span>
+<span class="p">}</span>
+<span class="c1">//Employee实现SpendSalary方法
+</span><span class="c1"></span><span class="kd">func</span><span class="p">(</span><span class="nx">e</span> <span class="o">*</span><span class="nx">Employee</span><span class="p">)</span> <span class="nf">SpendSalary</span><span class="p">(</span><span class="nx">amount</span> <span class="kt">float32</span><span class="p">){</span>
+	<span class="nx">e</span><span class="p">.</span><span class="nx">money</span> <span class="o">-=</span><span class="nx">amount</span>
+<span class="p">}</span>
+
+<span class="c1">//此接口被Humen，Student和Employee实现
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">Men</span> <span class="kd">interface</span><span class="p">{</span>
+	<span class="nf">Sayhello</span><span class="p">()</span>
+	<span class="nf">Sing</span><span class="p">(</span><span class="nx">geci</span> <span class="kt">string</span><span class="p">)</span>
+	<span class="nf">Dump</span><span class="p">(</span><span class="nx">length</span> <span class="kt">int</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">//这个接口被Student实现
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">YoungChap</span> <span class="kd">interface</span><span class="p">{</span>
+	<span class="nf">Sayhello</span><span class="p">()</span>
+	<span class="nf">Sing</span><span class="p">(</span><span class="nx">geci</span> <span class="kt">string</span><span class="p">)</span>
+	<span class="nf">BorrowMoney</span><span class="p">(</span><span class="nx">amount</span> <span class="kt">float32</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">//这个接口被Employee实现
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">ElderlyGent</span> <span class="kd">interface</span><span class="p">{</span>
+	<span class="nf">Sayhello</span><span class="p">()</span>
+	<span class="nf">Sing</span><span class="p">(</span><span class="nx">geci</span> <span class="kt">string</span><span class="p">)</span>
+	<span class="nf">SpendSalary</span><span class="p">(</span><span class="nx">amount</span> <span class="kt">float32</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">main</span><span class="p">(){</span>
+	<span class="nx">humen1</span> <span class="o">:=</span><span class="nx">Humen</span><span class="p">{</span><span class="s">&#34;张三&#34;</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="s">&#34;110&#34;</span><span class="p">}</span>
+	<span class="nx">student1</span> <span class="o">:=</span><span class="nx">Student</span><span class="p">{</span><span class="nx">Humen</span><span class="p">{</span><span class="s">&#34;李四&#34;</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="s">&#34;119&#34;</span><span class="p">},</span><span class="s">&#34;清华大学&#34;</span><span class="p">,</span><span class="mi">100</span><span class="p">}</span>
+	<span class="nx">employee1</span> <span class="o">:=</span><span class="nx">Employee</span><span class="p">{</span><span class="nx">Humen</span><span class="p">{</span><span class="s">&#34;王五&#34;</span><span class="p">,</span><span class="mi">23</span><span class="p">,</span><span class="s">&#34;911&#34;</span><span class="p">},</span><span class="s">&#34;腾讯&#34;</span><span class="p">,</span><span class="mi">20000</span><span class="p">}</span>
+	<span class="c1">//定义Men接口的变量
+</span><span class="c1"></span>	<span class="kd">var</span> <span class="nx">i</span> <span class="nx">Men</span>
+	<span class="nx">i</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">humen1</span>
+	<span class="nx">i</span><span class="p">.</span><span class="nf">Sayhello</span><span class="p">()</span>
+	<span class="nx">i</span><span class="p">.</span><span class="nf">Sing</span><span class="p">(</span><span class="s">&#34;找个天使替我去爱你&#34;</span><span class="p">)</span>
+	<span class="nx">i</span><span class="p">.</span><span class="nf">Dump</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+
+	<span class="nx">i</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">student1</span>
+	<span class="nx">i</span><span class="p">.</span><span class="nf">Sayhello</span><span class="p">()</span>
+	<span class="nx">i</span><span class="p">.</span><span class="nf">Sing</span><span class="p">(</span><span class="s">&#34;唱不完一首歌.....&#34;</span><span class="p">)</span>
+	<span class="nx">i</span><span class="p">.</span><span class="nf">Dump</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+
+	<span class="nx">i</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">employee1</span>
+	<span class="nx">i</span><span class="p">.</span><span class="nf">Sayhello</span><span class="p">()</span>
+	<span class="nx">i</span><span class="p">.</span><span class="nf">Sing</span><span class="p">(</span><span class="s">&#34;冬天的秘密...&#34;</span><span class="p">)</span>
+	<span class="nx">i</span><span class="p">.</span><span class="nf">Dump</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>Go通过interface实现了鸭子类型，即多态。</p>
+
+<h3 id="空interface">空interface</h3>
+
+<p>空的interface不包含任何的method，所以所有类型都实现了空interface，所以空interface可以存储任意类型的数值，相当于C语言的void*类型</p>
+
+<p>因此，一个函数可以把interface{}作为参数，可以接收任何类型的值，返回一个interface{}可以返回任意类型的值。相当于动态语言</p>
+
+<h3 id="interface变量存储的类型">interface变量存储的类型</h3>
+
+<p>我们知道interface的变量里面可以存储任意类型的数值，那么我们如何知道这个变量的实际保存的类型呢。
+有两种方法
+- Comma-ok断言
+value,ok = element.(T)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">import</span> <span class="p">(</span><span class="s">&#34;fmt&#34;</span>
+<span class="s">&#34;strconv&#34;</span><span class="p">)</span>
+
+<span class="kd">type</span> <span class="nx">Element</span> <span class="kd">interface</span><span class="p">{}</span>
+<span class="kd">type</span> <span class="nx">List</span> <span class="p">[]</span> <span class="nx">Element</span>
+<span class="kd">type</span> <span class="nx">Person</span> <span class="kd">struct</span><span class="p">{</span>
+	<span class="nx">name</span> <span class="kt">string</span> 
+	<span class="nx">age</span> <span class="kt">int</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="nx">Person</span><span class="p">)</span> <span class="nf">String</span><span class="p">()</span><span class="kt">string</span><span class="p">{</span>
+	<span class="k">return</span> <span class="s">&#34;(name: &#34;</span><span class="o">+</span><span class="nx">p</span><span class="p">.</span><span class="nx">name</span><span class="o">+</span><span class="s">&#34;- age: &#34;</span><span class="o">+</span><span class="nx">strconv</span><span class="p">.</span><span class="nf">Itoa</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span><span class="o">+</span><span class="s">&#34; years&#34;</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">Test_type_interface</span><span class="p">(){</span>
+	<span class="nx">list</span> <span class="o">:=</span><span class="nb">make</span><span class="p">(</span><span class="nx">List</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+	<span class="nx">list</span><span class="p">[</span><span class="mi">0</span><span class="p">]=</span><span class="mi">1</span>
+	<span class="nx">list</span><span class="p">[</span><span class="mi">1</span><span class="p">]=</span><span class="s">&#34;Hello&#34;</span>
+	<span class="nx">list</span><span class="p">[</span><span class="mi">2</span><span class="p">]=</span><span class="nx">Person</span><span class="p">{</span><span class="s">&#34;hello&#34;</span><span class="p">,</span><span class="mi">19</span><span class="p">}</span>
+	
+
+	<span class="k">for</span> <span class="nx">index</span><span class="p">,</span><span class="nx">element</span> <span class="o">:=</span><span class="k">range</span> <span class="nx">list</span><span class="p">{</span>
+		<span class="k">switch</span> <span class="nx">value</span> <span class="o">:=</span><span class="nx">element</span><span class="p">.(</span><span class="kd">type</span><span class="p">){</span>
+		<span class="k">case</span> <span class="kt">int</span><span class="p">:</span>
+			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;list[%d] is an int and its value is %d\n&#34;</span><span class="p">,</span><span class="nx">index</span><span class="p">,</span><span class="nx">value</span><span class="p">)</span>
+		<span class="k">case</span> <span class="kt">string</span><span class="p">:</span>
+			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;list[%d] is a string and its value is %s\n&#34;</span><span class="p">,</span><span class="nx">index</span><span class="p">,</span><span class="nx">value</span><span class="p">)</span>
+		<span class="k">case</span> <span class="nx">Person</span><span class="p">:</span>
+			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;list[%d] is a Person and its value is %s\n&#34;</span><span class="p">,</span><span class="nx">index</span><span class="p">,</span><span class="nx">value</span><span class="p">)</span>
+		<span class="k">default</span><span class="p">:</span>
+			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;list[%d] is of a different type&#34;</span><span class="p">,</span><span class="nx">index</span><span class="p">)</span>
+			
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>类似匿名字段，接口中也可以嵌入接口。即把嵌入接口的所有方法包含进来。</p>
+
+<h3 id="反射">反射</h3>
+
+<p>所谓反射，就是能检查程序在运行时的状态，我们一般用到的包是reflect包。
+1. 将该值转换成reflect对象(reflect.Type或者reflect.Value)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">t</span> <span class="o">:=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">TypeOf</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>    <span class="c1">//得到类型的元数据,通过t我们能获取类型定义里面的所有元素
+</span><span class="c1"></span><span class="nx">v</span> <span class="o">:=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">ValueOf</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>   <span class="o">//</span><span class="nx">得到实际的值</span><span class="err">，</span><span class="nx">通过v我们获取存储在里面的值</span><span class="err">，</span><span class="nx">还可以去改变值</span></code></pre></td></tr></table>
+</div>
+</div>
+<ol>
+<li><p>对reflect对象进行操作，转换成对应的值。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">tag</span> <span class="o">:=</span> <span class="nx">t</span><span class="p">.</span><span class="nf">Elem</span><span class="p">().</span><span class="nf">Field</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nx">Tag</span>  <span class="c1">//获取定义在struct里面的标签
+</span><span class="c1"></span><span class="nx">name</span> <span class="o">:=</span> <span class="nx">v</span><span class="p">.</span><span class="nf">Elem</span><span class="p">().</span><span class="nf">Field</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nf">String</span><span class="p">()</span>  <span class="o">//</span><span class="nx">获取存储在第一个字段里面的值</span></code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>获取反射值能返回相应的类型和数值</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">x</span> <span class="kt">float64</span> <span class="p">=</span> <span class="mf">3.4</span>
+<span class="nx">v</span> <span class="o">:=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">ValueOf</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;type:&#34;</span><span class="p">,</span> <span class="nx">v</span><span class="p">.</span><span class="nf">Type</span><span class="p">())</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;kind is float64:&#34;</span><span class="p">,</span> <span class="nx">v</span><span class="p">.</span><span class="nf">Kind</span><span class="p">()</span> <span class="o">==</span> <span class="nx">reflect</span><span class="p">.</span><span class="nx">Float64</span><span class="p">)</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;value:&#34;</span><span class="p">,</span> <span class="nx">v</span><span class="p">.</span><span class="nf">Float</span><span class="p">())</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">JackyLove</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2019-08-15
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/golang/">Golang</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/%E7%AE%80%E5%8D%95%E7%9A%84go/">
+            <span class="next-text nav-default">简单的Go</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  <span id="/post/go%E4%B8%AD%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%92%8C%E6%8E%A5%E5%8F%A3/" class="leancloud_visitors" data-flag-title="Go中的面向对象和接口">
+    <span class="post-meta-item-text">文章阅读量 </span>
+    <span class="leancloud-visitors-count">1000000</span>
+    <p></p>
+  </span>
+  <div id="vcomments"></div>
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+  <script type="text/javascript">
+    new Valine({
+        el: '#vcomments' ,
+        appId: 'xPwmFUoHVqraVIVlAt2Xch9M-gzGzoHsz',
+        appKey: 'VP1APko2CdGfydmf7xOplDur',
+        notify:  false , 
+        verify:  false , 
+        avatar:'', 
+        placeholder: '请说点什么吧...',
+        visitor:  true 
+    });
+  </script>
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://stackoverflow.com/users/8640064/jackylove" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/jacklov3" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.instagram.com/jacky1ove/" class="iconfont icon-instagram" title="instagram"></a>
+  <a href="https://www.jackylove.me/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">JackyLove</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
