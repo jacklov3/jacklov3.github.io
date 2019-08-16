@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>web on JackyLove的小窝</title>
+    <link>https://www.jackylove.me/tags/web/</link>
+    <description>Recent content in web on JackyLove的小窝</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 16 Aug 2019 21:08:43 +0800</lastBuildDate>
+    
+	<atom:link href="https://www.jackylove.me/tags/web/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Cookie和Session的区别和联系</title>
+      <link>https://www.jackylove.me/post/cookie%E5%92%8Csession%E7%9A%84%E5%8C%BA%E5%88%AB%E5%92%8C%E8%81%94%E7%B3%BB/</link>
+      <pubDate>Fri, 16 Aug 2019 21:08:43 +0800</pubDate>
+      
+      <guid>https://www.jackylove.me/post/cookie%E5%92%8Csession%E7%9A%84%E5%8C%BA%E5%88%AB%E5%92%8C%E8%81%94%E7%B3%BB/</guid>
+      <description>Cookie和Session 简单点理解。 - Session 由于HTTP是无状态的，如果我们需要识别每个HTTP的连接是否属于某个特定用户，我们就需要使用到</description>
+    </item>
+    
+  </channel>
+</rss>
