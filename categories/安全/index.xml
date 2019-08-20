@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>安全 on JackyLove的小窝</title>
+    <link>https://www.jackylove.me/categories/%E5%AE%89%E5%85%A8/</link>
+    <description>Recent content in 安全 on JackyLove的小窝</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 17 Aug 2019 13:54:30 +0800</lastBuildDate>
+    
+	<atom:link href="https://www.jackylove.me/categories/%E5%AE%89%E5%85%A8/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>浅谈hash算法、对称加密和非对称加密</title>
+      <link>https://www.jackylove.me/post/%E6%B5%85%E8%B0%88hash%E7%AE%97%E6%B3%95%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E5%92%8C%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86/</link>
+      <pubDate>Sat, 17 Aug 2019 13:54:30 +0800</pubDate>
+      
+      <guid>https://www.jackylove.me/post/%E6%B5%85%E8%B0%88hash%E7%AE%97%E6%B3%95%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E5%92%8C%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86/</guid>
+      <description>对称加密、非对称加密、Hash算法 对称加密 指加密和解密使用相同密钥的加密算法。对称加密算法的优点在于加解密的高速度和使用长密钥时的难破解性。</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2019-08-16T21:08:43&#43;08:00" />
 <meta itemprop="dateModified" content="2019-08-16T21:08:43&#43;08:00" />
-<meta itemprop="wordCount" content="444">
+<meta itemprop="wordCount" content="964">
 
 
 
@@ -132,8 +132,8 @@
         <div class="post-category">
             <a href="/categories/web%E5%BC%80%E5%8F%91/"> web开发 </a>
             </div>
-          <span class="more-meta"> 444 words </span>
-          <span class="more-meta"> 1 min read </span>
+          <span class="more-meta"> 964 words </span>
+          <span class="more-meta"> 2 mins read </span>
         
       </div>
     </header>
@@ -143,7 +143,10 @@
   <div class="post-toc-content">
     <nav id="TableOfContents">
 <ul>
-<li><a href="#cookie和session">Cookie和Session</a></li>
+<li><a href="#cookie和session">Cookie和Session</a>
+<ul>
+<li><a href="#安全性问题">安全性问题</a></li>
+</ul></li>
 </ul>
 </nav>
   </div>
@@ -169,6 +172,22 @@ sessionid用于标识别某个会话。</li>
 
 <p>由于cookie可以在客户端被禁止使用，这时需要使用URL重写的技术在URL后加上sid=xxxx这样的session id。</p>
 
+<h2 id="安全性问题">安全性问题</h2>
+
+<p>cookie的存储是不安全的，虽然浏览器可以加密cookie，但是有人侵入你的电脑，一样破解你的用户和密码
+session劫持问题，由于服务端和客户端是通过sessionid来实现识别的，若sessionid被嗅探到了，就容易造成session挟持问题。
+针对session挟持问题：</p>
+
+<ul>
+<li><p>其中一个解决方案就是sessionID的值只允许cookie设置，而不是通过URL重置方式设置，同时设置cookie的httponly为true,这个属性是设置是否可通过客户端脚本访问这个设置的cookie，第一这个可以防止这个cookie被XSS读取从而引起session劫持，第二cookie设置不会像URL重置方式那么容易获取sessionID。</p></li>
+
+<li><p>第二步就是在每个请求里面加上token，我们在每个请求里面加上一个隐藏的token，然后每次验证这个token，从而保证用户的请求都是唯一性。</p></li>
+
+<li><p>还有一个解决方案就是，我们给session额外设置一个创建时间的值，一旦过了一定的时间，我们销毁这个sessionID，重新生成新的session，这样可以一定程度上防止session劫持的问题。</p></li>
+</ul>
+
+<p>以上两个方案结合可以很大程度上解决session劫持的问题。</p>
+
     </div>
 
     <div class="post-copyright">
@@ -191,7 +210,11 @@ sessionid用于标识别某个会话。</li>
           <a href="/tags/web/">web</a>
           </div>
       <nav class="post-nav">
-        
+        <a class="prev" href="/post/%E6%B5%85%E8%B0%88hash%E7%AE%97%E6%B3%95%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E5%92%8C%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">浅谈hash算法、对称加密和非对称加密</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
         <a class="next" href="/post/go%E7%9A%84%E5%B9%B6%E5%8F%91/">
             <span class="next-text nav-default">Go的并发</span>
             <span class="next-text nav-mobile">Next</span>
