@@ -6,10 +6,19 @@
     <description>Recent content in Posts on JackyLove的小窝</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 17 Aug 2019 13:54:30 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 06 Sep 2019 21:40:43 +0800</lastBuildDate>
     
 	<atom:link href="https://www.jackylove.me/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>白嫖一波服务器</title>
+      <link>https://www.jackylove.me/post/%E7%99%BD%E5%AB%96%E4%B8%80%E6%B3%A2%E6%9C%8D%E5%8A%A1%E5%99%A8/</link>
+      <pubDate>Fri, 06 Sep 2019 21:40:43 +0800</pubDate>
+      
+      <guid>https://www.jackylove.me/post/%E7%99%BD%E5%AB%96%E4%B8%80%E6%B3%A2%E6%9C%8D%E5%8A%A1%E5%99%A8/</guid>
+      <description>个人服务器选择 最近时间，有同学问到我如何有自己的个人服务器，鉴于太多步骤，遂记录一波，以供他人参考。 获得服务器和域名 个人选择服务器一般购买各</description>
+    </item>
     
     <item>
       <title>浅谈hash算法、对称加密和非对称加密</title>
